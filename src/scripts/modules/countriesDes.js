@@ -30,7 +30,7 @@ function renderCountries() {
       <li>
         <div class="country">
           <div class="country__flag">
-            <img src="../${flag}" alt="${name}">
+            <img src="./${flag}" alt="${name}">
           </div>
           <div class="country__name">${name}</div>
         </div>

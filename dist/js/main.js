@@ -2,7 +2,7 @@
       <li>
         <div class="country">
           <div class="country__flag">
-            <img src="../${i}" alt="${t}">
+            <img src="./${i}" alt="${t}">
           </div>
           <div class="country__name">${t}</div>
         </div>
