@@ -1,0 +1,108 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.btn
+  background-color: #27615c
+  border-radius: rem(16)
+  font-size: rem(16)
+  font-weight: 700
+  color: #fff
+  text-align: center
+  padding: rem(16) rem(56)
+  text-decoration: none
+  outline: none
+  border: none
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  line-height: rem(24)
+  transition: $transition
+  cursor: pointer
+
+  &:hover
+    background-color: $secondary
+
+  &--dark
+    background-color: #1F2329
+
+    &:hover
+      background-color: $primary
+
+  &--tab
+    padding: rem(8) rem(14)
+    border-radius: rem(12)
+
+  &--bordered
+    background: none
+    border: 1px solid #2B2B37
+
+  &--telegram
+    background-color: #26A4E3
+    
+.return-btn
+  display: inline-flex
+  align-items: center
+  column-gap: rem(8)
+  color: #fff
+  font-weight: 600
+  font-size: rem(16)
+  text-decoration: none
+  transition: $transition
+
+  &:hover
+    color: $primary
+
+  svg
+    width: rem(24)
+    height: rem(24)
+
+.more-btn
+  display: flex
+  align-items: center
+  column-gap: rem(8)
+  font-size: rem(16)
+  font-weight: 600
+  color: #fff
+  cursor: pointer
+  transition: $transition
+
+  &__close
+    opacity: 0
+    pointer-events: none
+    transition: $transition
+    position: absolute
+
+  svg
+    width: rem(18)
+    height: rem(18)
+    transform: none
+    transition: $transition
+
+  &:hover
+    color: $primary
+
+  &.show
+    svg
+      transform: rotate(180deg)
+    span
+      position: absolute
+      opacity: 0
+
+    .more-btn__close
+      opacity: 1
+      pointer-events: inherit
+      position: relative
+
+.show
+  .more-btn
+    svg
+      transform: rotate(180deg)
+    span
+      position: absolute
+      opacity: 0
+
+    .more-btn__close
+      opacity: 1
+      pointer-events: inherit
+      position: relative

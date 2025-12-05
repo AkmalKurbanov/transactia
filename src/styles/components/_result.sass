@@ -1,0 +1,42 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.result
+  text-align: center
+  .typical-block
+    border-radius: rem(24)
+
+  .calculator-wrap__content-block
+    padding: rem(32) rem(40)
+
+  &__icon
+    width: rem(120)
+    height: rem(120)
+    margin: auto
+    margin-bottom: rem(24)
+
+  &__title
+    font-size: rem(20)
+    color: #fff
+    font-weight: 700
+    margin-bottom: rem(8)
+
+  p
+    color: #fff
+    font-size: rem(14)
+
+  .btn
+    display: flex
+    width: 100%
+    column-gap: rem(8)
+    background-color: #26A4E3
+    padding-left: rem(16)
+    padding-right: rem(16)
+    margin-top: rem(24)
+
+    svg
+      width: rem(24)
+
+    &:hover
+      transform: translateY(rem(-5))

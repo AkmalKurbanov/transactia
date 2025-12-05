@@ -1,0 +1,241 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.hero
+  row-gap: rem(171)
+  position: relative
+  z-index: 3
+  padding-top: rem(75)
+  padding-bottom: rem(360)
+
+  @include xl
+    padding-bottom: rem(230)
+  
+  @include lg
+    padding-bottom: rem(150)
+
+  @include md
+    padding-bottom: rem(50)
+    padding-top: rem(150)
+
+  @include xs
+    padding-top: rem(120)
+    padding-bottom: rem(80)
+
+  &__calculator
+    position: relative
+    display: flex
+
+    @include md
+      flex-direction: column
+
+    .mine-title-block
+      margin-right: rem(170)
+
+      @include xl
+        margin-right: rem(120)
+
+      @include lg
+        margin-right: rem(80)
+
+      @include md
+        margin-right: 0
+        max-width: 80%
+        margin-bottom: rem(24)
+      
+      @include sm
+        max-width: 100%
+        display: none
+
+    &--index
+      .mine-title-block
+        @include sm
+          display: block
+
+    &--single
+      justify-content: center    
+        
+  &__decor-item
+    position: absolute
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    transition: all 2s
+
+    &:first-child
+      right: 91.60%
+      bottom: 53.51%
+      transform: rotate(31.99deg)
+
+      @media (max-width: 1799.98px)
+        bottom: 35%
+
+      @include xl
+        bottom: 33%
+        right: 88%
+        width: rem(100)
+        height: rem(100)
+      
+      @include md
+        right: 50%
+        top: rem(5)
+        bottom: auto
+        width: rem(70)
+        height: rem(70)
+
+      @include sm
+        width: rem(31)
+        height: rem(31)
+
+
+
+    &:nth-child(2)
+      right: 85.30%
+      bottom: 21.33%
+      transform: rotate(-20.66deg)
+
+      @include xl
+        bottom: 25%
+        right: 78%
+        width: rem(100)
+        height: rem(100)
+
+      @include md
+        right: 5%
+        top: rem(10)
+        width: rem(70)
+        height: rem(70)
+
+      @include sm
+        width: rem(31)
+        height: rem(31)  
+
+    &:nth-child(3)
+      right: 71.44%
+      bottom: 14.89%
+      transform: rotate(-17.1deg)
+
+      @include xl
+        right: 67%
+        bottom: 10%
+        width: rem(100)
+        height: rem(100)
+
+      @include md
+        right: 40%
+        top: rem(70)
+        width: rem(70)
+        height: rem(70)
+
+      @include sm
+        width: rem(43)
+        height: rem(43)  
+
+   
+
+    &:nth-child(4)
+      right: 47.97%
+      bottom: 12.39%
+      transform: rotate(12.76deg)
+
+      @include xl
+        bottom: 20%
+        width: rem(200)
+        height: rem(200)
+
+      @include md
+        right: 68%
+        top: rem(15)
+        width: rem(150)
+        height: rem(150)  
+        transform: rotate(-15deg)
+
+      @include sm
+        width: rem(80)
+        height: rem(80)
+
+      @include xs 
+        right: 62%
+
+    &:nth-child(5)
+      bottom: 13.70%
+      right: 30.44%
+      transform: rotate(-24.85deg)
+
+      @include xl
+        bottom: 0%
+        width: rem(200)
+        height: rem(200)
+      
+      @include md
+        right: 27%
+        top: rem(5)
+        width: rem(60)
+        height: rem(60)  
+
+      @include sm
+        width: rem(33)
+        height: rem(33)  
+
+      
+          
+
+    &:nth-child(6)
+      bottom: 18.71%
+      right: 9.60%
+      transform: rotate(14.79deg)
+      
+      @include xl
+        width: rem(120)
+        height: rem(120)
+        bottom: 0
+        right: 15%
+
+      @include md
+        right: auto
+        left: 5%
+        top: rem(15)
+        width: rem(70)
+        height: rem(70)    
+
+      @include sm
+        width: rem(33)
+        height: rem(33) 
+      
+
+        
+
+    &:nth-child(7)
+      bottom: 56.61%
+      right: 3.14%
+      transform: rotate(-20deg)
+
+      @media (max-width: 1799.98px)
+        bottom: 35%
+      
+      @include xl
+        bottom: 13%
+        width: rem(200)
+        height: rem(200)
+        right: -5%
+
+      @include md
+        right: 10%
+        top: rem(30)
+        width: rem(170)
+        height: rem(170)   
+
+      @include sm
+        width: rem(84)
+        height: rem(84)   
+
+      @include xs
+        top: rem(50)
+        transform: rotate(-10deg)
+
+    img
+      @include xl
+        position: absolute
+        object-fit: contain
+        width: 100%

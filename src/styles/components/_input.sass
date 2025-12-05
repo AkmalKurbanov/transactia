@@ -1,0 +1,116 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.input
+  position: relative
+
+  &__field
+    background-color: #233331
+    border-radius: rem(12)
+    padding: rem(6) rem(16)
+    min-height: rem(60)
+    border: rem(1) solid transparent
+    transition: $transition
+    position: relative
+    
+
+    label
+      color: #AFAFAF
+      font-size: rem(12)
+      font-weight: 500
+
+    input,
+    textarea
+      background-color: transparent
+      border: none
+      outline: none
+      width: 100%
+      color: #fff
+      font-size: rem(16)
+      margin-top: rem(4)
+
+  &__dropdown
+    background-color: #2B2B37
+    border-radius: rem(12)
+    position: absolute
+    top: calc( 100% + rem(5) )
+    width: 100%
+    left: 0
+    overflow: hidden
+    max-height: rem(150)
+    overflow-y: auto
+    opacity: 0
+    transition: $transition
+    transform: translateY(rem(-15))
+    pointer-events: none
+    z-index: 1
+
+  &__selected
+    color: #fff
+    font-weight: 600
+    line-height: rem(24)
+    margin-top: rem(4)
+
+  &__select-arrow
+    width: rem(20)
+    height: rem(20)
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    top: 50%
+    right: rem(16)
+    transform: translateY(-50%)
+    transition: $transition
+
+    svg
+      width: rem(17)
+
+  &__option
+    padding: rem(6) rem(16)
+    cursor: pointer
+    color: #fff
+    transition: $transition
+
+    &:hover
+      background-color: #35353f
+
+  .message
+    font-size: rem(12)
+    font-weight: 500
+    margin-top: rem(8)
+    padding-left: rem(16)
+    color: #AFAFAF
+    transition: $transition
+
+  &.error
+    .input__field
+      border-color: red
+
+    .message
+      color: red
+
+  &--with-select
+    .input__field
+      display: flex
+      align-items: center
+      justify-content: space-between
+      column-gap: rem(16)
+
+      input
+        font-size: rem(20)
+        font-weight: 600
+        margin-top: rem(7)
+
+  &--select
+    .input__field
+      cursor: pointer
+      
+    &.open
+      .input__select-arrow
+        transform: translateY(-50%) rotate(180deg)
+      .input__dropdown
+        opacity: 1
+        transform: none
+        pointer-events: inherit

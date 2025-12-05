@@ -1,0 +1,29 @@
+mixin currencySelect(flag="./flags/1x1/ru.svg", code="RUB", disabled=false)
+  .cselect.cselect-js(class=disabled ? "is-disabled" : "")
+    .cselect__selected
+      .cselect__selected-left
+        span.cselect__img
+          img(src=flag alt=code)
+        span.cselect__code #{code}
+
+      .cselect__selected-right
+        svg(xmlns="http://www.w3.org/2000/svg", viewBox="0 0 16 16", width="20", height="20")
+          path(fill="#fff", d="M8 11.47a1 1 0 0 1-.71-.29L2.34 6.23a1 1 0 1 1 1.42-1.41L8 9.06l4.24-4.24a1 1 0 1 1 1.42 1.41l-4.95 4.95a1 1 0 0 1-.71.29Z")
+
+    if !disabled
+      .cselect__dropdown.js-select-options.scroll-bar
+        .cselect__dropdown-wrap
+          .cselect__search
+            svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 20 20")
+              path(fill="#AFAFAF", d="m18.16 16.84-3.7-3.71a7.2 7.2 0 1 0-1.34 1.32l3.72 3.72a.94.94 0 1 0 1.33-1.33ZM3.44 8.75a5.31 5.31 0 1 1 10.62 0 5.31 5.31 0 0 1-10.62 0Z")
+            input(type="text" placeholder="Страна получателя")
+          ul
+
+        .cselect__submenu
+          .cselect__submenu-header
+            div
+              p.cselect__submenu-country
+              p.cselect__submenu-label Выберите валюту
+            span.cselect__submenu-close ×
+
+          .cselect__submenu-list

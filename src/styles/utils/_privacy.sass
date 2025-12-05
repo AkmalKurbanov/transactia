@@ -1,0 +1,42 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+
+.privacy
+  color: #fff
+  padding-bottom: rem(390)
+  
+  h1
+    font-size: rem(32)
+    line-height: rem(40)
+    font-weight: 700
+    margin-bottom: rem(16)
+
+    @include sm
+      font-size: rem(24)
+      line-height: rem(32)
+      margin-bottom: rem(56)
+
+
+  h2
+    font-size: rem(24)
+    line-height: rem(32)
+    font-weight: 500
+    margin-bottom: rem(8)
+  
+  p  
+    font-size: rem(16)
+    line-height: rem(24)
+    font-weight: 500
+    margin-bottom: rem(56)
+
+  ul
+    margin-bottom: rem(24)  
+    li
+      list-style: none
+
+      ul
+        padding-left: rem(25)
+        li
+          list-style: disc

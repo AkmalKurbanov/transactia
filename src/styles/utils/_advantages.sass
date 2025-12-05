@@ -1,0 +1,66 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.advantages
+  &__flex-wrap 
+    display: flex
+    flex-wrap: wrap
+    column-gap: rem(120)
+    row-gap: rem(90)
+    margin-top: rem(64)
+
+    @include xl
+      column-gap: rem(50)
+      row-gap: rem(50)
+    
+    @include lg
+      column-gap: rem(24)
+
+    @include md
+      justify-content: space-between
+      column-gap: rem(16)
+      row-gap: rem(20)
+
+    @include xs
+      margin-top: rem(40)
+      column-gap: 0
+      row-gap: rem(50)
+
+  &__item
+    width: calc( 33.33% - rem(80) )
+    
+    @include xl
+      width: calc( 33.33% - rem(35) )
+    
+    @include lg
+      width: calc( 33.33% - rem(16) )
+
+    @include md
+      width: calc( 50% - rem(8) )
+
+    @include xs
+      width: 100%
+
+    &-icon
+      width: rem(96)
+      height: rem(96)
+      display: flex
+      align-items: center
+      justify-content: center
+      margin-bottom: rem(16)
+
+    &-title
+      font-size: rem(20)
+      font-weight: 500
+      color: #fff
+      margin-bottom: rem(16)
+
+
+    &-desc
+      font-size: rem(16)
+      font-weight: 500
+      line-height: rem(24)
+      color: #AFAFAF
+      
+

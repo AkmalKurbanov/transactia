@@ -1,0 +1,23 @@
+@use "sass:math"
+@use "sass:meta"
+@use "../abstracts/tokens"
+
+
+$base-font-size: 16px !default 
+
+
+@function rem($px, $base: $base-font-size)
+
+  @if meta.type-of($px) != number
+    @return $px
+
+
+  @if math.is-unitless($px)
+    $px: $px * 1px
+  @if math.is-unitless($base)
+    $base: $base * 1px
+
+  @if $base == 0px
+    @error "rem(): $base не может быть 0."
+
+  @return math.div($px, $base) * 1rem

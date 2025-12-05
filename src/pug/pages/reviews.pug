@@ -1,0 +1,88 @@
+extends ../layouts/base
+
+block content
+
+  include ../components/review
+  .container
+    .reviews
+      .reviews__top
+        h1.title Отзывы
+        button.btn(data-modal="review") Написать отзыв
+
+      .masonry-grid
+        .masonry-sizer
+        .gutter-sizer
+        .masonry-item
+          .reviews__item.typical-block 
+            .reviews__item-top 
+              .reviews__item-avatar 
+                img(src="", alt="")
+              .reviews__item-info 
+                p Святослав
+                span 25 августа
+            .stars-input(data-value="4")    
+            .reviews__item-rating
+            .reviews__item-text
+              p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos at laborum suscipit cum, blanditiis minima veritatis impedit hic autem quibusdam tempore odio dignissimos maiores pariatur, dolorem excepturi ratione officia. Delectus?
+        .masonry-item
+          .reviews__item.typical-block 
+            .reviews__item-top 
+              .reviews__item-avatar 
+                img(src="", alt="")
+              .reviews__item-info 
+                p Святослав
+                span 25 августа
+            .stars-input(data-value="1")        
+            .reviews__item-rating
+            .reviews__item-text
+              p Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum rem suscipit animi magnam impedit commodi amet dolore velit quod nam quis reprehenderit, dicta laborum accusamus incidunt explicabo saepe nisi debitis placeat molestias harum ex, doloribus dolorem sed! Voluptatem similique sapiente nisi eligendi eaque. Velit voluptatem, vero consequatur voluptate voluptatibus obcaecati, mollitia, porro doloribus facere illo autem molestiae hic. Laboriosam, quidem.
+        .masonry-item
+          .reviews__item.typical-block 
+            .reviews__item-top 
+              .reviews__item-avatar 
+                img(src="", alt="")
+              .reviews__item-info 
+                p Святослав
+                span 25 августа
+            .stars-input(data-value="2")        
+            .reviews__item-rating
+            .reviews__item-text
+              p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos at laborum suscipit cum, blanditiis minima veritatis impedit hic autem quibusdam tempore odio dignissimos maiores pariatur, dolorem excepturi ratione officia. Delectus?
+        .masonry-item
+          .reviews__item.typical-block 
+            .reviews__item-top 
+              .reviews__item-avatar 
+                img(src="", alt="")
+              .reviews__item-info 
+                p Святослав
+                span 25 августа
+            .stars-input(data-value="5")        
+            .reviews__item-rating
+            .reviews__item-text
+              p Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, voluptate veritatis doloribus a tempore officia saepe commodi porro voluptas omnis totam molestias accusamus? Veritatis perferendis neque cum officia inventore cupiditate rem distinctio quam quo! Voluptas ex minima explicabo dolor. Id facilis dolorum ex reiciendis iure repellat maiores ullam at accusantium. Reprehenderit, quos? Impedit placeat sapiente libero, aliquid dignissimos repellat deleniti sequi veritatis sed neque officiis rem, molestias maxime maiores tempore?
+        .masonry-item
+          .reviews__item.typical-block 
+            .reviews__item-top 
+              .reviews__item-avatar 
+                img(src="", alt="")
+              .reviews__item-info 
+                p Святослав
+            .stars-input(data-value="4")        
+                span 25 августа
+            .reviews__item-rating
+            .reviews__item-text
+              p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde odit provident, nisi magnam maxime officiis nemo doloribus expedita vel fugiat alias corporis voluptas beatae earum, adipisci possimus sit, at quibusdam! Repellendus, voluptatem totam consequuntur adipisci fugiat ex maiores asperiores enim.
+        .masonry-item
+          .reviews__item.typical-block 
+            .reviews__item-top 
+              .reviews__item-avatar 
+                img(src="", alt="")
+              .reviews__item-info 
+                p Святослав
+                span 25 августа
+            .stars-input(data-value="1")        
+            .reviews__item-rating
+            .reviews__item-text
+              p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos at laborum suscipit cum, blanditiis minima veritatis impedit hic autem quibusdam tempore odio dignissimos maiores pariatur, dolorem excepturi ratione officia. Delectus?
+      
+      include ../components/pagination

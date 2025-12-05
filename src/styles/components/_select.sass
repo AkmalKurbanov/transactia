@@ -1,0 +1,175 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.cselect
+  position: relative
+  cursor: pointer
+
+  &.is-disabled
+    pointer-events: none
+
+    .cselect__selected-right
+      opacity: 10%
+
+  &__selected
+    display: flex
+    align-items: center
+    justify-content: space-between
+    width: 100%
+    line-height: 0
+
+  &__selected-left
+    display: flex
+    align-items: center
+    gap: rem(8)
+
+  &__img
+    max-width: rem(24)
+    min-width: rem(24)
+    height: rem(24)
+    border-radius: 50%
+    overflow: hidden
+    display: flex
+
+    img
+      width: 100%
+      height: 100%
+      object-fit: cover
+
+  &__dropdown
+    position: absolute
+    width: 100%
+    top: calc(100% + rem(35))
+    right: rem(-16)
+    opacity: 0
+    pointer-events: none
+    transition: $transition
+    z-index: 2
+
+  &__dropdown-wrap
+    background-color: #233331
+    border-radius: rem(12)
+    max-height: rem(300)
+    overflow-y: auto
+
+  &__search
+    display: flex
+    align-items: center
+    column-gap: rem(12)
+    padding: rem(16)
+    position: sticky
+    top: 0
+    background-color: #233331
+
+    svg
+      width: rem(20)
+      height: rem(20)
+
+    input
+      margin-top: 0!important
+      font-size: rem(16) !important
+      &:placeholder
+        color: #AFAFAF
+
+  &__option
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: rem(16)
+    cursor: pointer
+    transition: $transition
+    font-weight: 500
+
+    &:hover
+      background: rgba(255,255,255,.05)
+
+  &__code
+    color: #fff
+    font-weight: 600
+    font-size: rem(20)
+
+  &__option-left
+    display: flex
+    align-items: center
+    column-gap: rem(8)
+    color: #fff
+
+  &__option-right
+    color: #AFAFAF
+    white-space: nowrap
+
+  &__selected-right
+    margin-left: rem(8)
+
+  &__selected-right svg
+    transition: $transition
+
+  &__submenu
+    background-color: #233331
+    border-radius: rem(12)
+    padding: rem(16)
+    opacity: 0
+    pointer-events: none
+    transform: translateY(rem(6))
+    transition: $transition
+    z-index: 20
+    margin-top: rem(15)
+
+    &.show
+      opacity: 1
+      pointer-events: auto
+      transform: translateY(0)
+
+  &__submenu-country
+    font-weight: 500
+    margin-bottom: rem(15)
+    color: #fff
+    padding-right: rem(32)
+
+  &__submenu-label
+    font-size: rem(14)
+    color: #afafaf
+    margin-bottom: rem(15)
+
+  &__submenu-list
+    margin-top: rem(10)
+
+  &__submenu-option
+    display: flex
+    justify-content: space-between
+    align-items: center
+    cursor: pointer
+    transition: $transition
+    margin-bottom: rem(10)
+    font-weight: 500
+    color: #fff
+
+    &:hover
+      color: $secondary
+
+    span
+      &:last-child
+        color: #AFAFAF
+
+  &__submenu-close
+    position: absolute
+    top: rem(16)
+    right: rem(16)
+    font-size: rem(25)
+    cursor: pointer
+    display: flex
+    align-items: center
+    justify-content: center
+    width: rem(16)
+    height: rem(16)
+    color: #fff
+
+  /* OPEN STATE */
+  &.open
+    .cselect__dropdown
+      opacity: 1
+      pointer-events: auto
+
+    .cselect__selected-right svg
+      transform: rotate(180deg)

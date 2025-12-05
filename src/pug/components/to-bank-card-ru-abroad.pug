@@ -1,0 +1,30 @@
+.calculator-wrap
+  a(href="#").return-btn 
+    svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
+      path(fill="#27615C", d="M15.8 18.7a1.13 1.13 0 1 1-1.6 1.6l-7.5-7.5a1.13 1.13 0 0 1 0-1.6l7.5-7.5a1.13 1.13 0 1 1 1.6 1.6L9.1 12l6.7 6.7Z")
+    | Назад
+  .typical-block
+    .calculator-wrap__content-block
+      h3.calculator-wrap__title На банковскую карту
+      form
+        .input
+          .input__field
+            label(for="card-number") Номер карты*
+            input(type="text" id="card-number" name="card-number") 
+
+          .message Введите 16 цифр 
+
+        .input
+          .input__field
+            label(for="card-name") Имя на карте*
+            input(type="text" id="card-name" name="card-name") 
+
+          .message Английскими буквами
+
+        .input
+          .input__field
+            label(for="pay-name") Назначение платежа
+            textarea(id="pay-name" name="pay-name")
+
+        .centered
+          button.btn Продолжить

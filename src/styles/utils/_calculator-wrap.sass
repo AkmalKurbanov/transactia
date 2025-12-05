@@ -1,0 +1,113 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.calculator-wrap
+  max-width: rem(520)
+  min-width: rem(420)
+  width: 100%
+
+  @include md
+    min-width: 100%
+    max-width: 100%
+  
+  .return-btn
+    margin-bottom: rem(24)
+    
+  &__header,
+  &__content-block
+    padding: rem(24) rem(32)
+
+    @include sm
+      padding: rem(24) rem(16)
+
+
+  &__header
+    background: linear-gradient(90deg, #181818 0%, #27615C 100%)
+    display: flex
+    column-gap: rem(16)
+    border-radius: rem(32) rem(32) 0 0
+
+    @include sm
+      border-radius: rem(24) rem(24) 0 0
+      padding: rem(16)
+      
+    &-icon
+      max-width: rem(80)
+      min-width: rem(80)
+      height: rem(80)
+      display: flex
+      align-items: center
+      justify-content: center
+      overflow: hidden
+      background-color: #fff
+      border-radius: rem(16)
+
+      @include sm
+        max-width: rem(72)
+        min-width: rem(72)
+        height: rem(72)
+
+
+    &-title
+      color: #fff
+      font-size: rem(32)
+      font-weight: 700
+      
+      @include sm
+        font-size: rem(23)
+    
+    &-info
+      display: flex
+      flex-direction: column
+      justify-content: center
+
+    &-rating
+      margin-top: rem(8)   
+      display: flex
+      align-items: center
+      column-gap: rem(8)
+
+      .stars-input
+        margin-bottom: 0
+
+        &__item 
+          width: rem(16)
+          height: rem(16)
+
+        &.disabled
+          pointer-events: none  
+
+      span
+        &:nth-child(2)
+          color: #fff 
+          font-weight: 600
+
+        &:last-child
+          font-size: rem(14)
+          font-weight: 500
+          color: #fc0
+           
+
+  &__title
+    font-size: rem(24)
+    color: #fff
+    font-weight: 700
+    margin-bottom: rem(24)
+    
+    
+
+
+  .input
+    margin-bottom: rem(24)  
+    &:last-child
+      margin-bottom: 0
+
+  .tabs
+    margin-bottom: rem(24)
+
+  .mine-title-block__icon-wrap
+    margin-top: rem(56)
+    display: none
+    @include md
+      display: flex  

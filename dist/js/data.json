@@ -1,0 +1,3125 @@
+{
+  "countries": [
+    {
+      "code": "AU",
+      "name": "Австралия",
+      "flag": "flags/1x1/au.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        }
+      ]
+    },
+    {
+      "code": "AT",
+      "name": "Австрия",
+      "flag": "flags/1x1/at.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "AZ",
+      "name": "Азербайджан",
+      "flag": "flags/1x1/az.svg",
+      "currencies": [
+        {
+          "code": "AZN",
+          "symbol": "AZN",
+          "name": "азербайджанский манат"
+        }
+      ]
+    },
+    {
+      "code": "AX",
+      "name": "Аландские острова",
+      "flag": "flags/1x1/ax.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "AL",
+      "name": "Албания",
+      "flag": "flags/1x1/al.svg",
+      "currencies": [
+        {
+          "code": "ALL",
+          "symbol": "ALL",
+          "name": "албанский лек"
+        }
+      ]
+    },
+    {
+      "code": "DZ",
+      "name": "Алжир",
+      "flag": "flags/1x1/dz.svg",
+      "currencies": [
+        {
+          "code": "DZD",
+          "symbol": "DZD",
+          "name": "алжирский динар"
+        }
+      ]
+    },
+    {
+      "code": "AS",
+      "name": "Американское Самоа",
+      "flag": "flags/1x1/as.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "AI",
+      "name": "Ангилья",
+      "flag": "flags/1x1/ai.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "AO",
+      "name": "Ангола",
+      "flag": "flags/1x1/ao.svg",
+      "currencies": [
+        {
+          "code": "AOA",
+          "symbol": "AOA",
+          "name": "ангольская кванза"
+        }
+      ]
+    },
+    {
+      "code": "AD",
+      "name": "Андорра",
+      "flag": "flags/1x1/ad.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "AQ",
+      "name": "Антарктида",
+      "flag": "flags/1x1/aq.svg",
+      "currencies": []
+    },
+    {
+      "code": "AG",
+      "name": "Антигуа и Барбуда",
+      "flag": "flags/1x1/ag.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "AR",
+      "name": "Аргентина",
+      "flag": "flags/1x1/ar.svg",
+      "currencies": [
+        {
+          "code": "ARS",
+          "symbol": "ARS",
+          "name": "аргентинский песо"
+        }
+      ]
+    },
+    {
+      "code": "AM",
+      "name": "Армения",
+      "flag": "flags/1x1/am.svg",
+      "currencies": [
+        {
+          "code": "AMD",
+          "symbol": "AMD",
+          "name": "армянский драм"
+        }
+      ]
+    },
+    {
+      "code": "AW",
+      "name": "Аруба",
+      "flag": "flags/1x1/aw.svg",
+      "currencies": [
+        {
+          "code": "AWG",
+          "symbol": "AWG",
+          "name": "арубанский флорин"
+        }
+      ]
+    },
+    {
+      "code": "AF",
+      "name": "Афганистан",
+      "flag": "flags/1x1/af.svg",
+      "currencies": [
+        {
+          "code": "AFN",
+          "symbol": "AFN",
+          "name": "афгани"
+        }
+      ]
+    },
+    {
+      "code": "BS",
+      "name": "Багамы",
+      "flag": "flags/1x1/bs.svg",
+      "currencies": [
+        {
+          "code": "BSD",
+          "symbol": "BSD",
+          "name": "багамский доллар"
+        },
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "BD",
+      "name": "Бангладеш",
+      "flag": "flags/1x1/bd.svg",
+      "currencies": [
+        {
+          "code": "BDT",
+          "symbol": "BDT",
+          "name": "бангладешская така"
+        }
+      ]
+    },
+    {
+      "code": "BB",
+      "name": "Барбадос",
+      "flag": "flags/1x1/bb.svg",
+      "currencies": [
+        {
+          "code": "BBD",
+          "symbol": "BBD",
+          "name": "барбадосский доллар"
+        }
+      ]
+    },
+    {
+      "code": "BH",
+      "name": "Бахрейн",
+      "flag": "flags/1x1/bh.svg",
+      "currencies": [
+        {
+          "code": "BHD",
+          "symbol": "BHD",
+          "name": "бахрейнский динар"
+        }
+      ]
+    },
+    {
+      "code": "BY",
+      "name": "Беларусь",
+      "flag": "flags/1x1/by.svg",
+      "currencies": [
+        {
+          "code": "BYN",
+          "symbol": "BYN",
+          "name": "белорусский рубль"
+        }
+      ]
+    },
+    {
+      "code": "BZ",
+      "name": "Белиз",
+      "flag": "flags/1x1/bz.svg",
+      "currencies": [
+        {
+          "code": "BZD",
+          "symbol": "BZD",
+          "name": "белизский доллар"
+        }
+      ]
+    },
+    {
+      "code": "BE",
+      "name": "Бельгия",
+      "flag": "flags/1x1/be.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "BJ",
+      "name": "Бенин",
+      "flag": "flags/1x1/bj.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "BM",
+      "name": "Бермуды",
+      "flag": "flags/1x1/bm.svg",
+      "currencies": [
+        {
+          "code": "BMD",
+          "symbol": "BMD",
+          "name": "бермудский доллар"
+        }
+      ]
+    },
+    {
+      "code": "BG",
+      "name": "Болгария",
+      "flag": "flags/1x1/bg.svg",
+      "currencies": [
+        {
+          "code": "BGN",
+          "symbol": "BGN",
+          "name": "болгарский лев"
+        }
+      ]
+    },
+    {
+      "code": "BO",
+      "name": "Боливия",
+      "flag": "flags/1x1/bo.svg",
+      "currencies": [
+        {
+          "code": "BOB",
+          "symbol": "BOB",
+          "name": "боливийский боливиано"
+        }
+      ]
+    },
+    {
+      "code": "BQ",
+      "name": "Бонэйр, Синт-Эстатиус и Саба",
+      "flag": "flags/1x1/bq.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "BA",
+      "name": "Босния и Герцеговина",
+      "flag": "flags/1x1/ba.svg",
+      "currencies": [
+        {
+          "code": "BAM",
+          "symbol": "BAM",
+          "name": "конвертируемая марка Боснии и Герцеговины"
+        }
+      ]
+    },
+    {
+      "code": "BW",
+      "name": "Ботсвана",
+      "flag": "flags/1x1/bw.svg",
+      "currencies": [
+        {
+          "code": "BWP",
+          "symbol": "BWP",
+          "name": "ботсванская пула"
+        }
+      ]
+    },
+    {
+      "code": "BR",
+      "name": "Бразилия",
+      "flag": "flags/1x1/br.svg",
+      "currencies": [
+        {
+          "code": "BRL",
+          "symbol": "R$",
+          "name": "бразильский реал"
+        }
+      ]
+    },
+    {
+      "code": "IO",
+      "name": "Британская территория в Индийском океане",
+      "flag": "flags/1x1/io.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "BN",
+      "name": "Бруней",
+      "flag": "flags/1x1/bn.svg",
+      "currencies": [
+        {
+          "code": "BND",
+          "symbol": "BND",
+          "name": "брунейский доллар"
+        },
+        {
+          "code": "SGD",
+          "symbol": "SGD",
+          "name": "сингапурский доллар"
+        }
+      ]
+    },
+    {
+      "code": "BF",
+      "name": "Буркина-Фасо",
+      "flag": "flags/1x1/bf.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "BI",
+      "name": "Бурунди",
+      "flag": "flags/1x1/bi.svg",
+      "currencies": [
+        {
+          "code": "BIF",
+          "symbol": "BIF",
+          "name": "бурундийский франк"
+        }
+      ]
+    },
+    {
+      "code": "BT",
+      "name": "Бутан",
+      "flag": "flags/1x1/bt.svg",
+      "currencies": [
+        {
+          "code": "BTN",
+          "symbol": "BTN",
+          "name": "бутанский нгултрум"
+        },
+        {
+          "code": "INR",
+          "symbol": "₹",
+          "name": "индийская рупия"
+        }
+      ]
+    },
+    {
+      "code": "VU",
+      "name": "Вануату",
+      "flag": "flags/1x1/vu.svg",
+      "currencies": [
+        {
+          "code": "VUV",
+          "symbol": "VUV",
+          "name": "вату Вануату"
+        }
+      ]
+    },
+    {
+      "code": "VA",
+      "name": "Ватикан",
+      "flag": "flags/1x1/va.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "GB",
+      "name": "Великобритания",
+      "flag": "flags/1x1/gb.svg",
+      "currencies": [
+        {
+          "code": "GBP",
+          "symbol": "£",
+          "name": "британский фунт стерлингов"
+        }
+      ]
+    },
+    {
+      "code": "HU",
+      "name": "Венгрия",
+      "flag": "flags/1x1/hu.svg",
+      "currencies": [
+        {
+          "code": "HUF",
+          "symbol": "HUF",
+          "name": "венгерский форинт"
+        }
+      ]
+    },
+    {
+      "code": "VE",
+      "name": "Венесуэла",
+      "flag": "flags/1x1/ve.svg",
+      "currencies": [
+        {
+          "code": "VES",
+          "symbol": "VES",
+          "name": "венесуэльский боливар"
+        }
+      ]
+    },
+    {
+      "code": "VG",
+      "name": "Виргинские Острова (Великобритания)",
+      "flag": "flags/1x1/vg.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "VI",
+      "name": "Виргинские Острова (США)",
+      "flag": "flags/1x1/vi.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "UM",
+      "name": "Внешние малые острова (США)",
+      "flag": "flags/1x1/um.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "TL",
+      "name": "Восточный Тимор",
+      "flag": "flags/1x1/tl.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "VN",
+      "name": "Вьетнам",
+      "flag": "flags/1x1/vn.svg",
+      "currencies": [
+        {
+          "code": "VND",
+          "symbol": "₫",
+          "name": "вьетнамский донг"
+        }
+      ]
+    },
+    {
+      "code": "GA",
+      "name": "Габон",
+      "flag": "flags/1x1/ga.svg",
+      "currencies": [
+        {
+          "code": "XAF",
+          "symbol": "FCFA",
+          "name": "франк КФА BEAC"
+        }
+      ]
+    },
+    {
+      "code": "HT",
+      "name": "Гаити",
+      "flag": "flags/1x1/ht.svg",
+      "currencies": [
+        {
+          "code": "HTG",
+          "symbol": "HTG",
+          "name": "гаитянский гурд"
+        }
+      ]
+    },
+    {
+      "code": "GY",
+      "name": "Гайана",
+      "flag": "flags/1x1/gy.svg",
+      "currencies": [
+        {
+          "code": "GYD",
+          "symbol": "GYD",
+          "name": "гайанский доллар"
+        }
+      ]
+    },
+    {
+      "code": "GM",
+      "name": "Гамбия",
+      "flag": "flags/1x1/gm.svg",
+      "currencies": [
+        {
+          "code": "GMD",
+          "symbol": "GMD",
+          "name": "гамбийский даласи"
+        }
+      ]
+    },
+    {
+      "code": "GH",
+      "name": "Гана",
+      "flag": "flags/1x1/gh.svg",
+      "currencies": [
+        {
+          "code": "GHS",
+          "symbol": "GHS",
+          "name": "ганский седи"
+        }
+      ]
+    },
+    {
+      "code": "GP",
+      "name": "Гваделупа",
+      "flag": "flags/1x1/gp.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "GT",
+      "name": "Гватемала",
+      "flag": "flags/1x1/gt.svg",
+      "currencies": [
+        {
+          "code": "GTQ",
+          "symbol": "GTQ",
+          "name": "гватемальский кетсаль"
+        }
+      ]
+    },
+    {
+      "code": "GF",
+      "name": "Гвиана",
+      "flag": "flags/1x1/gf.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "GN",
+      "name": "Гвинея",
+      "flag": "flags/1x1/gn.svg",
+      "currencies": [
+        {
+          "code": "GNF",
+          "symbol": "GNF",
+          "name": "гвинейский франк"
+        }
+      ]
+    },
+    {
+      "code": "GW",
+      "name": "Гвинея-Бисау",
+      "flag": "flags/1x1/gw.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "DE",
+      "name": "Германия",
+      "flag": "flags/1x1/de.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "GG",
+      "name": "Гернси",
+      "flag": "flags/1x1/gg.svg",
+      "currencies": [
+        {
+          "code": "GBP",
+          "symbol": "£",
+          "name": "британский фунт стерлингов"
+        },
+        {
+          "code": "GGP",
+          "symbol": "GGP",
+          "name": "GGP"
+        }
+      ]
+    },
+    {
+      "code": "GI",
+      "name": "Гибралтар",
+      "flag": "flags/1x1/gi.svg",
+      "currencies": [
+        {
+          "code": "GIP",
+          "symbol": "GIP",
+          "name": "гибралтарский фунт"
+        }
+      ]
+    },
+    {
+      "code": "HN",
+      "name": "Гондурас",
+      "flag": "flags/1x1/hn.svg",
+      "currencies": [
+        {
+          "code": "HNL",
+          "symbol": "HNL",
+          "name": "гондурасская лемпира"
+        }
+      ]
+    },
+    {
+      "code": "HK",
+      "name": "Гонконг",
+      "flag": "flags/1x1/hk.svg",
+      "currencies": [
+        {
+          "code": "HKD",
+          "symbol": "HK$",
+          "name": "гонконгский доллар"
+        }
+      ]
+    },
+    {
+      "code": "PS",
+      "name": "Государство Палестина",
+      "flag": "flags/1x1/ps.svg",
+      "currencies": [
+        {
+          "code": "EGP",
+          "symbol": "EGP",
+          "name": "египетский фунт"
+        },
+        {
+          "code": "ILS",
+          "symbol": "₪",
+          "name": "новый израильский шекель"
+        },
+        {
+          "code": "JOD",
+          "symbol": "JOD",
+          "name": "иорданский динар"
+        }
+      ]
+    },
+    {
+      "code": "GD",
+      "name": "Гренада",
+      "flag": "flags/1x1/gd.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "GL",
+      "name": "Гренландия",
+      "flag": "flags/1x1/gl.svg",
+      "currencies": [
+        {
+          "code": "DKK",
+          "symbol": "DKK",
+          "name": "датская крона"
+        }
+      ]
+    },
+    {
+      "code": "GR",
+      "name": "Греция",
+      "flag": "flags/1x1/gr.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "GE",
+      "name": "Грузия",
+      "flag": "flags/1x1/ge.svg",
+      "currencies": [
+        {
+          "code": "GEL",
+          "symbol": "GEL",
+          "name": "грузинский лари"
+        }
+      ]
+    },
+    {
+      "code": "GU",
+      "name": "Гуам",
+      "flag": "flags/1x1/gu.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "DK",
+      "name": "Дания",
+      "flag": "flags/1x1/dk.svg",
+      "currencies": [
+        {
+          "code": "DKK",
+          "symbol": "DKK",
+          "name": "датская крона"
+        }
+      ]
+    },
+    {
+      "code": "CD",
+      "name": "Демократическая Республика Конго",
+      "flag": "flags/1x1/cd.svg",
+      "currencies": [
+        {
+          "code": "CDF",
+          "symbol": "CDF",
+          "name": "конголезский франк"
+        }
+      ]
+    },
+    {
+      "code": "JE",
+      "name": "Джерси",
+      "flag": "flags/1x1/je.svg",
+      "currencies": [
+        {
+          "code": "GBP",
+          "symbol": "£",
+          "name": "британский фунт стерлингов"
+        },
+        {
+          "code": "JEP",
+          "symbol": "JEP",
+          "name": "JEP"
+        }
+      ]
+    },
+    {
+      "code": "DJ",
+      "name": "Джибути",
+      "flag": "flags/1x1/dj.svg",
+      "currencies": [
+        {
+          "code": "DJF",
+          "symbol": "DJF",
+          "name": "франк Джибути"
+        }
+      ]
+    },
+    {
+      "code": "DM",
+      "name": "Доминика",
+      "flag": "flags/1x1/dm.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "DO",
+      "name": "Доминиканская Республика",
+      "flag": "flags/1x1/do.svg",
+      "currencies": [
+        {
+          "code": "DOP",
+          "symbol": "DOP",
+          "name": "доминиканский песо"
+        }
+      ]
+    },
+    {
+      "code": "EG",
+      "name": "Египет",
+      "flag": "flags/1x1/eg.svg",
+      "currencies": [
+        {
+          "code": "EGP",
+          "symbol": "EGP",
+          "name": "египетский фунт"
+        }
+      ]
+    },
+    {
+      "code": "ZM",
+      "name": "Замбия",
+      "flag": "flags/1x1/zm.svg",
+      "currencies": [
+        {
+          "code": "ZMW",
+          "symbol": "ZMW",
+          "name": "замбийская квача"
+        }
+      ]
+    },
+    {
+      "code": "ZW",
+      "name": "Зимбабве",
+      "flag": "flags/1x1/zw.svg",
+      "currencies": [
+        {
+          "code": "BWP",
+          "symbol": "BWP",
+          "name": "ботсванская пула"
+        },
+        {
+          "code": "CNY",
+          "symbol": "CN¥",
+          "name": "китайский юань"
+        },
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        },
+        {
+          "code": "GBP",
+          "symbol": "£",
+          "name": "британский фунт стерлингов"
+        },
+        {
+          "code": "INR",
+          "symbol": "₹",
+          "name": "индийская рупия"
+        },
+        {
+          "code": "JPY",
+          "symbol": "¥",
+          "name": "японская иена"
+        },
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        },
+        {
+          "code": "ZAR",
+          "symbol": "ZAR",
+          "name": "южноафриканский рэнд"
+        },
+        {
+          "code": "ZWB",
+          "symbol": "ZWB",
+          "name": "ZWB"
+        }
+      ]
+    },
+    {
+      "code": "IL",
+      "name": "Израиль",
+      "flag": "flags/1x1/il.svg",
+      "currencies": [
+        {
+          "code": "ILS",
+          "symbol": "₪",
+          "name": "новый израильский шекель"
+        }
+      ]
+    },
+    {
+      "code": "IN",
+      "name": "Индия",
+      "flag": "flags/1x1/in.svg",
+      "currencies": [
+        {
+          "code": "INR",
+          "symbol": "₹",
+          "name": "индийская рупия"
+        }
+      ]
+    },
+    {
+      "code": "ID",
+      "name": "Индонезия",
+      "flag": "flags/1x1/id.svg",
+      "currencies": [
+        {
+          "code": "IDR",
+          "symbol": "IDR",
+          "name": "индонезийская рупия"
+        }
+      ]
+    },
+    {
+      "code": "JO",
+      "name": "Иордания",
+      "flag": "flags/1x1/jo.svg",
+      "currencies": [
+        {
+          "code": "JOD",
+          "symbol": "JOD",
+          "name": "иорданский динар"
+        }
+      ]
+    },
+    {
+      "code": "IQ",
+      "name": "Ирак",
+      "flag": "flags/1x1/iq.svg",
+      "currencies": [
+        {
+          "code": "IQD",
+          "symbol": "IQD",
+          "name": "иракский динар"
+        }
+      ]
+    },
+    {
+      "code": "IR",
+      "name": "Иран",
+      "flag": "flags/1x1/ir.svg",
+      "currencies": [
+        {
+          "code": "IRR",
+          "symbol": "IRR",
+          "name": "иранский риал"
+        }
+      ]
+    },
+    {
+      "code": "IE",
+      "name": "Ирландия",
+      "flag": "flags/1x1/ie.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "IS",
+      "name": "Исландия",
+      "flag": "flags/1x1/is.svg",
+      "currencies": [
+        {
+          "code": "ISK",
+          "symbol": "ISK",
+          "name": "исландская крона"
+        }
+      ]
+    },
+    {
+      "code": "ES",
+      "name": "Испания",
+      "flag": "flags/1x1/es.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "IT",
+      "name": "Италия",
+      "flag": "flags/1x1/it.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "YE",
+      "name": "Йемен",
+      "flag": "flags/1x1/ye.svg",
+      "currencies": [
+        {
+          "code": "YER",
+          "symbol": "YER",
+          "name": "йеменский риал"
+        }
+      ]
+    },
+    {
+      "code": "CV",
+      "name": "Кабо-Верде",
+      "flag": "flags/1x1/cv.svg",
+      "currencies": [
+        {
+          "code": "CVE",
+          "symbol": "CVE",
+          "name": "эскудо Кабо-Верде"
+        }
+      ]
+    },
+    {
+      "code": "KZ",
+      "name": "Казахстан",
+      "flag": "flags/1x1/kz.svg",
+      "currencies": [
+        {
+          "code": "KZT",
+          "symbol": "KZT",
+          "name": "казахский тенге"
+        }
+      ]
+    },
+    {
+      "code": "KH",
+      "name": "Камбоджа",
+      "flag": "flags/1x1/kh.svg",
+      "currencies": [
+        {
+          "code": "KHR",
+          "symbol": "KHR",
+          "name": "камбоджийский риель"
+        },
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "CM",
+      "name": "Камерун",
+      "flag": "flags/1x1/cm.svg",
+      "currencies": [
+        {
+          "code": "XAF",
+          "symbol": "FCFA",
+          "name": "франк КФА BEAC"
+        }
+      ]
+    },
+    {
+      "code": "CA",
+      "name": "Канада",
+      "flag": "flags/1x1/ca.svg",
+      "currencies": [
+        {
+          "code": "CAD",
+          "symbol": "CA$",
+          "name": "канадский доллар"
+        }
+      ]
+    },
+    {
+      "code": "QA",
+      "name": "Катар",
+      "flag": "flags/1x1/qa.svg",
+      "currencies": [
+        {
+          "code": "QAR",
+          "symbol": "QAR",
+          "name": "катарский риал"
+        }
+      ]
+    },
+    {
+      "code": "KE",
+      "name": "Кения",
+      "flag": "flags/1x1/ke.svg",
+      "currencies": [
+        {
+          "code": "KES",
+          "symbol": "KES",
+          "name": "кенийский шиллинг"
+        }
+      ]
+    },
+    {
+      "code": "CY",
+      "name": "Кипр",
+      "flag": "flags/1x1/cy.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "KG",
+      "name": "Киргизия",
+      "flag": "flags/1x1/kg.svg",
+      "currencies": [
+        {
+          "code": "KGS",
+          "symbol": "KGS",
+          "name": "киргизский сом"
+        }
+      ]
+    },
+    {
+      "code": "KI",
+      "name": "Кирибати",
+      "flag": "flags/1x1/ki.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        },
+        {
+          "code": "KID",
+          "symbol": "KID",
+          "name": "KID"
+        }
+      ]
+    },
+    {
+      "code": "KP",
+      "name": "КНДР (Корейская Народно-Демократическая Республика)",
+      "flag": "flags/1x1/kp.svg",
+      "currencies": [
+        {
+          "code": "KPW",
+          "symbol": "KPW",
+          "name": "северокорейская вона"
+        }
+      ]
+    },
+    {
+      "code": "CN",
+      "name": "КНР (Китайская Народная Республика)",
+      "flag": "flags/1x1/cn.svg",
+      "currencies": [
+        {
+          "code": "CNY",
+          "symbol": "CN¥",
+          "name": "китайский юань"
+        }
+      ]
+    },
+    {
+      "code": "CC",
+      "name": "Кокосовые острова",
+      "flag": "flags/1x1/cc.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        }
+      ]
+    },
+    {
+      "code": "CO",
+      "name": "Колумбия",
+      "flag": "flags/1x1/co.svg",
+      "currencies": [
+        {
+          "code": "COP",
+          "symbol": "COP",
+          "name": "колумбийский песо"
+        }
+      ]
+    },
+    {
+      "code": "KM",
+      "name": "Коморы",
+      "flag": "flags/1x1/km.svg",
+      "currencies": [
+        {
+          "code": "KMF",
+          "symbol": "KMF",
+          "name": "коморский франк"
+        }
+      ]
+    },
+    {
+      "code": "XK",
+      "name": "Косово",
+      "flag": "flags/1x1/xk.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "CR",
+      "name": "Коста-Рика",
+      "flag": "flags/1x1/cr.svg",
+      "currencies": [
+        {
+          "code": "CRC",
+          "symbol": "CRC",
+          "name": "костариканский колон"
+        }
+      ]
+    },
+    {
+      "code": "CI",
+      "name": "Кот-д’Ивуар",
+      "flag": "flags/1x1/ci.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "CU",
+      "name": "Куба",
+      "flag": "flags/1x1/cu.svg",
+      "currencies": [
+        {
+          "code": "CUC",
+          "symbol": "CUC",
+          "name": "кубинский конвертируемый песо"
+        },
+        {
+          "code": "CUP",
+          "symbol": "CUP",
+          "name": "кубинский песо"
+        }
+      ]
+    },
+    {
+      "code": "KW",
+      "name": "Кувейт",
+      "flag": "flags/1x1/kw.svg",
+      "currencies": [
+        {
+          "code": "KWD",
+          "symbol": "KWD",
+          "name": "кувейтский динар"
+        }
+      ]
+    },
+    {
+      "code": "CW",
+      "name": "Кюрасао",
+      "flag": "flags/1x1/cw.svg",
+      "currencies": [
+        {
+          "code": "ANG",
+          "symbol": "ANG",
+          "name": "нидерландский антильский гульден"
+        }
+      ]
+    },
+    {
+      "code": "LA",
+      "name": "Лаос",
+      "flag": "flags/1x1/la.svg",
+      "currencies": [
+        {
+          "code": "LAK",
+          "symbol": "LAK",
+          "name": "лаосский кип"
+        }
+      ]
+    },
+    {
+      "code": "LV",
+      "name": "Латвия",
+      "flag": "flags/1x1/lv.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "LS",
+      "name": "Лесото",
+      "flag": "flags/1x1/ls.svg",
+      "currencies": [
+        {
+          "code": "LSL",
+          "symbol": "LSL",
+          "name": "лоти"
+        },
+        {
+          "code": "ZAR",
+          "symbol": "ZAR",
+          "name": "южноафриканский рэнд"
+        }
+      ]
+    },
+    {
+      "code": "LR",
+      "name": "Либерия",
+      "flag": "flags/1x1/lr.svg",
+      "currencies": [
+        {
+          "code": "LRD",
+          "symbol": "LRD",
+          "name": "либерийский доллар"
+        }
+      ]
+    },
+    {
+      "code": "LB",
+      "name": "Ливан",
+      "flag": "flags/1x1/lb.svg",
+      "currencies": [
+        {
+          "code": "LBP",
+          "symbol": "LBP",
+          "name": "ливанский фунт"
+        }
+      ]
+    },
+    {
+      "code": "LY",
+      "name": "Ливия",
+      "flag": "flags/1x1/ly.svg",
+      "currencies": [
+        {
+          "code": "LYD",
+          "symbol": "LYD",
+          "name": "ливийский динар"
+        }
+      ]
+    },
+    {
+      "code": "LT",
+      "name": "Литва",
+      "flag": "flags/1x1/lt.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "LI",
+      "name": "Лихтенштейн",
+      "flag": "flags/1x1/li.svg",
+      "currencies": [
+        {
+          "code": "CHF",
+          "symbol": "CHF",
+          "name": "швейцарский франк"
+        }
+      ]
+    },
+    {
+      "code": "LU",
+      "name": "Люксембург",
+      "flag": "flags/1x1/lu.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "MU",
+      "name": "Маврикий",
+      "flag": "flags/1x1/mu.svg",
+      "currencies": [
+        {
+          "code": "MUR",
+          "symbol": "MUR",
+          "name": "маврикийская рупия"
+        }
+      ]
+    },
+    {
+      "code": "MR",
+      "name": "Мавритания",
+      "flag": "flags/1x1/mr.svg",
+      "currencies": [
+        {
+          "code": "MRU",
+          "symbol": "MRU",
+          "name": "мавританская угия"
+        }
+      ]
+    },
+    {
+      "code": "MG",
+      "name": "Мадагаскар",
+      "flag": "flags/1x1/mg.svg",
+      "currencies": [
+        {
+          "code": "MGA",
+          "symbol": "MGA",
+          "name": "малагасийский ариари"
+        }
+      ]
+    },
+    {
+      "code": "YT",
+      "name": "Майотта",
+      "flag": "flags/1x1/yt.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "MO",
+      "name": "Макао",
+      "flag": "flags/1x1/mo.svg",
+      "currencies": [
+        {
+          "code": "MOP",
+          "symbol": "MOP",
+          "name": "патака Макао"
+        }
+      ]
+    },
+    {
+      "code": "MW",
+      "name": "Малави",
+      "flag": "flags/1x1/mw.svg",
+      "currencies": [
+        {
+          "code": "MWK",
+          "symbol": "MWK",
+          "name": "малавийская квача"
+        }
+      ]
+    },
+    {
+      "code": "MY",
+      "name": "Малайзия",
+      "flag": "flags/1x1/my.svg",
+      "currencies": [
+        {
+          "code": "MYR",
+          "symbol": "MYR",
+          "name": "малайзийский ринггит"
+        }
+      ]
+    },
+    {
+      "code": "ML",
+      "name": "Мали",
+      "flag": "flags/1x1/ml.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "MV",
+      "name": "Мальдивы",
+      "flag": "flags/1x1/mv.svg",
+      "currencies": [
+        {
+          "code": "MVR",
+          "symbol": "MVR",
+          "name": "мальдивская руфия"
+        }
+      ]
+    },
+    {
+      "code": "MT",
+      "name": "Мальта",
+      "flag": "flags/1x1/mt.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "MA",
+      "name": "Марокко",
+      "flag": "flags/1x1/ma.svg",
+      "currencies": [
+        {
+          "code": "MAD",
+          "symbol": "MAD",
+          "name": "марокканский дирхам"
+        }
+      ]
+    },
+    {
+      "code": "MQ",
+      "name": "Мартиника",
+      "flag": "flags/1x1/mq.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "MH",
+      "name": "Маршалловы Острова",
+      "flag": "flags/1x1/mh.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "MX",
+      "name": "Мексика",
+      "flag": "flags/1x1/mx.svg",
+      "currencies": [
+        {
+          "code": "MXN",
+          "symbol": "MX$",
+          "name": "мексиканский песо"
+        }
+      ]
+    },
+    {
+      "code": "FM",
+      "name": "Микронезия",
+      "flag": "flags/1x1/fm.svg",
+      "currencies": []
+    },
+    {
+      "code": "MZ",
+      "name": "Мозамбик",
+      "flag": "flags/1x1/mz.svg",
+      "currencies": [
+        {
+          "code": "MZN",
+          "symbol": "MZN",
+          "name": "мозамбикский метикал"
+        }
+      ]
+    },
+    {
+      "code": "MD",
+      "name": "Молдавия",
+      "flag": "flags/1x1/md.svg",
+      "currencies": [
+        {
+          "code": "MDL",
+          "symbol": "MDL",
+          "name": "молдавский лей"
+        }
+      ]
+    },
+    {
+      "code": "MC",
+      "name": "Монако",
+      "flag": "flags/1x1/mc.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "MN",
+      "name": "Монголия",
+      "flag": "flags/1x1/mn.svg",
+      "currencies": [
+        {
+          "code": "MNT",
+          "symbol": "MNT",
+          "name": "монгольский тугрик"
+        }
+      ]
+    },
+    {
+      "code": "MS",
+      "name": "Монтсеррат",
+      "flag": "flags/1x1/ms.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "MM",
+      "name": "Мьянма",
+      "flag": "flags/1x1/mm.svg",
+      "currencies": [
+        {
+          "code": "MMK",
+          "symbol": "MMK",
+          "name": "мьянманский кьят"
+        }
+      ]
+    },
+    {
+      "code": "NA",
+      "name": "Намибия",
+      "flag": "flags/1x1/na.svg",
+      "currencies": [
+        {
+          "code": "NAD",
+          "symbol": "NAD",
+          "name": "доллар Намибии"
+        },
+        {
+          "code": "ZAR",
+          "symbol": "ZAR",
+          "name": "южноафриканский рэнд"
+        }
+      ]
+    },
+    {
+      "code": "NR",
+      "name": "Науру",
+      "flag": "flags/1x1/nr.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        }
+      ]
+    },
+    {
+      "code": "NP",
+      "name": "Непал",
+      "flag": "flags/1x1/np.svg",
+      "currencies": [
+        {
+          "code": "NPR",
+          "symbol": "NPR",
+          "name": "непальская рупия"
+        }
+      ]
+    },
+    {
+      "code": "NE",
+      "name": "Нигер",
+      "flag": "flags/1x1/ne.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "NG",
+      "name": "Нигерия",
+      "flag": "flags/1x1/ng.svg",
+      "currencies": [
+        {
+          "code": "NGN",
+          "symbol": "NGN",
+          "name": "нигерийская найра"
+        }
+      ]
+    },
+    {
+      "code": "NL",
+      "name": "Нидерланды",
+      "flag": "flags/1x1/nl.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "NI",
+      "name": "Никарагуа",
+      "flag": "flags/1x1/ni.svg",
+      "currencies": [
+        {
+          "code": "NIO",
+          "symbol": "NIO",
+          "name": "никарагуанская кордоба"
+        }
+      ]
+    },
+    {
+      "code": "NU",
+      "name": "Ниуэ",
+      "flag": "flags/1x1/nu.svg",
+      "currencies": [
+        {
+          "code": "NZD",
+          "symbol": "NZ$",
+          "name": "новозеландский доллар"
+        }
+      ]
+    },
+    {
+      "code": "NZ",
+      "name": "Новая Зеландия",
+      "flag": "flags/1x1/nz.svg",
+      "currencies": [
+        {
+          "code": "NZD",
+          "symbol": "NZ$",
+          "name": "новозеландский доллар"
+        }
+      ]
+    },
+    {
+      "code": "NC",
+      "name": "Новая Каледония",
+      "flag": "flags/1x1/nc.svg",
+      "currencies": [
+        {
+          "code": "XPF",
+          "symbol": "CFPF",
+          "name": "французский тихоокеанский франк"
+        }
+      ]
+    },
+    {
+      "code": "NO",
+      "name": "Норвегия",
+      "flag": "flags/1x1/no.svg",
+      "currencies": [
+        {
+          "code": "NOK",
+          "symbol": "NOK",
+          "name": "норвежская крона"
+        }
+      ]
+    },
+    {
+      "code": "AE",
+      "name": "ОАЭ",
+      "flag": "flags/1x1/ae.svg",
+      "currencies": [
+        {
+          "code": "AED",
+          "symbol": "AED",
+          "name": "дирхам ОАЭ"
+        }
+      ]
+    },
+    {
+      "code": "OM",
+      "name": "Оман",
+      "flag": "flags/1x1/om.svg",
+      "currencies": [
+        {
+          "code": "OMR",
+          "symbol": "OMR",
+          "name": "оманский риал"
+        }
+      ]
+    },
+    {
+      "code": "BV",
+      "name": "Остров Буве",
+      "flag": "flags/1x1/bv.svg",
+      "currencies": []
+    },
+    {
+      "code": "IM",
+      "name": "Остров Мэн",
+      "flag": "flags/1x1/im.svg",
+      "currencies": [
+        {
+          "code": "GBP",
+          "symbol": "£",
+          "name": "британский фунт стерлингов"
+        },
+        {
+          "code": "IMP",
+          "symbol": "IMP",
+          "name": "IMP"
+        }
+      ]
+    },
+    {
+      "code": "NF",
+      "name": "Остров Норфолк",
+      "flag": "flags/1x1/nf.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        }
+      ]
+    },
+    {
+      "code": "CX",
+      "name": "Остров Рождества",
+      "flag": "flags/1x1/cx.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        }
+      ]
+    },
+    {
+      "code": "KY",
+      "name": "Острова Кайман",
+      "flag": "flags/1x1/ky.svg",
+      "currencies": [
+        {
+          "code": "KYD",
+          "symbol": "KYD",
+          "name": "доллар Островов Кайман"
+        }
+      ]
+    },
+    {
+      "code": "CK",
+      "name": "Острова Кука",
+      "flag": "flags/1x1/ck.svg",
+      "currencies": [
+        {
+          "code": "CKD",
+          "symbol": "CKD",
+          "name": "CKD"
+        },
+        {
+          "code": "NZD",
+          "symbol": "NZ$",
+          "name": "новозеландский доллар"
+        }
+      ]
+    },
+    {
+      "code": "PN",
+      "name": "Острова Питкэрн",
+      "flag": "flags/1x1/pn.svg",
+      "currencies": [
+        {
+          "code": "NZD",
+          "symbol": "NZ$",
+          "name": "новозеландский доллар"
+        }
+      ]
+    },
+    {
+      "code": "SH",
+      "name": "Острова Святой Елены, Вознесения и Тристан-да-Кунья",
+      "flag": "flags/1x1/sh.svg",
+      "currencies": [
+        {
+          "code": "GBP",
+          "symbol": "£",
+          "name": "британский фунт стерлингов"
+        },
+        {
+          "code": "SHP",
+          "symbol": "SHP",
+          "name": "фунт острова Святой Елены"
+        }
+      ]
+    },
+    {
+      "code": "PK",
+      "name": "Пакистан",
+      "flag": "flags/1x1/pk.svg",
+      "currencies": [
+        {
+          "code": "PKR",
+          "symbol": "PKR",
+          "name": "пакистанская рупия"
+        }
+      ]
+    },
+    {
+      "code": "PW",
+      "name": "Палау",
+      "flag": "flags/1x1/pw.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "PA",
+      "name": "Панама",
+      "flag": "flags/1x1/pa.svg",
+      "currencies": [
+        {
+          "code": "PAB",
+          "symbol": "PAB",
+          "name": "панамский бальбоа"
+        },
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "PG",
+      "name": "Папуа — Новая Гвинея",
+      "flag": "flags/1x1/pg.svg",
+      "currencies": [
+        {
+          "code": "PGK",
+          "symbol": "PGK",
+          "name": "кина Папуа – Новой Гвинеи"
+        }
+      ]
+    },
+    {
+      "code": "PY",
+      "name": "Парагвай",
+      "flag": "flags/1x1/py.svg",
+      "currencies": [
+        {
+          "code": "PYG",
+          "symbol": "PYG",
+          "name": "парагвайский гуарани"
+        }
+      ]
+    },
+    {
+      "code": "PE",
+      "name": "Перу",
+      "flag": "flags/1x1/pe.svg",
+      "currencies": [
+        {
+          "code": "PEN",
+          "symbol": "PEN",
+          "name": "перуанский соль"
+        }
+      ]
+    },
+    {
+      "code": "PL",
+      "name": "Польша",
+      "flag": "flags/1x1/pl.svg",
+      "currencies": [
+        {
+          "code": "PLN",
+          "symbol": "PLN",
+          "name": "польский злотый"
+        }
+      ]
+    },
+    {
+      "code": "PT",
+      "name": "Португалия",
+      "flag": "flags/1x1/pt.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "PR",
+      "name": "Пуэрто-Рико",
+      "flag": "flags/1x1/pr.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "CG",
+      "name": "Республика Конго",
+      "flag": "flags/1x1/cg.svg",
+      "currencies": [
+        {
+          "code": "XAF",
+          "symbol": "FCFA",
+          "name": "франк КФА BEAC"
+        }
+      ]
+    },
+    {
+      "code": "KR",
+      "name": "Республика Корея",
+      "flag": "flags/1x1/kr.svg",
+      "currencies": [
+        {
+          "code": "KRW",
+          "symbol": "₩",
+          "name": "южнокорейская вона"
+        }
+      ]
+    },
+    {
+      "code": "RE",
+      "name": "Реюньон",
+      "flag": "flags/1x1/re.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "RU",
+      "name": "Российская Федерация",
+      "flag": "flags/1x1/ru.svg",
+      "currencies": [
+        {
+          "code": "RUB",
+          "symbol": "₽",
+          "name": "российский рубль"
+        }
+      ]
+    },
+    {
+      "code": "RW",
+      "name": "Руанда",
+      "flag": "flags/1x1/rw.svg",
+      "currencies": [
+        {
+          "code": "RWF",
+          "symbol": "RWF",
+          "name": "франк Руанды"
+        }
+      ]
+    },
+    {
+      "code": "RO",
+      "name": "Румыния",
+      "flag": "flags/1x1/ro.svg",
+      "currencies": [
+        {
+          "code": "RON",
+          "symbol": "RON",
+          "name": "румынский лей"
+        }
+      ]
+    },
+    {
+      "code": "EH",
+      "name": "САДР",
+      "flag": "flags/1x1/eh.svg",
+      "currencies": [
+        {
+          "code": "DZD",
+          "symbol": "DZD",
+          "name": "алжирский динар"
+        },
+        {
+          "code": "MAD",
+          "symbol": "MAD",
+          "name": "марокканский дирхам"
+        },
+        {
+          "code": "MRU",
+          "symbol": "MRU",
+          "name": "мавританская угия"
+        }
+      ]
+    },
+    {
+      "code": "SV",
+      "name": "Сальвадор",
+      "flag": "flags/1x1/sv.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "WS",
+      "name": "Самоа",
+      "flag": "flags/1x1/ws.svg",
+      "currencies": [
+        {
+          "code": "WST",
+          "symbol": "WST",
+          "name": "самоанская тала"
+        }
+      ]
+    },
+    {
+      "code": "SM",
+      "name": "Сан-Марино",
+      "flag": "flags/1x1/sm.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "ST",
+      "name": "Сан-Томе и Принсипи",
+      "flag": "flags/1x1/st.svg",
+      "currencies": [
+        {
+          "code": "STN",
+          "symbol": "STN",
+          "name": "добра Сан-Томе и Принсипи"
+        }
+      ]
+    },
+    {
+      "code": "SA",
+      "name": "Саудовская Аравия",
+      "flag": "flags/1x1/sa.svg",
+      "currencies": [
+        {
+          "code": "SAR",
+          "symbol": "SAR",
+          "name": "саудовский риял"
+        }
+      ]
+    },
+    {
+      "code": "MK",
+      "name": "Северная Македония",
+      "flag": "flags/1x1/mk.svg",
+      "currencies": [
+        {
+          "code": "MKD",
+          "symbol": "MKD",
+          "name": "македонский денар"
+        }
+      ]
+    },
+    {
+      "code": "MP",
+      "name": "Северные Марианские Острова",
+      "flag": "flags/1x1/mp.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "SC",
+      "name": "Сейшельские Острова",
+      "flag": "flags/1x1/sc.svg",
+      "currencies": [
+        {
+          "code": "SCR",
+          "symbol": "SCR",
+          "name": "сейшельская рупия"
+        }
+      ]
+    },
+    {
+      "code": "BL",
+      "name": "Сен-Бартелеми",
+      "flag": "flags/1x1/bl.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "MF",
+      "name": "Сен-Мартен",
+      "flag": "flags/1x1/mf.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "PM",
+      "name": "Сен-Пьер и Микелон",
+      "flag": "flags/1x1/pm.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "SN",
+      "name": "Сенегал",
+      "flag": "flags/1x1/sn.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "VC",
+      "name": "Сент-Винсент и Гренадины",
+      "flag": "flags/1x1/vc.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "KN",
+      "name": "Сент-Китс и Невис",
+      "flag": "flags/1x1/kn.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "LC",
+      "name": "Сент-Люсия",
+      "flag": "flags/1x1/lc.svg",
+      "currencies": [
+        {
+          "code": "XCD",
+          "symbol": "EC$",
+          "name": "восточно-карибский доллар"
+        }
+      ]
+    },
+    {
+      "code": "RS",
+      "name": "Сербия",
+      "flag": "flags/1x1/rs.svg",
+      "currencies": [
+        {
+          "code": "RSD",
+          "symbol": "RSD",
+          "name": "сербский динар"
+        }
+      ]
+    },
+    {
+      "code": "SG",
+      "name": "Сингапур",
+      "flag": "flags/1x1/sg.svg",
+      "currencies": [
+        {
+          "code": "SGD",
+          "symbol": "SGD",
+          "name": "сингапурский доллар"
+        }
+      ]
+    },
+    {
+      "code": "SX",
+      "name": "Синт-Мартен",
+      "flag": "flags/1x1/sx.svg",
+      "currencies": [
+        {
+          "code": "ANG",
+          "symbol": "ANG",
+          "name": "нидерландский антильский гульден"
+        }
+      ]
+    },
+    {
+      "code": "SY",
+      "name": "Сирия",
+      "flag": "flags/1x1/sy.svg",
+      "currencies": [
+        {
+          "code": "SYP",
+          "symbol": "SYP",
+          "name": "сирийский фунт"
+        }
+      ]
+    },
+    {
+      "code": "SK",
+      "name": "Словакия",
+      "flag": "flags/1x1/sk.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "SI",
+      "name": "Словения",
+      "flag": "flags/1x1/si.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "SB",
+      "name": "Соломоновы Острова",
+      "flag": "flags/1x1/sb.svg",
+      "currencies": [
+        {
+          "code": "SBD",
+          "symbol": "SBD",
+          "name": "доллар Соломоновых Островов"
+        }
+      ]
+    },
+    {
+      "code": "SO",
+      "name": "Сомали",
+      "flag": "flags/1x1/so.svg",
+      "currencies": [
+        {
+          "code": "SOS",
+          "symbol": "SOS",
+          "name": "сомалийский шиллинг"
+        }
+      ]
+    },
+    {
+      "code": "SD",
+      "name": "Судан",
+      "flag": "flags/1x1/sd.svg",
+      "currencies": [
+        {
+          "code": "SDG",
+          "symbol": "SDG",
+          "name": "суданский фунт"
+        }
+      ]
+    },
+    {
+      "code": "SR",
+      "name": "Суринам",
+      "flag": "flags/1x1/sr.svg",
+      "currencies": [
+        {
+          "code": "SRD",
+          "symbol": "SRD",
+          "name": "суринамский доллар"
+        }
+      ]
+    },
+    {
+      "code": "US",
+      "name": "США",
+      "flag": "flags/1x1/us.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "SL",
+      "name": "Сьерра-Леоне",
+      "flag": "flags/1x1/sl.svg",
+      "currencies": [
+        {
+          "code": "SLL",
+          "symbol": "SLL",
+          "name": "леоне (1964—2022)"
+        }
+      ]
+    },
+    {
+      "code": "TJ",
+      "name": "Таджикистан",
+      "flag": "flags/1x1/tj.svg",
+      "currencies": [
+        {
+          "code": "TJS",
+          "symbol": "TJS",
+          "name": "таджикский сомони"
+        }
+      ]
+    },
+    {
+      "code": "TH",
+      "name": "Таиланд",
+      "flag": "flags/1x1/th.svg",
+      "currencies": [
+        {
+          "code": "THB",
+          "symbol": "฿",
+          "name": "таиландский бат"
+        }
+      ]
+    },
+    {
+      "code": "TW",
+      "name": "Тайвань",
+      "flag": "flags/1x1/tw.svg",
+      "currencies": [
+        {
+          "code": "TWD",
+          "symbol": "NT$",
+          "name": "новый тайваньский доллар"
+        }
+      ]
+    },
+    {
+      "code": "TZ",
+      "name": "Танзания",
+      "flag": "flags/1x1/tz.svg",
+      "currencies": [
+        {
+          "code": "TZS",
+          "symbol": "TZS",
+          "name": "танзанийский шиллинг"
+        }
+      ]
+    },
+    {
+      "code": "TC",
+      "name": "Теркс и Кайкос",
+      "flag": "flags/1x1/tc.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "TG",
+      "name": "Того",
+      "flag": "flags/1x1/tg.svg",
+      "currencies": [
+        {
+          "code": "XOF",
+          "symbol": "F CFA",
+          "name": "франк КФА ВСЕАО"
+        }
+      ]
+    },
+    {
+      "code": "TK",
+      "name": "Токелау",
+      "flag": "flags/1x1/tk.svg",
+      "currencies": [
+        {
+          "code": "NZD",
+          "symbol": "NZ$",
+          "name": "новозеландский доллар"
+        }
+      ]
+    },
+    {
+      "code": "TO",
+      "name": "Тонга",
+      "flag": "flags/1x1/to.svg",
+      "currencies": [
+        {
+          "code": "TOP",
+          "symbol": "TOP",
+          "name": "тонганская паанга"
+        }
+      ]
+    },
+    {
+      "code": "TT",
+      "name": "Тринидад и Тобаго",
+      "flag": "flags/1x1/tt.svg",
+      "currencies": [
+        {
+          "code": "TTD",
+          "symbol": "TTD",
+          "name": "доллар Тринидада и Тобаго"
+        }
+      ]
+    },
+    {
+      "code": "TV",
+      "name": "Тувалу",
+      "flag": "flags/1x1/tv.svg",
+      "currencies": [
+        {
+          "code": "AUD",
+          "symbol": "A$",
+          "name": "австралийский доллар"
+        },
+        {
+          "code": "TVD",
+          "symbol": "TVD",
+          "name": "TVD"
+        }
+      ]
+    },
+    {
+      "code": "TN",
+      "name": "Тунис",
+      "flag": "flags/1x1/tn.svg",
+      "currencies": [
+        {
+          "code": "TND",
+          "symbol": "TND",
+          "name": "тунисский динар"
+        }
+      ]
+    },
+    {
+      "code": "TM",
+      "name": "Туркмения",
+      "flag": "flags/1x1/tm.svg",
+      "currencies": [
+        {
+          "code": "TMT",
+          "symbol": "ТМТ",
+          "name": "новый туркменский манат"
+        }
+      ]
+    },
+    {
+      "code": "TR",
+      "name": "Турция",
+      "flag": "flags/1x1/tr.svg",
+      "currencies": [
+        {
+          "code": "TRY",
+          "symbol": "TRY",
+          "name": "турецкая лира"
+        }
+      ]
+    },
+    {
+      "code": "UG",
+      "name": "Уганда",
+      "flag": "flags/1x1/ug.svg",
+      "currencies": [
+        {
+          "code": "UGX",
+          "symbol": "UGX",
+          "name": "угандийский шиллинг"
+        }
+      ]
+    },
+    {
+      "code": "UZ",
+      "name": "Узбекистан",
+      "flag": "flags/1x1/uz.svg",
+      "currencies": [
+        {
+          "code": "UZS",
+          "symbol": "UZS",
+          "name": "узбекский сум"
+        }
+      ]
+    },
+    {
+      "code": "UA",
+      "name": "Украина",
+      "flag": "flags/1x1/ua.svg",
+      "currencies": [
+        {
+          "code": "UAH",
+          "symbol": "₴",
+          "name": "украинская гривна"
+        }
+      ]
+    },
+    {
+      "code": "WF",
+      "name": "Уоллис и Футуна",
+      "flag": "flags/1x1/wf.svg",
+      "currencies": [
+        {
+          "code": "XPF",
+          "symbol": "CFPF",
+          "name": "французский тихоокеанский франк"
+        }
+      ]
+    },
+    {
+      "code": "UY",
+      "name": "Уругвай",
+      "flag": "flags/1x1/uy.svg",
+      "currencies": [
+        {
+          "code": "UYU",
+          "symbol": "UYU",
+          "name": "уругвайский песо"
+        }
+      ]
+    },
+    {
+      "code": "FO",
+      "name": "Фареры",
+      "flag": "flags/1x1/fo.svg",
+      "currencies": [
+        {
+          "code": "DKK",
+          "symbol": "DKK",
+          "name": "датская крона"
+        },
+        {
+          "code": "FOK",
+          "symbol": "FOK",
+          "name": "FOK"
+        }
+      ]
+    },
+    {
+      "code": "FJ",
+      "name": "Фиджи",
+      "flag": "flags/1x1/fj.svg",
+      "currencies": [
+        {
+          "code": "FJD",
+          "symbol": "FJD",
+          "name": "доллар Фиджи"
+        }
+      ]
+    },
+    {
+      "code": "PH",
+      "name": "Филиппины",
+      "flag": "flags/1x1/ph.svg",
+      "currencies": [
+        {
+          "code": "PHP",
+          "symbol": "PHP",
+          "name": "филиппинский песо"
+        }
+      ]
+    },
+    {
+      "code": "FI",
+      "name": "Финляндия",
+      "flag": "flags/1x1/fi.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "FK",
+      "name": "Фолклендские острова",
+      "flag": "flags/1x1/fk.svg",
+      "currencies": [
+        {
+          "code": "FKP",
+          "symbol": "FKP",
+          "name": "фунт Фолклендских островов"
+        }
+      ]
+    },
+    {
+      "code": "FR",
+      "name": "Франция",
+      "flag": "flags/1x1/fr.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "PF",
+      "name": "Французская Полинезия",
+      "flag": "flags/1x1/pf.svg",
+      "currencies": [
+        {
+          "code": "XPF",
+          "symbol": "CFPF",
+          "name": "французский тихоокеанский франк"
+        }
+      ]
+    },
+    {
+      "code": "TF",
+      "name": "Французские Южные и Антарктические Территории",
+      "flag": "flags/1x1/tf.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "HM",
+      "name": "Херд и Макдональд",
+      "flag": "flags/1x1/hm.svg",
+      "currencies": []
+    },
+    {
+      "code": "HR",
+      "name": "Хорватия",
+      "flag": "flags/1x1/hr.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "CF",
+      "name": "ЦАР",
+      "flag": "flags/1x1/cf.svg",
+      "currencies": [
+        {
+          "code": "XAF",
+          "symbol": "FCFA",
+          "name": "франк КФА BEAC"
+        }
+      ]
+    },
+    {
+      "code": "TD",
+      "name": "Чад",
+      "flag": "flags/1x1/td.svg",
+      "currencies": [
+        {
+          "code": "XAF",
+          "symbol": "FCFA",
+          "name": "франк КФА BEAC"
+        }
+      ]
+    },
+    {
+      "code": "ME",
+      "name": "Черногория",
+      "flag": "flags/1x1/me.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "CZ",
+      "name": "Чехия",
+      "flag": "flags/1x1/cz.svg",
+      "currencies": [
+        {
+          "code": "CZK",
+          "symbol": "CZK",
+          "name": "чешская крона"
+        }
+      ]
+    },
+    {
+      "code": "CL",
+      "name": "Чили",
+      "flag": "flags/1x1/cl.svg",
+      "currencies": [
+        {
+          "code": "CLP",
+          "symbol": "CLP",
+          "name": "чилийский песо"
+        }
+      ]
+    },
+    {
+      "code": "CH",
+      "name": "Швейцария",
+      "flag": "flags/1x1/ch.svg",
+      "currencies": [
+        {
+          "code": "CHF",
+          "symbol": "CHF",
+          "name": "швейцарский франк"
+        }
+      ]
+    },
+    {
+      "code": "SE",
+      "name": "Швеция",
+      "flag": "flags/1x1/se.svg",
+      "currencies": [
+        {
+          "code": "SEK",
+          "symbol": "SEK",
+          "name": "шведская крона"
+        }
+      ]
+    },
+    {
+      "code": "SJ",
+      "name": "Шпицберген и Ян-Майен",
+      "flag": "flags/1x1/sj.svg",
+      "currencies": [
+        {
+          "code": "NOK",
+          "symbol": "NOK",
+          "name": "норвежская крона"
+        }
+      ]
+    },
+    {
+      "code": "LK",
+      "name": "Шри-Ланка",
+      "flag": "flags/1x1/lk.svg",
+      "currencies": [
+        {
+          "code": "LKR",
+          "symbol": "LKR",
+          "name": "шри-ланкийская рупия"
+        }
+      ]
+    },
+    {
+      "code": "EC",
+      "name": "Эквадор",
+      "flag": "flags/1x1/ec.svg",
+      "currencies": [
+        {
+          "code": "USD",
+          "symbol": "$",
+          "name": "доллар США"
+        }
+      ]
+    },
+    {
+      "code": "GQ",
+      "name": "Экваториальная Гвинея",
+      "flag": "flags/1x1/gq.svg",
+      "currencies": [
+        {
+          "code": "XAF",
+          "symbol": "FCFA",
+          "name": "франк КФА BEAC"
+        }
+      ]
+    },
+    {
+      "code": "ER",
+      "name": "Эритрея",
+      "flag": "flags/1x1/er.svg",
+      "currencies": [
+        {
+          "code": "ERN",
+          "symbol": "ERN",
+          "name": "эритрейская накфа"
+        }
+      ]
+    },
+    {
+      "code": "SZ",
+      "name": "Эсватини",
+      "flag": "flags/1x1/sz.svg",
+      "currencies": [
+        {
+          "code": "SZL",
+          "symbol": "SZL",
+          "name": "свазилендский лилангени"
+        },
+        {
+          "code": "ZAR",
+          "symbol": "ZAR",
+          "name": "южноафриканский рэнд"
+        }
+      ]
+    },
+    {
+      "code": "EE",
+      "name": "Эстония",
+      "flag": "flags/1x1/ee.svg",
+      "currencies": [
+        {
+          "code": "EUR",
+          "symbol": "€",
+          "name": "евро"
+        }
+      ]
+    },
+    {
+      "code": "ET",
+      "name": "Эфиопия",
+      "flag": "flags/1x1/et.svg",
+      "currencies": [
+        {
+          "code": "ETB",
+          "symbol": "ETB",
+          "name": "эфиопский быр"
+        }
+      ]
+    },
+    {
+      "code": "ZA",
+      "name": "ЮАР",
+      "flag": "flags/1x1/za.svg",
+      "currencies": [
+        {
+          "code": "ZAR",
+          "symbol": "ZAR",
+          "name": "южноафриканский рэнд"
+        }
+      ]
+    },
+    {
+      "code": "GS",
+      "name": "Южная Георгия и Южные Сандвичевы Острова",
+      "flag": "flags/1x1/gs.svg",
+      "currencies": [
+        {
+          "code": "SHP",
+          "symbol": "SHP",
+          "name": "фунт острова Святой Елены"
+        }
+      ]
+    },
+    {
+      "code": "SS",
+      "name": "Южный Судан",
+      "flag": "flags/1x1/ss.svg",
+      "currencies": [
+        {
+          "code": "SSP",
+          "symbol": "SSP",
+          "name": "южносуданский фунт"
+        }
+      ]
+    },
+    {
+      "code": "JM",
+      "name": "Ямайка",
+      "flag": "flags/1x1/jm.svg",
+      "currencies": [
+        {
+          "code": "JMD",
+          "symbol": "JMD",
+          "name": "ямайский доллар"
+        }
+      ]
+    },
+    {
+      "code": "JP",
+      "name": "Япония",
+      "flag": "flags/1x1/jp.svg",
+      "currencies": [
+        {
+          "code": "JPY",
+          "symbol": "¥",
+          "name": "японская иена"
+        }
+      ]
+    }
+  ]
+}

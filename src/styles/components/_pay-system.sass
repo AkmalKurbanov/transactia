@@ -1,0 +1,57 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.pay-system-wrap
+  .pay-system
+    margin-bottom: rem(20)
+    
+    &:last-child
+      margin-bottom: 0
+
+.pay-system
+  cursor: pointer
+  display: flex
+  align-items: center
+  column-gap: rem(16)
+  transition: $transition
+  transform: none
+
+  &:hover
+    opacity: .7
+    .pay-system__icon,
+    .pay-system__content
+      transform: translateY(rem(-5))
+
+  &__icon,
+  &__content
+    transition: $transition
+
+  &__icon,
+  picture
+    display: flex
+    align-items: center
+    justify-content: center
+  
+  &__icon
+    border-radius: rem(16)
+    background-color: #fff
+    overflow: hidden
+    height: rem(48)
+    min-width: rem(48)
+    max-width: rem(48)
+
+  &__title
+    margin-bottom: rem(4)
+    line-height: rem(20)
+    font-weight: 600
+    color: #fff
+
+  &__desc
+    color: #AFAFAF
+    font-size: rem(14)
+    font-weight: 500
+  
+  &.disabled
+    pointer-events: none
+    opacity: 0.5

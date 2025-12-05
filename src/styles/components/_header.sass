@@ -1,0 +1,55 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+@mixin aic-jcc
+  display: flex
+  align-items: center
+  justify-content: center
+
+.header
+  padding: rem(24) 0
+  position: relative
+  z-index: 2
+
+  @include xs
+    padding: rem(16) 0
+
+  &__flex-container
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+picture,
+.avatar
+  @include aic-jcc
+
+.avatar
+  width: rem(36)
+  height: rem(36)
+  position: relative
+  border-radius: rem(14)
+  overflow: hidden
+
+.login
+  background-color: #21212C
+  border-radius: rem(14)
+  display: flex
+  align-items: center
+  column-gap: rem(8)
+  color: #fff
+  font-weight: 600 
+  text-decoration: none
+  padding: rem(8) rem(14)
+  transition: $transition
+  border: none
+  outline: none
+  cursor: pointer
+
+
+  &:hover
+    transform: translateY(rem(-5)) 
+
+  svg
+    width: rem(24)
+    height: rem(24)  

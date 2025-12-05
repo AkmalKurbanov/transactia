@@ -1,0 +1,130 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.footer
+  padding: rem(24) 0 0
+  position: relative
+
+  &__flex-wrapper
+    display: flex
+    justify-content: space-between
+    padding: rem(24) 0
+    column-gap: rem(16)
+
+    @include lg
+      flex-wrap: wrap
+      justify-content: flex-start
+      row-gap: rem(24)
+
+    @include xs
+      flex-direction: column
+      row-gap: rem(16)
+
+  &__flex-column
+    @include lg
+      width: calc( 33.33% - rem(11) )
+
+    @include xs
+      width: 100%
+      border-bottom: 1px solid #21212C
+      padding-bottom: rem(16)
+
+    &:nth-child(4)
+      border: none
+
+    &:last-child
+
+      @include lg
+        width: auto
+
+  &__flex-payments
+    @include lg
+      display: flex
+      column-gap: rem(16)
+
+    @include sm
+      flex-direction: column
+
+    .btn
+      display: flex
+      margin-top: rem(30)
+      padding-left: rem(10)
+      padding-right: rem(10)
+      background-color: #1E2B40
+
+      @include lg
+        margin-top: 0
+
+      @include sm
+        margin-top: rem(30)
+
+  &__title
+    color: #fff
+    font-size: rem(20)
+    font-weight: 700
+    display: flex
+    justify-content: space-between
+
+    @include xs
+      margin-bottom: 0
+
+  &__nav-trigger
+    width: rem(24)
+    height: rem(24)
+    transition: $transition 
+    display: none
+    z-index: 2
+    position: relative
+
+    @include xs
+      display: flex
+
+  &__nav
+    @include xs
+      display: none
+
+    &.is-open
+      display: block
+     
+
+  ul
+    li
+      margin-top: rem(12)
+      list-style: none
+
+      a
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        color: #fff
+        text-decoration: none
+        transition: $transition
+        font-size: rem(14)
+        font-weight: 500
+
+        &:hover
+          color: $primary
+
+    &.images-list
+      display: flex
+      align-items: center
+      column-gap: rem(18)
+
+      svg
+        height: rem(32)
+
+      &--social
+        svg
+          width: rem(32)
+
+  &__copyright
+    text-align: center
+    color: #C3C3C3
+    font-size: rem(14)
+    font-weight: 400
+    padding: rem(16) 0
+    border-top: 1px solid #21212C
+    border-bottom: 1px solid #21212C
+
+  

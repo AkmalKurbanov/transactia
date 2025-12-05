@@ -1,0 +1,13 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.container
+  max-width: rem(1472)
+  margin: 0 auto
+  padding: 0 rem(16)
+  z-index: 2
+  position: relative
+
+  @include xl
+    max-width: rem(1140)

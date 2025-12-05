@@ -1,0 +1,63 @@
+.calculator-wrap
+  a(href="#").return-btn 
+    svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
+      path(fill="#27615C", d="M15.8 18.7a1.13 1.13 0 1 1-1.6 1.6l-7.5-7.5a1.13 1.13 0 0 1 0-1.6l7.5-7.5a1.13 1.13 0 1 1 1.6 1.6L9.1 12l6.7 6.7Z")
+    | Назад
+  .typical-block
+    .calculator-wrap__content-block
+      h3.calculator-wrap__title На банковский счет
+      .tabs.tabs-js
+        .tabs__nav
+          button.tabs__btn.btn(data-name="tab1").is-active Физ.лицо
+          button.tabs__btn.btn(data-name="tab2") Компания
+        
+        .tabs__content
+          .tabs__panel.is-active(data-name="tab1")
+            form
+              .input
+                .input__field
+                  label(for="number") Номер счета получателя*
+                  input(type="text" id="number" name="number") 
+
+                .message 2 буквы, за которым следует до 32 символов
+
+              .input
+                .input__field
+                  label(for="surname") ФИО получателя
+                  input(type="text" id="surname" name="surname") 
+
+                .message Русскими буквами
+
+              .input
+                .input__field
+                  label(for="pay-name") Назначение платежа
+                  textarea(id="pay-name" name="pay-name")
+
+              .centered
+                button.btn Продолжить
+          
+
+          .tabs__panel(data-name="tab2")
+            form
+              .input
+                .input__field
+                  label(for="number") Номер счета получателя
+                  input(type="text" id="number" name="number") 
+
+                .message 2 буквы, за которым следует до 32 символов
+
+              .input
+                .input__field
+                  label(for="surname") ФИО получателя
+                  input(type="text" id="surname" name="surname") 
+
+                .message Английскими буквами
+
+              .input
+                .input__field
+                  label(for="pay-name") Назначение платежа
+                  textarea(id="pay-name" name="pay-name")
+
+              .centered
+                button.btn Продолжить
+        

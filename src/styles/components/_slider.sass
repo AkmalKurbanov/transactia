@@ -1,0 +1,71 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.slider
+  position: relative
+  overflow: hidden
+
+  .swiper
+    position: relative
+    width: 100vw
+    overflow: visible
+    margin-top: rem(56)
+
+    @include sm
+      margin-top: rem(40)
+
+    .swiper-wrapper 
+      transition-timing-function: linear 
+
+  &__item
+    width: rem(458)!important
+    min-height: rem(250)
+    background-color: #191E1E
+    border-radius: rem(12)
+    padding: rem(24)
+
+    @include xs
+      width: rem(340)!important
+  
+  .btn
+    margin-top: rem(32)
+
+
+.review
+  &__flex-wrapper
+    display: flex
+    align-items: center
+    column-gap: rem(10)
+
+  &__img
+    background-color: #fff
+    border-radius: 50%
+    display: flex
+    align-items: center
+    justify-content: center
+    overflow: hidden
+    max-width: rem(52)
+    min-width: rem(52)
+    height: rem(52)
+
+  &__name 
+    color: #fff
+    font-weight: 700  
+    font-size: rem(20)
+    line-height: rem(24)
+  &__date  
+    font-weight: 500
+    color: #7f7f90
+    font-size: rem(16)
+    line-height: rem(24)
+
+  &__rating  
+    width: rem(100)
+    margin-top: rem(16)
+
+  &__text  
+    margin-top: rem(16)
+    font-size: rem(16)
+    color: #fff
+    line-height: rem(24)

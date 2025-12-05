@@ -1,0 +1,63 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.mine-title-block
+  max-width: rem(575)
+  width: 100%
+
+  h1,
+  h2
+    color: #fff
+  h1
+    font-size: rem(55)
+    line-height: rem(72)
+    font-weight: 700
+
+    @include xl
+      font-size: rem(45)
+      line-height: rem(60)
+
+    @include lg
+      font-size: rem(40)
+      line-height: rem(55)
+
+    @include xs
+      font-size: rem(34)
+      line-height: rem(44)
+
+  h2
+    font-size: rem(22)
+    line-height: rem(37)
+    font-weight: 400
+    margin-top: rem(16)
+
+    @include xl
+      font-size: rem(20)
+      line-height: rem(28)
+
+    @include xs
+      font-size: rem(16)
+      line-height: rem(24)
+
+  &__icon-wrap
+    display: flex
+    margin-top: rem(16)
+    column-gap: rem(17)
+    justify-content: space-between
+
+    @include md
+      display: none
+    
+
+  &__column-icon
+    color: #fff
+
+    svg
+      width: rem(48)
+      height: rem(48)
+
+    p
+      font-weight: 500
+      margin-top: rem(14)
+      font-size: rem(15)

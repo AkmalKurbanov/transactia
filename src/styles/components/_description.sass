@@ -1,0 +1,46 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.decription
+  border-bottom: rem(1) solid #21212C
+  padding-bottom: rem(32)
+  color: #fff
+  font-size: rem(16)
+  line-height: rem(22)
+
+  &__text-wrap
+    @include xs
+      font-size: rem(16)
+
+  &__btn-wrap
+    display: flex
+    justify-content: flex-end
+
+    
+  ul
+    padding-left: rem(20)
+    margin-bottom: rem(20)
+
+  &__more
+    margin-top: rem(20)
+    opacity: 0
+    pointer-events: none
+    height: 0
+    
+    @include xs
+      margin-top: rem(12)
+
+    p
+      margin-bottom: rem(20)
+
+  .more-btn
+    @include xs
+      font-size: rem(13)
+  &.show
+    .decription__more
+      opacity: 1
+      pointer-events: inherit
+      height: auto
+
+    

@@ -1,0 +1,15 @@
+- 
+  const paySystems4 = [
+    { img: 'sbp', title: 'СБП', desc: 'Мгновенное зачисление на карту по номеру телефона. ' },
+    { img: 'bank', title: 'На банковский счет', desc: 'Перевод напрямую в банк — для крупных сумм и деловых операций.' }
+    ]
+
+
+each item in paySystems4
+  .pay-system(class=item.disabled ? 'disabled' : '')
+    .pay-system__icon
+      +imgFixed(item.img, 48, 48, "images/pay-systems")
+
+    .pay-system__content
+      .pay-system__title= item.title
+      .pay-system__desc= item.desc

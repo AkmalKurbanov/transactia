@@ -1,0 +1,84 @@
+.calculator-wrap.receipt
+  a(href="#").return-btn 
+    svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
+      path(fill="#27615C", d="M15.8 18.7a1.13 1.13 0 1 1-1.6 1.6l-7.5-7.5a1.13 1.13 0 0 1 0-1.6l7.5-7.5a1.13 1.13 0 1 1 1.6 1.6L9.1 12l6.7 6.7Z")
+    | Назад
+  .typical-block
+    .calculator-wrap__content-block
+      .receipt__top   
+        .receipt__icon 
+        .receipt__title 
+        .receipt__total
+          p 10 100
+            span RUB
+          svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 20 20")
+            path(fill="#fff", d="m19.82 10.42-5.63 5.4a.64.64 0 0 1-.88 0 .59.59 0 0 1-.19-.42c0-.16.07-.31.19-.42l4.56-4.38H.62a.64.64 0 0 1-.44-.18A.59.59 0 0 1 0 10a.6.6 0 0 1 .18-.42.64.64 0 0 1 .44-.18h17.25L13.3 5.02a.59.59 0 0 1-.19-.42c0-.16.07-.31.19-.42a.64.64 0 0 1 .88 0l5.63 5.4A.6.6 0 0 1 20 10a.58.58 0 0 1-.18.42Z")
+          p 100,00
+            span EUR
+
+      .receipt__list 
+        .receipt__list-item
+          span Комиссия:
+          span 0%
+        
+        .receipt__list-item
+          span Курс:
+          span 101,00 RUB = 1 EUR
+        
+        .receipt__list-item
+          span Получатель
+          span Erzhan Kaldybaev
+        
+        .receipt__list-item
+          span Номер счета:
+          span 1234567989
+
+        .receipt__list-item
+          span Скорость доставки:
+          span Несколько минут
+
+        
+    form
+      .payment-method
+        .payment-method__title Способ оплаты
+        .swiper.payment-js
+          .payment-method__flex-wrap.swiper-wrapper
+            .payment-method__item.swiper-slide
+              
+              input(type="radio" id="TRC-20" name="payment") 
+              label(for="TRC-20")
+                .payment-method__img
+                  +imgFixed("trc-20", 32, 32, "images/pay-systems")    
+                                  
+                span TRC-20
+          
+            .payment-method__item.swiper-slide
+              
+              input(type="radio" id="ERC-20" name="payment") 
+              label(for="ERC-20")
+                .payment-method__img
+                  +imgFixed("erc-20", 32, 32, "images/pay-systems")    
+                  
+                span ERC-20
+
+            .payment-method__item.swiper-slide
+              
+              input(type="radio" id="BEP-20" name="payment") 
+              label(for="BEP-20")
+                .payment-method__img
+                  +imgFixed("bep-20", 32, 32, "images/pay-systems")    
+                  
+                span BEP-20
+          
+        .calculator-wrap__content-block
+          .payment-method__bottom 
+            label(for="agree2")
+              input(type="checkbox" id="agree2" name="agree")    
+              .agree 
+                .agree__box 
+                  svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 14 11")
+                    path(stroke="#fff", stroke-linecap="round", stroke-linejoin="round", stroke-width="1.5", d="M13.25.75 4.65 9.5.76 5.52")
+
+                span Нажимая, я даю согласие с условиями использования и политикой конфиденциальности
+
+            button.btn Подтвердить перевод 

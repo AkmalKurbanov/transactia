@@ -1,0 +1,101 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.reviews
+  &__top
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-bottom: rem(64)
+
+    @include xs
+      margin-bottom: rem(32)
+    
+    .btn
+      @include xs
+        padding: rem(8) rem(24)
+        border-radius: rem(12)
+
+  .masonry-grid
+    position: relative
+
+    .masonry-sizer,
+    .masonry-item
+      width: calc( 33.33% - rem(21) )
+      margin-bottom: rem(32)
+
+      @include xl
+        margin-bottom: rem(24)
+        width: calc( 33.33% - rem(16) )
+
+      @include lg
+        margin-bottom: rem(16)
+        width: calc( 33.33% - rem(11) )
+
+      @include sm
+        width: calc( 50% - rem(8) )
+
+      @include xs
+        width: 100%
+
+
+
+    .gutter-sizer
+      width: rem(32)
+      
+      @include xl
+        width: rem(24)
+
+      @include lg
+        width: rem(16)
+
+
+  &__item
+    padding: rem(24)     
+    
+    @include md
+      padding: rem(24) rem(16)     
+      border-radius: rem(24)
+
+    &-top 
+      display: flex
+      align-items: center
+      column-gap: rem(10)
+      margin-bottom: rem(16)
+
+    &-avatar
+      max-width: rem(52)
+      min-width: rem(52)
+      height: rem(52)
+      background-color: #fff
+      border-radius: 50%
+      overflow: hidden
+      position: relative
+      img
+        position: absolute
+        object-fit: cover
+        object-position: center
+        inset: 0
+        width: 100%
+        height: 100%
+
+    &-info 
+      p 
+        color: #fff
+        font-size: rem(20)
+        font-weight: 600
+      span  
+        color: #7F7F90
+        font-size: rem(16)
+        font-weight: 500
+    
+    &-rating
+      margin-bottom: rem(16)
+    
+    &-text
+      p
+        color: #fff
+        font-size: rem(16)
+        font-weight: 500
+        line-height: rem(24)

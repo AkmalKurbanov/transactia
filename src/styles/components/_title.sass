@@ -1,0 +1,20 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+.title
+  font-size: rem(56)
+  font-weight: 600
+  color: #fff
+
+  @include xs
+    font-size: rem(24)
+
+  &--h2
+    font-size: rem(40)
+
+    @include xs
+      font-size: rem(24)
+      
+  &--h3
+    font-size: rem(24)

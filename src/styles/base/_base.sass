@@ -1,0 +1,166 @@
+@use '../abstracts/tokens' as *
+@use '../abstracts/media' as *
+@use '../mixins/rem' as *
+
+html,
+body
+  background-color: #181818
+  width: 100%
+  position: relative
+
+
+.decor-wrapper
+  position: absolute
+  inset: 0
+  overflow: hidden
+  pointer-events: none
+  z-index: 0
+
+  .gradient-element
+    position: fixed
+    border-radius: 50%
+    width: rem(500)
+    height: rem(500)
+    display: flex
+    align-items: center
+    justify-content: center
+
+    @include sm
+      width: rem(200)
+      height: rem(200)
+      opacity: 0.8
+
+    &:after
+      position: absolute
+      content: ''
+      width: 100%
+      height: 100%
+      filter: blur(250px)
+
+    svg
+      opacity: 10%
+      transform: rotate(-15deg)
+      width: rem(275)
+
+      @include sm
+        width: rem(135)
+
+    &--primary
+      top: rem(-210px)
+      right: rem(-210px)
+
+      @include sm
+        top: rem(-50px)
+        right: rem(-90px)
+
+      &:after
+        background: #27615C
+
+    &--secondary
+      bottom: rem(150)
+      left: rem(-210px)
+
+      @include sm
+        bottom: rem(150)
+        left: rem(-100px)
+
+      &:after
+        background: #5B68DF
+
+.wrapper
+  height: 100vh
+  display: flex
+  flex-direction: column
+  .content
+    flex: 1 0 auto
+    padding-top: rem(80)
+
+    &--no-indent
+      padding-top: 0
+
+.logo
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  max-width: rem(195)
+
+  img
+    width: 100%
+
+  @include xs
+    max-width: rem(145)
+
+.typical-block
+  border-radius: rem(32)
+  background-color: #191E1E
+
+  @include sm
+    border-radius: rem(24)
+
+section
+  margin-bottom: rem(120)
+
+  @include xs
+    margin-bottom: rem(80)
+
+.centered
+  display: flex
+  align-items: center
+  justify-content: center
+
+.components-wrap
+  display: flex
+  flex-wrap: wrap
+  gap: 20px
+
+  .components-item
+    width: calc(50% - 10px)
+    border: rem(1) solid #fff
+    padding: rem(30)
+    display: flex
+    align-items: center
+    justify-content: center
+
+.currency-transfer
+  .input
+    margin-bottom: rem(8) !important
+
+  &__icon
+    width: rem(34)
+    height: rem(34)
+    background-color: $primary
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 50%
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    cursor: pointer
+    transition: $transition
+    z-index: 1
+
+    &:hover
+      transform: translate(-50%, -50%) scale(1.1) rotate(180deg)
+
+    svg
+      width: rem(24)
+      height: rem(24)
+
+.scroll-bar
+  scrollbar-width: thin
+  scrollbar-color: rgba(255,255,255,.15) transparent
+
+  &::-webkit-scrollbar
+    width: rem(4)
+
+  &::-webkit-scrollbar-track
+    background: transparent
+
+  &::-webkit-scrollbar-thumb
+    background: rgba(255,255,255,.15)
+    border-radius: rem(8)
+
+  &::-webkit-scrollbar-thumb:hover
+    background: rgba(255,255,255,.25)
