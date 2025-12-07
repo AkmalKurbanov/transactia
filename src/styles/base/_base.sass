@@ -7,28 +7,23 @@ body
   background-color: #181818
   width: 100%
   position: relative
-
+  overflow-x: hidden
 
 .decor-wrapper
   position: absolute
   inset: 0
-  overflow: hidden
   pointer-events: none
   z-index: 0
 
   .gradient-element
-    position: fixed
+    position: absolute
     border-radius: 50%
     width: rem(500)
     height: rem(500)
-    display: flex
-    align-items: center
-    justify-content: center
 
-    @include sm
+    @include xs
       width: rem(200)
       height: rem(200)
-      opacity: 0.8
 
     &:after
       position: absolute
@@ -37,35 +32,90 @@ body
       height: 100%
       filter: blur(250px)
 
+      @include xs
+        filter: blur(100px)
+      
+
     svg
       opacity: 10%
       transform: rotate(-15deg)
-      width: rem(275)
-
-      @include sm
-        width: rem(135)
 
     &--primary
-      top: rem(-210px)
-      right: rem(-210px)
-
-      @include sm
-        top: rem(-50px)
-        right: rem(-90px)
-
       &:after
         background: #27615C
 
     &--secondary
-      bottom: rem(150)
-      left: rem(-210px)
-
-      @include sm
-        bottom: rem(150)
-        left: rem(-100px)
-
       &:after
         background: #5B68DF
+
+    &--first
+      width: rem(952)
+      height: rem(952)
+      display: flex
+      align-items: center
+      justify-content: center
+      top: rem(-355)
+      right: rem(-470)
+
+      @include xs
+        width: rem(270)
+        height: rem(270)
+        top: rem(-100)
+        right: rem(-125)
+
+      svg
+        width: rem(460)
+
+        @include xs
+          width: rem(136)
+
+    &--second
+      top: rem(864)
+      left: rem(-337)
+
+      @include xs
+        left: rem(-110)
+
+      svg
+        width: rem(274)
+        position: absolute
+        top: rem(80)
+        right: rem(24)
+
+        @include xs
+          width: rem(83)
+          top: auto
+          right: auto
+          left: 50%
+          bottom: rem(22)
+          transform: translateX(-50%) rotate(-15deg)
+
+    &--third
+      top: rem(1770)
+      right: rem(-460)
+
+      @include xs
+        right: rem(-100)
+
+    &--fourth
+      top: rem(2681)
+      left: rem(-460)
+
+      @include xs
+        top: rem(3000)
+        left: rem(-100)
+
+    &--fifth
+      top: rem(2940)
+      right: rem(-275)
+
+      
+
+      svg
+        width: rem(460)
+        position: absolute
+        top: rem(90)
+        left: 0
 
 .wrapper
   height: 100vh

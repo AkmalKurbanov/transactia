@@ -10,7 +10,7 @@
 .header
   padding: rem(24) 0
   position: relative
-  z-index: 2
+  z-index: 4
 
   @include xs
     padding: rem(16) 0
@@ -24,13 +24,6 @@ picture,
 .avatar
   @include aic-jcc
 
-.avatar
-  width: rem(36)
-  height: rem(36)
-  position: relative
-  border-radius: rem(14)
-  overflow: hidden
-
 .login
   background-color: #21212C
   border-radius: rem(14)
@@ -38,7 +31,7 @@ picture,
   align-items: center
   column-gap: rem(8)
   color: #fff
-  font-weight: 600 
+  font-weight: 600
   text-decoration: none
   padding: rem(8) rem(14)
   transition: $transition
@@ -46,10 +39,125 @@ picture,
   outline: none
   cursor: pointer
 
-
   &:hover
-    transform: translateY(rem(-5)) 
+    transform: translateY(rem(-5))
 
   svg
     width: rem(24)
-    height: rem(24)  
+    height: rem(24)
+
+.avatar
+  width: rem(36)
+  height: rem(36)
+  position: relative
+  cursor: pointer
+
+  &__img
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: rem(14)
+    overflow: hidden
+
+.profile-control
+  position: absolute
+  min-width: rem(300)
+  background-color: #191E1E
+  border-radius: rem(24)
+  padding: rem(32)
+  top: 100%
+  right: 0
+  overflow: hidden
+  pointer-events: none
+  opacity: 0
+  transition: $transition 
+
+  &.is-open
+    opacity: 1
+    pointer-events: inherit
+    top: calc( 100% + rem(20) )
+
+  &__close
+    width: rem(24)
+    position: absolute
+    top: rem(32)
+    right: rem(32)
+    cursor: pointer
+    z-index: 1
+
+  &__top
+    padding-bottom: rem(16)
+    margin-bottom: rem(16)
+    position: relative
+
+    &:after
+      position: absolute
+      content: ''
+      height: rem(1)
+      background-color: #233331
+      width: calc( 100% + rem(64) )
+      bottom: 0
+      left: rem(-32)
+
+  &__avatar
+    position: relative
+    width: rem(48)
+    height: rem(48)
+    border-radius: rem(14)
+    overflow: hidden
+    margin-bottom: rem(12)
+
+    img
+      position: absolute
+      width: 100%
+      height: 100%
+      inset: 0
+      object-fit: cover
+      object-position: center
+
+  &__id
+    font-weight: 600
+    color: #fff
+    margin-bottom: rem(4)
+
+  &__email
+    font-weight: 500
+    color: #AFAFAF
+
+  &__nav
+    ul
+      li
+        list-style: none
+        margin-bottom: rem(16)
+
+        a
+          align-items: center
+          display: flex
+          column-gap: rem(8)
+          color: #fff
+          font-weight: 600
+          text-decoration: none
+          transition: $transition
+
+          svg
+            fill: #fff
+            transition: $transition
+
+        svg
+          width: rem(20)
+
+        &:last-child
+          margin-bottom: 0
+
+        &.profile-control__exit
+          svg
+            fill: #DA423A
+          a
+            color: #DA423A
+
+        &:hover
+          a
+            color: $secondary
+          svg
+            fill: $secondary
+            

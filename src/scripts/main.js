@@ -11,5 +11,6 @@ import './modules/select'
 import './modules/payment-method'
 import './modules/reviews'
 import './modules/rating'
+import './modules/profile-control'
 import './modules/footer'
 

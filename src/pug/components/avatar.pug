@@ -1,2 +1,31 @@
-a(href="profile.html").avatar
-  +imgFixed("avatar", 36, 36, "images/static")
+.avatar.avatar-js
+  .avatar__img
+    +imgFixed("avatar", 36, 36, "images/static")
+
+  .profile-control
+    .profile-control__close
+      svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
+        path(fill="#fff", d="M19.28 18.22a.75.75 0 1 1-1.06 1.06L12 13.06l-6.22 6.22a.75.75 0 0 1-1.06-1.06L10.94 12 4.72 5.78a.75.75 0 1 1 1.06-1.06L12 10.94l6.22-6.22a.75.75 0 1 1 1.06 1.06L13.06 12l6.22 6.22Z")
+    
+    .profile-control__top
+      .profile-control__avatar
+        +imgFixed("avatar", 48, 48, "images/static")
+      .profile-control__id Telegram ID
+      .profile-control__email test@trustypay.org
+
+
+    .profile-control__nav
+      ul
+        li
+          a(href="#")
+            svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
+              path(d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM6.82 18.68a6.15 6.15 0 0 1 10.36 0 8.45 8.45 0 0 1-10.36 0Zm2.1-7.45a3.08 3.08 0 1 1 6.16 0 3.08 3.08 0 0 1-6.16 0Zm9.4 6.39a7.66 7.66 0 0 0-3.46-2.77 4.62 4.62 0 1 0-5.72 0 7.66 7.66 0 0 0-3.46 2.77 8.46 8.46 0 1 1 12.64 0Z")
+            span Профиль
+        li.profile-control__exit
+          a(href="#")
+            svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
+              path(d="M11.25 20.25a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75V3.75A.75.75 0 0 1 4.5 3h6a.75.75 0 1 1 0 1.5H5.25v15h5.25a.75.75 0 0 1 .75.75Zm10.28-8.78-3.75-3.75a.75.75 0 1 0-1.06 1.06l2.47 2.47H10.5a.75.75 0 1 0 0 1.5h8.69l-2.47 2.47a.75.75 0 1 0 1.06 1.06l3.75-3.75a.75.75 0 0 0 0-1.06Z")
+            span Выйти
+
+
+
