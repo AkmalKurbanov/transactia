@@ -3,7 +3,7 @@
     {
       "id": "BTC",
       "label": "Bitcoin",
-      "icon": "images/currencies/crypto/bitcoin.svg",
+      "icon": "images/currencies/crypto/btc.svg",
       "values": [
         { "code": "BTC", "symbol": "₿", "name": "Bitcoin" }
       ]
@@ -11,7 +11,7 @@
     {
       "id": "ETH",
       "label": "Ethereum",
-      "icon": "images/currencies/crypto/ethereume.svg",
+      "icon": "images/currencies/crypto/eth.svg",
       "values": [
         { "code": "ETH", "symbol": "Ξ", "name": "Ethereum" }
       ]
@@ -19,7 +19,7 @@
     {
       "id": "USDT",
       "label": "Tether",
-      "icon": "images/currencies/crypto/tether.svg",
+      "icon": "images/currencies/crypto/usdt.svg",
       "values": [
         { "code": "USDT", "symbol": "$", "name": "Tether USD" },
         { "code": "USDT-TRC20", "symbol": "$", "name": "Tether (TRC20)" }
