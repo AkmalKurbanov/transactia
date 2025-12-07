@@ -61,21 +61,48 @@ picture,
 
 .profile-control
   position: absolute
-  min-width: rem(300)
-  background-color: #191E1E
-  border-radius: rem(24)
-  padding: rem(32)
   top: 100%
   right: 0
   overflow: hidden
   pointer-events: none
   opacity: 0
   transition: $transition 
+  
+  @include xs
+    position: fixed
+    width: 100%
+    height: 100%
+    inset: 0
+    background-color: rgba(0,0,0,0.5)
+
+  &__block
+    min-width: rem(300)
+    background-color: #191E1E
+    border-radius: rem(24)
+    padding: rem(32)
+    transition: $transition
+
+    @include xs
+      position: absolute
+      width: 100%
+      border-radius: rem(24) rem(24) 0 0
+      bottom: -100%
+      text-align: center
+      padding: rem(64) rem(24) rem(24)
+    
 
   &.is-open
     opacity: 1
     pointer-events: inherit
     top: calc( 100% + rem(20) )
+    
+    @include xs
+      top: 0
+    
+    .profile-control__block
+      @include xs
+        top: auto
+        bottom: 0
 
   &__close
     width: rem(24)
@@ -84,6 +111,11 @@ picture,
     right: rem(32)
     cursor: pointer
     z-index: 1
+
+    @include xs
+      top: rem(24)
+      right: rem(24)
+    
 
   &__top
     padding-bottom: rem(16)
@@ -107,6 +139,12 @@ picture,
     overflow: hidden
     margin-bottom: rem(12)
 
+    @include xs
+      margin-left: auto
+      margin-right: auto
+      width: rem(63)
+      height: rem(63)
+
     img
       position: absolute
       width: 100%
@@ -129,15 +167,20 @@ picture,
       li
         list-style: none
         margin-bottom: rem(16)
-
         a
           align-items: center
-          display: flex
+          display: inline-flex
           column-gap: rem(8)
           color: #fff
           font-weight: 600
           text-decoration: none
           transition: $transition
+          
+          @include xs
+            display: flex
+            text-align: center
+            justify-content: center
+
 
           svg
             fill: #fff
