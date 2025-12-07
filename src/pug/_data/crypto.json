@@ -22,7 +22,7 @@
       "icon": "images/currencies/crypto/usdt.svg",
       "values": [
         { "code": "USDT", "symbol": "$", "name": "Tether USD" },
-        { "code": "USDT-TRC20", "symbol": "$", "name": "Tether (TRC20)" }
+        { "code": "TRC20", "symbol": "$", "name": "Tether (TRC20)" }
       ]
     }
   ]
