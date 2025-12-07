@@ -37,6 +37,11 @@
 
       @include lg
         width: auto
+      
+      @include xs
+        padding-bottom: 0
+        border-bottom: none
+
 
   &__flex-payments
     @include lg
@@ -52,6 +57,9 @@
       padding-left: rem(10)
       padding-right: rem(10)
       background-color: #1E2B40
+
+      &:hover
+        background-color: $primary
 
       @include lg
         margin-top: 0
@@ -115,8 +123,13 @@
         height: rem(32)
 
       &--social
-        svg
+        li
           width: rem(32)
+          height: rem(32)  
+
+          svg
+            width: 100%
+
 
   &__copyright
     text-align: center
