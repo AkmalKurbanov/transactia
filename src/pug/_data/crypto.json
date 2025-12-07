@@ -1,0 +1,29 @@
+{
+  "entities": [
+    {
+      "id": "BTC",
+      "label": "Bitcoin",
+      "icon": "crypto/btc.svg",
+      "values": [
+        { "code": "BTC", "symbol": "₿", "name": "Bitcoin" }
+      ]
+    },
+    {
+      "id": "ETH",
+      "label": "Ethereum",
+      "icon": "crypto/eth.svg",
+      "values": [
+        { "code": "ETH", "symbol": "Ξ", "name": "Ethereum" }
+      ]
+    },
+    {
+      "id": "USDT",
+      "label": "Tether",
+      "icon": "crypto/usdt.svg",
+      "values": [
+        { "code": "USDT", "symbol": "$", "name": "Tether USD" },
+        { "code": "USDT-TRC20", "symbol": "$", "name": "Tether (TRC20)" }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-mixin currencySelect(flag="./flags/1x1/ru.svg", code="RUB", disabled=false)
-  .cselect.cselect-js(class=disabled ? "is-disabled" : "")
+mixin currencySelect(flag="./flags/1x1/ru.svg", code="RUB", src="./js/entities.json", disabled=false)
+  .cselect.cselect-js(data-src=src class=(disabled ? "is-disabled" : ""))
     .cselect__selected
       .cselect__selected-left
         span.cselect__img

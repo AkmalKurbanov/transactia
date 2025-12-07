@@ -80,7 +80,7 @@ function setupPugWatcher() {
 
 export function flags() {
   return src('./node_modules/flag-icons/flags/1x1/*.svg')
-    .pipe(dest('dist/flags/1x1'));
+    .pipe(dest('dist/images/currencies/flags'));
 }
 
 export function clean() {

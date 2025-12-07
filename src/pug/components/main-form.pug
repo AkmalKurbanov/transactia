@@ -24,7 +24,7 @@
                     label(for="sending") Вы отправляете
                     input(type="text" id="sending" name="sending")
 
-                  +currencySelect("./flags/1x1/ru.svg", "RUB", true)
+                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true)
 
               .currency-transfer__icon
                 svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
@@ -35,7 +35,7 @@
                   div
                     label(for="sending") Получатель получит
                     input(type="text" id="sending" name="sending") 
-                  +currencySelect("./flags/1x1/de.svg", "EUR")
+                  +currencySelect("./images/currencies/flags/de.svg", "EUR", src="./js/entities.json", false)
           
           .tabs__panel(data-name="tab2")
             .currency-transfer
@@ -45,7 +45,7 @@
                     label(for="sending") Вы отправляете
                     input(type="text" id="sending" name="sending")
 
-                  +currencySelect("./flags/1x1/ru.svg", "RUB", true)
+                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true)
 
               .currency-transfer__icon
                 svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
@@ -56,7 +56,7 @@
                   div
                     label(for="sending") Получатель получит
                     input(type="text" id="sending" name="sending") 
-                  +currencySelect("./flags/1x1/de.svg", "EUR")
+                  +currencySelect("./images/currencies/crypto/ustd.svg", "USDT", src="./js/crypto.json", false)
 
       .receipt__list 
         .receipt__list-item

@@ -1,33 +1,55 @@
 /**************************************************************
- * 1. ЗАГРУЗКА СТРАН
+ * 1. УНИВЕРСАЛЬНАЯ ЗАГРУЗКА ДАННЫХ ЧЕРЕЗ data-src
  **************************************************************/
-async function loadCurrencies() {
-  const dropdowns = document.querySelectorAll('.js-select-options');
-  if (!dropdowns.length) return;
+async function loadOptions(select) {
+  const src = select.dataset.src;  // ← ВАЖНО: путь берём отсюда
+  if (!src) return;
 
-  const res = await fetch('./js/data.json');
-  const { countries } = await res.json();
+  const dropdown = select.querySelector('.js-select-options');
+  if (!dropdown) return;
+
+  const ul = dropdown.querySelector('ul');
+  if (!ul) return;
+
+  const res = await fetch(src);
+  const json = await res.json();
+
+  // Универсальные форматы
+  const items =
+    json.items ||
+    json.entities ||
+    json.data ||
+    json.list ||
+    json.countries || // поддержка старого
+    [];
+
   const fragment = document.createDocumentFragment();
 
-  countries.forEach(c => {
-    if (!c.currencies?.length) return;
+  items.forEach(item => {
+    const values = item.values || item.currencies || [];
+    if (!values.length) return;
 
     const li = document.createElement('li');
     li.className = 'cselect__option';
-    li.dataset.code = c.code;
-    li.dataset.currencies = JSON.stringify(c.currencies);
+
+    const id = item.id || item.code || '';
+    const label = item.label || item.name || id;
+    const icon = item.icon || item.flag || '';
+    const defaultValue = values[0].code || id;
+
+    li.dataset.code = id;
+    li.dataset.values = JSON.stringify(values);
 
     li.innerHTML = `
       <div class="cselect__option-left">
-        <span class="cselect__img"><img src="./${c.flag}" alt="${c.name}" loading="lazy"></span>
-        <span class="cselect__label">${c.name}</span>
+        ${icon ? `<span class="cselect__img"><img src="${icon}" loading="lazy"></span>` : ''}
+        <span class="cselect__label">${label}</span>
       </div>
       <div class="cselect__option-right">
-        <span>${c.currencies[0].code}</span>
+        <span>${defaultValue}</span>
         ${
-          c.currencies[0].symbol &&
-          c.currencies[0].symbol !== c.currencies[0].code
-            ? `<span>${c.currencies[0].symbol}</span>`
+          values[0].symbol && values[0].symbol !== values[0].code
+            ? `<span>${values[0].symbol}</span>`
             : ''
         }
       </div>
@@ -36,18 +58,24 @@ async function loadCurrencies() {
     fragment.appendChild(li);
   });
 
-  dropdowns.forEach(drop => {
-    const ul = drop.querySelector('ul');
-    if (!ul) return;
-    ul.innerHTML = '';
-    ul.appendChild(fragment.cloneNode(true));
-  });
+  ul.innerHTML = '';
+  ul.appendChild(fragment);
 }
 
 
 /**************************************************************
  * 2. УТИЛИТЫ
  **************************************************************/
+function getValues(option) {
+  try {
+    return JSON.parse(option.dataset.values || '[]');
+  } catch { return []; }
+}
+
+function hasMultiple(option) {
+  return getValues(option).length > 1;
+}
+
 function markDisabledSelects() {
   document.querySelectorAll('.cselect-js').forEach(select => {
     const dropdown = select.querySelector('.cselect__dropdown.js-select-options');
@@ -55,57 +83,35 @@ function markDisabledSelects() {
   });
 }
 
-function getCurrencies(option) {
-  try {
-    return JSON.parse(option.dataset.currencies || '[]');
-  } catch {
-    return [];
-  }
-}
-
-function hasMultiple(option) {
-  return getCurrencies(option).length > 1;
-}
-
 
 /**************************************************************
- * 3. ПЕРЕЗАПОЛНЕНИЕ SUBMENU
+ * 3. SUBMENU
  **************************************************************/
 function fillSubmenu(select, option) {
   const submenu = select.querySelector('.cselect__submenu');
 
-  const countryName = option.querySelector('.cselect__label')?.textContent || '';
-  const currencies = getCurrencies(option);
+  const label = option.querySelector('.cselect__label')?.textContent || '';
+  const values = getValues(option);
 
-  submenu.dataset.countryCode = option.dataset.code;
-  submenu.querySelector('.cselect__submenu-country').textContent = countryName;
+  submenu.dataset.itemCode = option.dataset.code;
+  submenu.querySelector('.cselect__submenu-country').textContent = label;
 
   const list = submenu.querySelector('.cselect__submenu-list');
-  list.innerHTML = currencies
-    .map(
-      c => `
-      <div class="cselect__submenu-option" data-currency="${c.code}">
-        <span>${c.name}</span>
-        <span>${c.code}</span>
-      </div>`
-    )
+  list.innerHTML = values
+    .map(v => `
+      <div class="cselect__submenu-option" data-value="${v.code}">
+        <span>${v.name}</span>
+        <span>${v.code}</span>
+      </div>
+    `)
     .join('');
 }
 
-
-/**************************************************************
- * 5. ПОКАЗАТЬ SUBMENU
- **************************************************************/
 function showSubmenu(select, option) {
   fillSubmenu(select, option);
-  const submenu = select.querySelector('.cselect__submenu');
-  submenu.classList.add('show');
+  select.querySelector('.cselect__submenu').classList.add('show');
 }
 
-
-/**************************************************************
- * 6. СКРЫТЬ ВСЕ SUBMENU
- **************************************************************/
 function hideSubmenus() {
   document.querySelectorAll('.cselect__submenu.show')
     .forEach(s => s.classList.remove('show'));
@@ -113,7 +119,7 @@ function hideSubmenus() {
 
 
 /**************************************************************
- * 7. ОБНОВЛЕНИЕ SELECTED ЭЛЕМЕНТА
+ * 4. SELECTED
  **************************************************************/
 function renderSelected(select, option, forced = null) {
   const block = select.querySelector('.cselect__selected-left');
@@ -125,11 +131,13 @@ function renderSelected(select, option, forced = null) {
   const wrap = document.createElement('span');
   wrap.className = 'cselect__img';
   if (img) wrap.appendChild(img);
-
   block.appendChild(wrap);
 
-  const currencies = getCurrencies(option);
-  const code = forced || currencies?.[0]?.code || '';
+  const values = getValues(option);
+  const code =
+    forced ||
+    values?.[0]?.code ||
+    option.dataset.code;
 
   const span = document.createElement('span');
   span.className = 'cselect__code';
@@ -140,44 +148,39 @@ function renderSelected(select, option, forced = null) {
 
 
 /**************************************************************
- * 8. CLICK HANDLER
+ * 5. CLICK HANDLER
  **************************************************************/
 document.addEventListener('click', e => {
   const select = e.target.closest('.cselect-js');
   const submenu = e.target.closest('.cselect__submenu');
 
-  // клик вне select — закрыть всё
   if (!select) {
     hideSubmenus();
     document.querySelectorAll('.cselect-js').forEach(s => s.classList.remove('open'));
     return;
   }
 
-  // закрытие submenu
   if (e.target.closest('.cselect__submenu-close')) {
     hideSubmenus();
     return;
   }
 
-  // выбор валюты
   const subOption = e.target.closest('.cselect__submenu-option');
   if (subOption) {
-    const currency = subOption.dataset.currency;
-    const code = submenu.dataset.countryCode;
-    const countryOption = select.querySelector(`.cselect__option[data-code="${code}"]`);
+    const value = subOption.dataset.value;
+    const code = submenu.dataset.itemCode;
+    const parentOption = select.querySelector(`.cselect__option[data-code="${code}"]`);
 
-    renderSelected(select, countryOption, currency);
+    renderSelected(select, parentOption, value);
     hideSubmenus();
     select.classList.remove('open');
     return;
   }
 
-  // выбор страны
   const option = e.target.closest('.cselect__option');
   if (option) {
-    if (hasMultiple(option)) {
-      showSubmenu(select, option);
-    } else {
+    if (hasMultiple(option)) showSubmenu(select, option);
+    else {
       hideSubmenus();
       renderSelected(select, option);
       select.classList.remove('open');
@@ -185,7 +188,7 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // открыть dropdown
+  // открыть
   if (!e.target.closest('.js-select-options')) {
     select.classList.toggle('open');
     hideSubmenus();
@@ -194,24 +197,9 @@ document.addEventListener('click', e => {
 
 
 /**************************************************************
- * 9. ПОИСК
+ * 6. ПОИСК
  **************************************************************/
-function updateDropdownHeight(select) {
-  const dd = select.querySelector('.cselect__dropdown.js-select-options');
-  if (!dd) return;
-
-  const ul = dd.querySelector('ul');
-  const search = dd.querySelector('.cselect__search');
-
-  const listHeight = ul.scrollHeight;
-  const searchHeight = search ? search.offsetHeight : 0;
-
-  dd.style.height = Math.max(searchHeight, listHeight + searchHeight) + 'px';
-
-}
-
-
-function initCountrySearch() {
+function initSearch() {
   document.querySelectorAll('.cselect-js').forEach(select => {
     const dropdown = select.querySelector('.cselect__dropdown.js-select-options');
     if (!dropdown) return;
@@ -226,26 +214,31 @@ function initCountrySearch() {
       ul.querySelectorAll('.cselect__option').forEach(option => {
         const label = option.querySelector('.cselect__label')?.textContent.toLowerCase() || '';
         const code = option.dataset.code?.toLowerCase() || '';
+
         option.style.display = label.includes(value) || code.includes(value) ? '' : 'none';
       });
-
-      updateDropdownHeight(select);
     });
   });
 }
 
 
 /**************************************************************
- * 10. ИНИЦИАЛИЗАЦИЯ
+ * 7. ИНИЦИАЛИЗАЦИЯ
  **************************************************************/
-document.addEventListener('DOMContentLoaded', () => {
-  loadCurrencies().then(() => {
-    initCountrySearch();
-    markDisabledSelects();
-  });
+document.addEventListener('DOMContentLoaded', async () => {
+  const selects = document.querySelectorAll('.cselect-js');
+
+  for (const select of selects) {
+    await loadOptions(select);
+  }
+
+  initSearch();
+  markDisabledSelects();
 });
+
+
 /**************************************************************
- * 11. СИНХРОН ШИРИНЫ
+ * 8. СИНХРОН ШИРИНЫ
  **************************************************************/
 function syncCselectWidths() {
   document.querySelectorAll('.cselect-js').forEach(select => {
@@ -263,11 +256,5 @@ function syncCselectWidths() {
 }
 
 window.addEventListener('load', syncCselectWidths);
-window.addEventListener('resize', () => {
-  syncCselectWidths();
-});
-document.addEventListener('click', () => {
-  setTimeout(() => {
-    syncCselectWidths();
-  }, 0);
-});
+window.addEventListener('resize', syncCselectWidths);
+document.addEventListener('click', () => setTimeout(syncCselectWidths, 0));

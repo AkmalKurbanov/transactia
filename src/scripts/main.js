@@ -1,8 +1,6 @@
 import './modules/description'
 import './modules/faq'
 import './modules/slider'
-import './modules/countries'
-import './modules/countriesDes'
 import './modules/decor'
 import './modules/modal'
 import './modules/tabs'
