@@ -35,7 +35,7 @@
                   div
                     label(for="sending") Получатель получит
                     input(type="text" id="sending" name="sending") 
-                  +currencySelect("./images/currencies/flags/de.svg", "EUR", src="./js/entities.json", false)
+                  +currencySelect("./images/currencies/flags/de.svg", "EUR", src="./js/entities.json", false, "Страна получателя")
           
           .tabs__panel(data-name="tab2")
             .currency-transfer
@@ -56,7 +56,7 @@
                   div
                     label(for="sending") Получатель получит
                     input(type="text" id="sending" name="sending") 
-                  +currencySelect("./images/currencies/crypto/tether.svg", "USDT", src="./js/crypto.json", false)
+                  +currencySelect("./images/currencies/crypto/ustd.svg", "USDT", src="./js/crypto.json", false, "Валюта получателя")
 
       .receipt__list 
         .receipt__list-item
