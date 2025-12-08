@@ -1,9 +1,9 @@
 mixin imgFixed(name, w, h, folder = "images/decors")
   picture
-    source(srcset=`../${folder}/${name}.avif` type="image/avif")
-    source(srcset=`../${folder}/${name}.webp` type="image/webp")
+    source(srcset=`/transactia/dist/images/${folder}/${name}.avif` type="image/avif")
+    source(srcset=`/transactia/dist/images/${folder}/${name}.webp` type="image/webp")
     img(
-      src=`/${folder}/${name}.png`
+      src=`/transactia/dist/images/${folder}/${name}.png`
       width=w
       height=h
       alt=""
