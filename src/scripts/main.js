@@ -11,5 +11,6 @@ import './modules/reviews'
 import './modules/rating'
 import './modules/profile-control'
 import './modules/calc-switch'
+import './modules/countries-list'
 import './modules/footer'
 
