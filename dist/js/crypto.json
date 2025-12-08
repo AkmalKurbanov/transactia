@@ -1,22 +1,6 @@
 {
   "entities": [
     {
-      "id": "BTC",
-      "label": "Bitcoin",
-      "icon": "images/currencies/crypto/btc.svg",
-      "values": [
-        { "code": "BTC", "symbol": "₿", "name": "Bitcoin" }
-      ]
-    },
-    {
-      "id": "ETH",
-      "label": "Ethereum",
-      "icon": "images/currencies/crypto/eth.svg",
-      "values": [
-        { "code": "ETH", "symbol": "Ξ", "name": "Ethereum" }
-      ]
-    },
-    {
       "id": "USDT",
       "label": "Tether",
       "icon": "images/currencies/crypto/usdt.svg",

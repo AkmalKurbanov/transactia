@@ -10,5 +10,6 @@ import './modules/payment-method'
 import './modules/reviews'
 import './modules/rating'
 import './modules/profile-control'
+import './modules/calc-switch'
 import './modules/footer'
 

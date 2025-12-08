@@ -4,9 +4,11 @@
 
 .calculator-wrap
   max-width: rem(520)
-  min-width: rem(420)
+  min-width: rem(520)
   width: 100%
 
+  @include xl
+    min-width: rem(420)
   @include md
     min-width: 100%
     max-width: 100%

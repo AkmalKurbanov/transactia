@@ -121,7 +121,7 @@ function hideSubmenus() {
 /**************************************************************
  * 4. SELECTED
  **************************************************************/
-function renderSelected(select, option, forced = null) {
+export function renderSelected(select, option, forced = null) {
   const block = select.querySelector('.cselect__selected-left');
   if (!block) return;
 
