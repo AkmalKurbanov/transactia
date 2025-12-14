@@ -134,6 +134,20 @@ function renderSelected(select, option, forced = null) {
 
 window.renderSelected = renderSelected;
 
+
+function clearSearch(select) {
+  const dropdown = select.querySelector('.js-select-options');
+  if (!dropdown) return;
+
+  const input = dropdown.querySelector('.cselect__search input');
+  if (input) input.value = '';
+
+  dropdown.querySelectorAll('.cselect__option').forEach(option => {
+    option.style.display = '';
+  });
+}
+
+
 /**************************************************************
  * 5. CLICK HANDLER
  **************************************************************/
@@ -163,9 +177,11 @@ document.addEventListener('click', e => {
     );
 
     renderSelected(select, parentOption, value);
+    clearSearch(select);
     hideSubmenus();
     select.classList.remove('open');
     return;
+
   }
 
   const option = e.target.closest('.cselect__option');
@@ -175,7 +191,9 @@ document.addEventListener('click', e => {
     } else {
       hideSubmenus();
       renderSelected(select, option);
+      clearSearch(select);
       select.classList.remove('open');
+
     }
     return;
   }
