@@ -22,9 +22,9 @@
                 .input__field
                   div
                     label(for="sending") Вы отправляете
-                    input(type="text" id="sending" name="sending")
+                    input.js-send-amount.js-fiat-send-amount(type="number" name="sending" data-src)
 
-                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true)
+                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true).js-fiat-sending-select
 
               .currency-transfer__icon
                 svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
@@ -33,19 +33,36 @@
               .input.input--with-select
                 .input__field
                   div
-                    label(for="sending") Получатель получит
-                    input(type="text" id="sending" name="sending") 
-                  +currencySelect("./images/currencies/flags/de.svg", "EUR", src="./js/entities.json", false, "Страна получателя")
-          
+                    label(for="get") Получатель получит
+                    input.js-receive-amount.js-fiat-receive-amount(type="number" name="receiving")
+                  +currencySelect("./images/currencies/flags/de.svg", "EUR", src="./js/entities.json", false, "Страна получателя").js-fiat-receiving-select
+            
+            .receipt__list 
+              .receipt__list-item
+                span Комиссия:
+                span.js-fiat-commission 
+              
+              .receipt__list-item
+                span Курс:
+                span.js-fiat-rate 
+                
+              .receipt__list-item
+                span Скорость доставки:
+                span.js-fiat-delivery  до 30 минут
+
+            .centered
+              button.btn.js-fiat-button 
+
+
           .tabs__panel(data-name="tab2")
             .currency-transfer
               .input.input--with-select
                 .input__field
                   div
                     label(for="sending") Вы отправляете
-                    input(type="text" id="sending" name="sending")
+                    input.js-send-amount.js-crypto-send-amount(type="number" name="sending-crypto" data-src)
 
-                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true)
+                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true).js-crypto-sending-select
 
               .currency-transfer__icon
                 svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
@@ -55,24 +72,24 @@
                 .input__field
                   div
                     label(for="sending") Получатель получит
-                    input(type="text" id="sending" name="sending") 
-                  +currencySelect("./images/currencies/crypto/usdt.svg", "USDT", src="./js/crypto.json", true, "Валюта получателя")
+                    input.js-receive-amount.js-crypto-receive-amount(type="number" name="receiving-crypto")
+                  +currencySelect("./images/currencies/crypto/usdt.svg", "USDT", src="./js/crypto.json", true, "Валюта получателя").js-crypto-receiving-select
 
-      .receipt__list 
-        .receipt__list-item
-          span Комиссия:
-          span 0%
-        
-        .receipt__list-item
-          span Курс:
-          span 101,00 RUB = 1 EUR
-          
-        .receipt__list-item
-          span Скорость доставки:
-          span Несколько минут
+            .receipt__list 
+              .receipt__list-item
+                span Комиссия:
+                span.js-crypto-commission 
+              
+              .receipt__list-item
+                span Курс:
+                span.js-crypto-rate 
+                
+              .receipt__list-item
+                span Скорость доставки:
+                span.js-crypto-delivery 
 
-      .centered
-        button.btn Перевести 10 100 RUB
+            .centered
+              button.btn.js-crypto-button
 
   .mine-title-block__icon-wrap
     .mine-title-block__column-icon
