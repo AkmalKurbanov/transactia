@@ -13,6 +13,9 @@ const CRYPTO_RATES = {
 let RATES = {};
 let READY = false;
 
+/* ======================
+   LOAD RATES
+====================== */
 fetch(API_URL)
   .then(r => r.json())
   .then(d => {
@@ -20,12 +23,19 @@ fetch(API_URL)
     READY = true;
   });
 
+/* ======================
+   COMMISSION RULES
+====================== */
 function getCommissionPercent(eur) {
   if (eur < 500) return 10;
-  if (eur < 1000) return 5;
+  if (eur < 1000) return 7;
+  if (eur < 2000) return 5;
   return 3;
 }
 
+/* ======================
+   HELPERS
+====================== */
 function format(v) {
   return Number(v).toLocaleString('ru-RU');
 }
@@ -40,6 +50,15 @@ function toEUR(amount, currency) {
   return amount * (Number(RATES.EUR) / Number(RATES[currency]));
 }
 
+// минимум 500 RUB
+function applyMinCommission(fee, toCurrency) {
+  if (toCurrency !== 'RUB') return fee;
+  return Math.max(fee, 500);
+}
+
+/* ======================
+   INIT CALCULATOR
+====================== */
 function initCalculator(calc) {
   const sendInput = calc.querySelector('.js-send-amount');
   const receiveInput = calc.querySelector('.js-receive-amount');
@@ -51,61 +70,79 @@ function initCalculator(calc) {
   let sendSelect = selects[0];
   let receiveSelect = selects[1];
 
-  receiveInput.readOnly = true;
-
   const panel = calc.closest('.tabs__panel') || calc;
-
   const commissionEl = panel.querySelector('.js-fiat-commission, .js-crypto-commission');
   const rateEl = panel.querySelector('.js-fiat-rate, .js-crypto-rate');
   const button = panel.querySelector('.js-fiat-button, .js-crypto-button');
 
+  let LOCK = false;
+
+  /* ======================
+     RATE
+  ====================== */
   function getRate(from, to) {
     if (!READY) return null;
 
     const isCryptoFrom = CRYPTO_RATES[from];
     const isCryptoTo = CRYPTO_RATES[to];
 
-    if (isCryptoFrom && isCryptoTo) {
-      return from === 'RUB' ? 1 / 1.05 : 1;
-    }
+    if (isCryptoFrom && isCryptoTo) return 1;
 
     let rf = Number(RATES[from]);
     let rt = Number(RATES[to]);
-
     if (!rf || !rt) return null;
 
-    if (from === 'RUB') {
-      rf *= 1.05;
-    }
+    if (from === 'RUB') rf *= 1.05; // +5%
 
     return rt / rf;
   }
 
+  /* ======================
+     UI
+  ====================== */
   function updateButton() {
     if (!button) return;
     const v = parseFloat(sendInput.value);
     const c = getCurrency(sendSelect);
-    button.textContent =
-      v && c ? `Перевести ${format(v)} ${c}` : 'Перевести';
+    button.textContent = v && c ? `Перевести ${format(v)} ${c}` : 'Перевести';
   }
 
-  function recalc() {
-    const send = parseFloat(sendInput.value);
+  function renderMeta(percent, fee, rate, from, to) {
+    commissionEl &&
+      (commissionEl.textContent =
+        percent ? `${percent}% (${fee.toFixed(2)} ${to})` : '');
 
+    rateEl &&
+      (rateEl.textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`);
+
+    updateButton();
+  }
+
+  function clear() {
+    commissionEl && (commissionEl.textContent = '');
+    rateEl && (rateEl.textContent = '');
+    updateButton();
+  }
+
+  /* ======================
+     CALC → FROM SEND
+  ====================== */
+  function calcFromSend() {
+    if (LOCK) return;
+    LOCK = true;
+
+    const send = parseFloat(sendInput.value);
     if (!send) {
       receiveInput.value = '';
-      commissionEl && (commissionEl.textContent = '');
-      rateEl && (rateEl.textContent = '');
-      updateButton();
+      clear();
+      LOCK = false;
       return;
     }
 
     const from = getCurrency(sendSelect);
     const to = getCurrency(receiveSelect);
-    if (!from || !to) return;
-
     const rate = getRate(from, to);
-    if (!rate) return;
+    if (!rate) return (LOCK = false);
 
     const gross = send * rate;
 
@@ -113,29 +150,64 @@ function initCalculator(calc) {
     let percent = 0;
     let fee = 0;
 
-    const isCryptoTo = CRYPTO_RATES[to];
-
-    if (!isCryptoTo) {
+    if (!CRYPTO_RATES[to]) {
       const eur = toEUR(gross, to);
-      if (!eur) return;
-
       percent = getCommissionPercent(eur);
       fee = gross * (percent / 100);
+      fee = applyMinCommission(fee, to);
       net = gross - fee;
     }
 
     receiveInput.value = net.toFixed(2);
-
-    commissionEl &&
-      (commissionEl.textContent =
-        percent ? `${percent}% (${fee.toFixed(2)} ${to})` : '');
-
-    rateEl && (rateEl.textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`);
-
-    updateButton();
+    renderMeta(percent, fee, rate, from, to);
+    LOCK = false;
   }
 
-  sendInput.addEventListener('input', recalc);
+  /* ======================
+     CALC → FROM RECEIVE
+  ====================== */
+  function calcFromReceive() {
+    if (LOCK) return;
+    LOCK = true;
+
+    const net = parseFloat(receiveInput.value);
+    if (!net) {
+      sendInput.value = '';
+      clear();
+      LOCK = false;
+      return;
+    }
+
+    const from = getCurrency(sendSelect);
+    const to = getCurrency(receiveSelect);
+    const rate = getRate(from, to);
+    if (!rate) return (LOCK = false);
+
+    let gross = net;
+    let percent = 0;
+    let fee = 0;
+
+    if (!CRYPTO_RATES[to]) {
+      const eur = toEUR(net, to);
+      percent = getCommissionPercent(eur);
+      gross = net / (1 - percent / 100);
+      fee = gross - net;
+      fee = applyMinCommission(fee, to);
+      gross = net + fee;
+    }
+
+    const send = gross / rate;
+    sendInput.value = send.toFixed(2);
+
+    renderMeta(percent, fee, rate, from, to);
+    LOCK = false;
+  }
+
+  /* ======================
+     EVENTS
+  ====================== */
+  sendInput.addEventListener('input', calcFromSend);
+  receiveInput.addEventListener('input', calcFromReceive);
 
   document.addEventListener('click', e => {
     if (
@@ -143,7 +215,7 @@ function initCalculator(calc) {
       (e.target.closest('.cselect__option') ||
         e.target.closest('.cselect__submenu-option'))
     ) {
-      recalc();
+      calcFromSend();
     }
   });
 
@@ -162,14 +234,15 @@ function initCalculator(calc) {
 
       sendInput.value = '';
       receiveInput.value = '';
-      commissionEl && (commissionEl.textContent = '');
-      rateEl && (rateEl.textContent = '');
-      updateButton();
+      clear();
     });
 
   updateButton();
 }
 
+/* ======================
+   BOOT
+====================== */
 document.addEventListener('DOMContentLoaded', () => {
   document
     .querySelectorAll('.currency-transfer')
