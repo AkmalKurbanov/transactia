@@ -12,7 +12,6 @@ const CRYPTO_RATES = {
 
 let RATES = {};
 
-
 /* ======================
    LOAD RATES
 ====================== */
@@ -20,7 +19,6 @@ fetch(API_URL)
   .then(r => r.json())
   .then(d => {
     RATES = d.rates || {};
-
   });
 
 /* ======================
@@ -50,10 +48,15 @@ function toEUR(amount, currency) {
   return amount * (Number(RATES.EUR) / Number(RATES[currency]));
 }
 
-// минимальная комиссия 500 RUB
-function applyMinCommission(fee, currency) {
-  if (currency !== 'RUB') return fee;
-  return Math.max(fee, 500);
+// 🔒 ОКРУГЛЕНИЕ ВВЕРХ (ЕДИНСТВЕННОЕ)
+function roundUp(value, decimals = 2) {
+  const factor = 10 ** decimals;
+  return Math.ceil(Number(value) * factor) / factor;
+}
+
+// 🔑 ВСЕГДА ЧИТАЕМ INPUT ЧЕРЕЗ ЭТО
+function getInputValue(input, decimals = 2) {
+  return roundUp(parseFloat(input.value || 0), decimals);
 }
 
 /* ======================
@@ -71,57 +74,94 @@ function initCalculator(calc) {
   let receiveSelect = selects[1];
 
   const panel = calc.closest('.tabs__panel') || calc;
-  const commissionEl = panel.querySelector('.js-fiat-commission, .js-crypto-commission');
   const rateEl = panel.querySelector('.js-fiat-rate, .js-crypto-rate');
+  const commissionEl = panel.querySelector('.js-fiat-commission, .js-crypto-commission');
   const button = panel.querySelector('.js-fiat-button, .js-crypto-button');
 
   let LOCK = false;
-  let LAST_INPUT = 'send'; // ← КЛЮЧЕВО
+  let LAST_INPUT = 'send';
+  let LAST_COMMISSION_PERCENT = 0;
 
   /* ======================
-     RATE
+     RATE (±5%)
   ====================== */
   function getRate(from, to) {
     if (!RATES[from] || !RATES[to]) return null;
-  
-    const isCryptoFrom = CRYPTO_RATES[from];
-    const isCryptoTo = CRYPTO_RATES[to];
-    if (isCryptoFrom && isCryptoTo) return 1;
-  
-    let rf = Number(RATES[from]);
-    let rt = Number(RATES[to]);
-  
-    if (from === 'RUB') rf *= 1.05; // +5%
-  
-    return rt / rf;
+
+    const baseRate = Number(RATES[to]) / Number(RATES[from]);
+
+    if (from === 'RUB' && to !== 'RUB') return baseRate * 1.05;
+    if (from !== 'RUB' && to === 'RUB') return baseRate * 0.95;
+
+    return baseRate;
   }
-  
 
   /* ======================
      UI
   ====================== */
   function updateButton() {
     if (!button) return;
-    const v = parseFloat(sendInput.value);
+
+    const send = getInputValue(sendInput);
     const c = getCurrency(sendSelect);
-    button.textContent = v && c ? `Перевести ${format(v)} ${c}` : 'Перевести';
+
+    if (!send || !c) {
+      button.textContent = 'Перевести';
+      return;
+    }
+
+    const finalToPay = roundUp(
+      send * (1 + LAST_COMMISSION_PERCENT / 100),
+      2
+    );
+
+    button.textContent = `Перевести ${format(finalToPay)} ${c}`;
   }
 
-  function renderMeta(percent, fee, rate, from, to) {
-    commissionEl &&
-      (commissionEl.textContent =
-        percent ? `${percent}% (${fee.toFixed(2)} ${to})` : '');
+  function renderRate(from, to) {
+    if (!rateEl || !from || !to) return;
 
-    rateEl &&
-      (rateEl.textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`);
+    const foreign = from === 'RUB' ? to : from;
+    if (!foreign || foreign === 'RUB') return;
 
-    updateButton();
+    const baseRubPerFx = Number(RATES.RUB) / Number(RATES[foreign]);
+    const rubPerFx =
+      from === 'RUB'
+        ? baseRubPerFx * 1.05
+        : baseRubPerFx * 0.95;
+
+    rateEl.textContent = `1 ${foreign} = ${roundUp(rubPerFx, 2)} RUB`;
+  }
+
+  function renderCommission() {
+    commissionEl.textContent = LAST_COMMISSION_PERCENT
+      ? `${LAST_COMMISSION_PERCENT}%`
+      : '';
   }
 
   function clear() {
-    commissionEl && (commissionEl.textContent = '');
-    rateEl && (rateEl.textContent = '');
+    receiveInput.value = '';
+    rateEl.textContent = '';
+    LAST_COMMISSION_PERCENT = 0;
+    renderCommission();
     updateButton();
+  }
+
+  /* ======================
+     COMMISSION (ВСЕГДА ОТ SEND)
+  ====================== */
+  function updateCommission() {
+    const send = getInputValue(sendInput);
+    if (!send) return;
+
+    const from = getCurrency(sendSelect);
+    if (CRYPTO_RATES[from]) return;
+
+    const eurBase = from === 'EUR'
+      ? send
+      : toEUR(send, from);
+
+    LAST_COMMISSION_PERCENT = getCommissionPercent(eurBase);
   }
 
   /* ======================
@@ -131,9 +171,8 @@ function initCalculator(calc) {
     if (LOCK) return;
     LOCK = true;
 
-    const send = parseFloat(sendInput.value);
+    const send = getInputValue(sendInput);
     if (!send) {
-      receiveInput.value = '';
       clear();
       LOCK = false;
       return;
@@ -144,26 +183,13 @@ function initCalculator(calc) {
     const rate = getRate(from, to);
     if (!rate) return (LOCK = false);
 
-    const gross = send * rate;
+    receiveInput.value = roundUp(send * rate, 2);
 
-    let net = gross;
-    let percent = 0;
-    let fee = 0;
+    updateCommission();
+    renderRate(from, to);
+    renderCommission();
+    updateButton();
 
-    if (!CRYPTO_RATES[to]) {
-      const eurBase =
-        from === 'EUR'
-          ? send
-          : toEUR(gross, to);
-
-      percent = getCommissionPercent(eurBase);
-      fee = gross * (percent / 100);
-      fee = applyMinCommission(fee, to);
-      net = gross - fee;
-    }
-
-    receiveInput.value = net.toFixed(2);
-    renderMeta(percent, fee, rate, from, to);
     LOCK = false;
   }
 
@@ -174,8 +200,8 @@ function initCalculator(calc) {
     if (LOCK) return;
     LOCK = true;
 
-    const net = parseFloat(receiveInput.value);
-    if (!net) {
+    const receive = getInputValue(receiveInput);
+    if (!receive) {
       sendInput.value = '';
       clear();
       LOCK = false;
@@ -187,28 +213,13 @@ function initCalculator(calc) {
     const rate = getRate(from, to);
     if (!rate) return (LOCK = false);
 
-    let gross = net;
-    let percent = 0;
-    let fee = 0;
+    sendInput.value = roundUp(receive / rate, 2);
 
-    if (!CRYPTO_RATES[to]) {
-      const eurBase =
-        to === 'EUR'
-          ? net
-          : toEUR(net, to);
+    updateCommission();
+    renderRate(from, to);
+    renderCommission();
+    updateButton();
 
-      percent = getCommissionPercent(eurBase);
-
-      gross = net / (1 - percent / 100);
-      fee = gross - net;
-      fee = applyMinCommission(fee, to);
-      gross = net + fee;
-    }
-
-    const send = gross / rate;
-    sendInput.value = send.toFixed(2);
-
-    renderMeta(percent, fee, rate, from, to);
     LOCK = false;
   }
 
@@ -229,13 +240,11 @@ function initCalculator(calc) {
     if (
       panel.contains(e.target) &&
       (e.target.closest('.cselect__option') ||
-        e.target.closest('.cselect__submenu-option'))
+       e.target.closest('.cselect__submenu-option'))
     ) {
-      if (LAST_INPUT === 'send') {
-        calcFromSend();
-      } else {
-        calcFromReceive();
-      }
+      LAST_INPUT === 'send'
+        ? calcFromSend()
+        : calcFromReceive();
     }
   });
 
@@ -251,9 +260,7 @@ function initCalculator(calc) {
       mark.parentNode.replaceChild(receiveSelect, mark);
 
       [sendSelect, receiveSelect] = [receiveSelect, sendSelect];
-
       sendInput.value = '';
-      receiveInput.value = '';
       clear();
     });
 
