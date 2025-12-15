@@ -11,7 +11,7 @@ const CRYPTO_RATES = {
 };
 
 let RATES = {};
-let READY = false;
+
 
 /* ======================
    LOAD RATES
@@ -20,11 +20,11 @@ fetch(API_URL)
   .then(r => r.json())
   .then(d => {
     RATES = d.rates || {};
-    READY = true;
+
   });
 
 /* ======================
-   COMMISSION RULES
+   COMMISSION RULES (EUR)
 ====================== */
 function getCommissionPercent(eur) {
   if (eur < 500) return 10;
@@ -50,9 +50,9 @@ function toEUR(amount, currency) {
   return amount * (Number(RATES.EUR) / Number(RATES[currency]));
 }
 
-// минимум 500 RUB
-function applyMinCommission(fee, toCurrency) {
-  if (toCurrency !== 'RUB') return fee;
+// минимальная комиссия 500 RUB
+function applyMinCommission(fee, currency) {
+  if (currency !== 'RUB') return fee;
   return Math.max(fee, 500);
 }
 
@@ -76,26 +76,26 @@ function initCalculator(calc) {
   const button = panel.querySelector('.js-fiat-button, .js-crypto-button');
 
   let LOCK = false;
+  let LAST_INPUT = 'send'; // ← КЛЮЧЕВО
 
   /* ======================
      RATE
   ====================== */
   function getRate(from, to) {
-    if (!READY) return null;
-
+    if (!RATES[from] || !RATES[to]) return null;
+  
     const isCryptoFrom = CRYPTO_RATES[from];
     const isCryptoTo = CRYPTO_RATES[to];
-
     if (isCryptoFrom && isCryptoTo) return 1;
-
+  
     let rf = Number(RATES[from]);
     let rt = Number(RATES[to]);
-    if (!rf || !rt) return null;
-
+  
     if (from === 'RUB') rf *= 1.05; // +5%
-
+  
     return rt / rf;
   }
+  
 
   /* ======================
      UI
@@ -125,7 +125,7 @@ function initCalculator(calc) {
   }
 
   /* ======================
-     CALC → FROM SEND
+     CALC FROM SEND
   ====================== */
   function calcFromSend() {
     if (LOCK) return;
@@ -151,8 +151,12 @@ function initCalculator(calc) {
     let fee = 0;
 
     if (!CRYPTO_RATES[to]) {
-      const eur = toEUR(gross, to);
-      percent = getCommissionPercent(eur);
+      const eurBase =
+        from === 'EUR'
+          ? send
+          : toEUR(gross, to);
+
+      percent = getCommissionPercent(eurBase);
       fee = gross * (percent / 100);
       fee = applyMinCommission(fee, to);
       net = gross - fee;
@@ -164,7 +168,7 @@ function initCalculator(calc) {
   }
 
   /* ======================
-     CALC → FROM RECEIVE
+     CALC FROM RECEIVE
   ====================== */
   function calcFromReceive() {
     if (LOCK) return;
@@ -188,8 +192,13 @@ function initCalculator(calc) {
     let fee = 0;
 
     if (!CRYPTO_RATES[to]) {
-      const eur = toEUR(net, to);
-      percent = getCommissionPercent(eur);
+      const eurBase =
+        to === 'EUR'
+          ? net
+          : toEUR(net, to);
+
+      percent = getCommissionPercent(eurBase);
+
       gross = net / (1 - percent / 100);
       fee = gross - net;
       fee = applyMinCommission(fee, to);
@@ -206,8 +215,15 @@ function initCalculator(calc) {
   /* ======================
      EVENTS
   ====================== */
-  sendInput.addEventListener('input', calcFromSend);
-  receiveInput.addEventListener('input', calcFromReceive);
+  sendInput.addEventListener('input', () => {
+    LAST_INPUT = 'send';
+    calcFromSend();
+  });
+
+  receiveInput.addEventListener('input', () => {
+    LAST_INPUT = 'receive';
+    calcFromReceive();
+  });
 
   document.addEventListener('click', e => {
     if (
@@ -215,7 +231,11 @@ function initCalculator(calc) {
       (e.target.closest('.cselect__option') ||
         e.target.closest('.cselect__submenu-option'))
     ) {
-      calcFromSend();
+      if (LAST_INPUT === 'send') {
+        calcFromSend();
+      } else {
+        calcFromReceive();
+      }
     }
   });
 
