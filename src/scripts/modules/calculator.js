@@ -1,277 +1,347 @@
+/**************************************************************
+ * API
+ **************************************************************/
 const API_KEY = '557e55cf33ce4ba9983b55b771d0b44b';
 const API_URL = `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${API_KEY}`;
 
-const CRYPTO_RATES = {
-  USDT: 1,
-  BTC: 1,
-  ETH: 1,
-  TON: 1,
-  BNB: 1,
-  TRX: 1,
+const CRYPTO = {
+  USDT: true,
+  BTC: true,
+  ETH: true,
+  TON: true,
+  BNB: true,
+  TRX: true,
 };
+
+const CRYPTO_MARKUP = 1.05;
+const MIN_COMMISSION_RUB = 500;
 
 let RATES = {};
 
-/* ======================
-   LOAD RATES
-====================== */
+/**************************************************************
+ * LOAD RATES
+ **************************************************************/
 fetch(API_URL)
   .then(r => r.json())
   .then(d => {
     RATES = d.rates || {};
   });
 
-/* ======================
-   COMMISSION RULES (EUR)
-====================== */
-function getCommissionPercent(eur) {
-  if (eur < 500) return 10;
-  if (eur < 1000) return 7;
-  if (eur < 2000) return 5;
-  return 3;
+/**************************************************************
+ * FORMAT / MASK
+ **************************************************************/
+function roundUp(v, d = 2) {
+  const f = 10 ** d;
+  return Math.ceil(Number(v) * f) / f;
 }
 
-/* ======================
-   HELPERS
-====================== */
-function format(v) {
-  return Number(v).toLocaleString('ru-RU');
+function maskValue(v, d = 2) {
+  if (!v) return '0';
+  let [i, f] = roundUp(v, d).toString().split('.');
+  let res = '';
+  let c = 0;
+
+  for (let x = i.length - 1; x >= 0; x--) {
+    res = i[x] + res;
+    c++;
+    if (c % 3 === 0 && x !== 0) res = ' ' + res;
+  }
+
+  return d && f ? res + '.' + f.padEnd(d, '0') : res;
 }
 
+function maskNumberInput(input, decimals = 2) {
+  input.addEventListener('input', () => {
+    let value = input.value.replace(/[^0-9.,]/g, '');
+    let [intPart, fracPart] = value.split(/[.,]/);
+
+    let formattedInt = '';
+    let count = 0;
+
+    for (let i = intPart.length - 1; i >= 0; i--) {
+      formattedInt = intPart[i] + formattedInt;
+      count++;
+      if (count % 3 === 0 && i !== 0) formattedInt = ' ' + formattedInt;
+    }
+
+    let formattedFrac = '';
+    if (decimals > 0 && fracPart !== undefined) {
+      formattedFrac = '.' + fracPart.slice(0, decimals);
+    }
+
+    input.value = formattedInt + formattedFrac;
+  });
+}
+
+/**************************************************************
+ * HELPERS
+ **************************************************************/
 function getCurrency(select) {
   return select?.querySelector('.cselect__code')?.textContent.trim() || null;
 }
 
-function toEUR(amount, currency) {
-  if (currency === 'EUR') return amount;
-  if (!RATES[currency] || !RATES.EUR) return null;
-  return amount * (Number(RATES.EUR) / Number(RATES[currency]));
+function getValue(input) {
+  return Number(input.value.replace(/\s/g, '').replace(',', '.')) || 0;
 }
 
-// 🔒 ОКРУГЛЕНИЕ ВВЕРХ (ЕДИНСТВЕННОЕ)
-function roundUp(value, decimals = 2) {
-  const factor = 10 ** decimals;
-  return Math.ceil(Number(value) * factor) / factor;
+function setValue(input, v, d = 2) {
+  input.value = maskValue(v, d);
 }
 
-// 🔑 ВСЕГДА ЧИТАЕМ INPUT ЧЕРЕЗ ЭТО
-function getInputValue(input, decimals = 2) {
-  return roundUp(parseFloat(input.value || 0), decimals);
+function toRUB(amount, currency) {
+  if (currency === 'RUB') return amount;
+  return amount * (Number(RATES.RUB) / Number(RATES[currency]));
 }
 
-/* ======================
-   INIT CALCULATOR
-====================== */
-function initCalculator(calc) {
-  const sendInput = calc.querySelector('.js-send-amount');
-  const receiveInput = calc.querySelector('.js-receive-amount');
+/**************************************************************
+ * COMMISSION (FIAT, С МИНИМУМОМ 500 RUB)
+ **************************************************************/
+function getFiatCommission(send, from) {
+  if (!send || CRYPTO[from]) return 0;
+
+  let percent = 10;
+  if (send >= 2000) percent = 3;
+  else if (send >= 1000) percent = 5;
+  else if (send >= 500) percent = 7;
+
+  const commissionPercent = send * percent / 100;
+
+  // минимум 500 RUB → переводим в валюту отправителя
+  const minInFrom = MIN_COMMISSION_RUB / (Number(RATES.RUB) / Number(RATES[from]));
+
+  return roundUp(Math.max(commissionPercent, minInFrom), 2);
+}
+
+/**************************************************************
+ * RATES
+ **************************************************************/
+function getFiatRate(from, to) {
+  const base = Number(RATES[to]) / Number(RATES[from]);
+
+  if (from === 'RUB' && to !== 'RUB') return base * 1.05;
+  if (from !== 'RUB' && to === 'RUB') return base * 0.95;
+
+  return base;
+}
+
+function getCryptoRate(from, to) {
+  return (Number(RATES[to]) / Number(RATES[from])) * CRYPTO_MARKUP;
+}
+
+/**************************************************************
+ * INIT FIAT
+ **************************************************************/
+function initFiat(panel) {
+  const calc = panel.querySelector('.currency-transfer');
+  if (!calc) return;
+
+  const sendInput = calc.querySelector('.js-fiat-send-amount');
+  const receiveInput = calc.querySelector('.js-fiat-receive-amount');
   const selects = calc.querySelectorAll('.cselect-js');
   const swapBtn = calc.querySelector('.currency-transfer__icon');
 
-  if (!sendInput || !receiveInput || selects.length < 2) return;
+  let [sendSelect, receiveSelect] = selects;
 
-  let sendSelect = selects[0];
-  let receiveSelect = selects[1];
-
-  const panel = calc.closest('.tabs__panel') || calc;
-  const rateEl = panel.querySelector('.js-fiat-rate, .js-crypto-rate');
-  const commissionEl = panel.querySelector('.js-fiat-commission, .js-crypto-commission');
-  const button = panel.querySelector('.js-fiat-button, .js-crypto-button');
+  const rateEl = panel.querySelector('.js-fiat-rate');
+  const commissionEl = panel.querySelector('.js-fiat-commission');
+  const button = panel.querySelector('.js-fiat-button');
 
   let LOCK = false;
-  let LAST_INPUT = 'send';
-  let LAST_COMMISSION_PERCENT = 0;
-
-  /* ======================
-     RATE (±5%)
-  ====================== */
-  function getRate(from, to) {
-    if (!RATES[from] || !RATES[to]) return null;
-
-    const baseRate = Number(RATES[to]) / Number(RATES[from]);
-
-    if (from === 'RUB' && to !== 'RUB') return baseRate * 1.05;
-    if (from !== 'RUB' && to === 'RUB') return baseRate * 0.95;
-
-    return baseRate;
-  }
-
-  /* ======================
-     UI
-  ====================== */
-  function updateButton() {
-    if (!button) return;
-
-    const send = getInputValue(sendInput);
-    const c = getCurrency(sendSelect);
-
-    if (!send || !c) {
-      button.textContent = 'Перевести';
-      return;
-    }
-
-    const finalToPay = roundUp(
-      send * (1 + LAST_COMMISSION_PERCENT / 100),
-      2
-    );
-
-    button.textContent = `Перевести ${format(finalToPay)} ${c}`;
-  }
+  let LAST = 'send';
 
   function renderRate(from, to) {
-    if (!rateEl || !from || !to) return;
-
-    const foreign = from === 'RUB' ? to : from;
-    if (!foreign || foreign === 'RUB') return;
-
-    const baseRubPerFx = Number(RATES.RUB) / Number(RATES[foreign]);
-    const rubPerFx =
-      from === 'RUB'
-        ? baseRubPerFx * 1.05
-        : baseRubPerFx * 0.95;
-
-    rateEl.textContent = `1 ${foreign} = ${roundUp(rubPerFx, 2)} RUB`;
+    const base = from === 'RUB' ? to : from;
+    if (!base || base === 'RUB') return;
+    rateEl.textContent = `1 ${base} = ${maskValue(toRUB(1, base), 2)} RUB`;
   }
 
-  function renderCommission() {
-    commissionEl.textContent = LAST_COMMISSION_PERCENT
-      ? `${LAST_COMMISSION_PERCENT}%`
-      : '';
-  }
-
-  function clear() {
-    receiveInput.value = '';
-    rateEl.textContent = '';
-    LAST_COMMISSION_PERCENT = 0;
-    renderCommission();
-    updateButton();
-  }
-
-  /* ======================
-     COMMISSION (ВСЕГДА ОТ SEND)
-  ====================== */
-  function updateCommission() {
-    const send = getInputValue(sendInput);
-    if (!send) return;
-
-    const from = getCurrency(sendSelect);
-    if (CRYPTO_RATES[from]) return;
-
-    const eurBase = from === 'EUR'
-      ? send
-      : toEUR(send, from);
-
-    LAST_COMMISSION_PERCENT = getCommissionPercent(eurBase);
-  }
-
-  /* ======================
-     CALC FROM SEND
-  ====================== */
-  function calcFromSend() {
+  function calcSend() {
     if (LOCK) return;
     LOCK = true;
 
-    const send = getInputValue(sendInput);
+    const send = getValue(sendInput);
     if (!send) {
-      clear();
+      receiveInput.value = '';
+      commissionEl.textContent = '';
+      button.textContent = 'Перевести';
       LOCK = false;
       return;
     }
 
     const from = getCurrency(sendSelect);
     const to = getCurrency(receiveSelect);
-    const rate = getRate(from, to);
-    if (!rate) return (LOCK = false);
+    const rate = getFiatRate(from, to);
 
-    receiveInput.value = roundUp(send * rate, 2);
+    setValue(receiveInput, send * rate, 2);
 
-    updateCommission();
+    const commission = getFiatCommission(send, from);
+    commissionEl.textContent = `${maskValue(commission, 2)} ${from}`;
+
     renderRate(from, to);
-    renderCommission();
-    updateButton();
+
+    const total = send + commission;
+    button.textContent = `Перевести ${maskValue(total, 2)} ${from}`;
 
     LOCK = false;
   }
 
-  /* ======================
-     CALC FROM RECEIVE
-  ====================== */
-  function calcFromReceive() {
+  function calcReceive() {
     if (LOCK) return;
     LOCK = true;
 
-    const receive = getInputValue(receiveInput);
-    if (!receive) {
-      sendInput.value = '';
-      clear();
-      LOCK = false;
-      return;
-    }
+    const receive = getValue(receiveInput);
+    const rate = getFiatRate(
+      getCurrency(sendSelect),
+      getCurrency(receiveSelect)
+    );
 
-    const from = getCurrency(sendSelect);
-    const to = getCurrency(receiveSelect);
-    const rate = getRate(from, to);
-    if (!rate) return (LOCK = false);
-
-    sendInput.value = roundUp(receive / rate, 2);
-
-    updateCommission();
-    renderRate(from, to);
-    renderCommission();
-    updateButton();
+    setValue(sendInput, receive / rate, 2);
+    calcSend();
 
     LOCK = false;
   }
 
-  /* ======================
-     EVENTS
-  ====================== */
   sendInput.addEventListener('input', () => {
-    LAST_INPUT = 'send';
-    calcFromSend();
+    LAST = 'send';
+    calcSend();
   });
 
   receiveInput.addEventListener('input', () => {
-    LAST_INPUT = 'receive';
-    calcFromReceive();
+    LAST = 'receive';
+    calcReceive();
   });
 
   document.addEventListener('click', e => {
-    if (
-      panel.contains(e.target) &&
-      (e.target.closest('.cselect__option') ||
-       e.target.closest('.cselect__submenu-option'))
-    ) {
-      LAST_INPUT === 'send'
-        ? calcFromSend()
-        : calcFromReceive();
+    if (panel.contains(e.target) && e.target.closest('.cselect__option')) {
+      LAST === 'send' ? calcSend() : calcReceive();
     }
   });
 
-  swapBtn &&
-    swapBtn.addEventListener('click', () => {
-      const p1 = sendSelect.parentNode;
-      const p2 = receiveSelect.parentNode;
-      if (!p1 || !p2) return;
-
-      const mark = document.createComment('');
-      p1.replaceChild(mark, sendSelect);
-      p2.replaceChild(sendSelect, receiveSelect);
-      mark.parentNode.replaceChild(receiveSelect, mark);
-
-      [sendSelect, receiveSelect] = [receiveSelect, sendSelect];
-      sendInput.value = '';
-      clear();
-    });
-
-  updateButton();
+  swapBtn?.addEventListener('click', () => {
+    const m = document.createComment('');
+    sendSelect.parentNode.replaceChild(m, sendSelect);
+    receiveSelect.parentNode.replaceChild(sendSelect, receiveSelect);
+    m.parentNode.replaceChild(receiveSelect, m);
+    [sendSelect, receiveSelect] = [receiveSelect, sendSelect];
+    sendInput.value = '';
+    receiveInput.value = '';
+    commissionEl.textContent = '';
+    button.textContent = 'Перевести';
+  });
 }
 
-/* ======================
-   BOOT
-====================== */
+/**************************************************************
+ * INIT CRYPTO
+ **************************************************************/
+function initCrypto(panel) {
+  const calc = panel.querySelector('.currency-transfer');
+  if (!calc) return;
+
+  const sendInput = calc.querySelector('.js-crypto-send-amount');
+  const receiveInput = calc.querySelector('.js-crypto-receive-amount');
+  const selects = calc.querySelectorAll('.cselect-js');
+  const swapBtn = calc.querySelector('.currency-transfer__icon');
+
+  let [sendSelect, receiveSelect] = selects;
+
+  const rateEl = panel.querySelector('.js-crypto-rate');
+  const commissionEl = panel.querySelector('.js-crypto-commission');
+  const button = panel.querySelector('.js-crypto-button');
+
+  let LOCK = false;
+  let LAST = 'send';
+
+  commissionEl.textContent = '0';
+
+  function renderRate(from, to) {
+    const base = from === 'RUB' ? to : from;
+    if (!base || base === 'RUB') return;
+
+    const rub =
+      (Number(RATES.RUB) / Number(RATES[base])) * CRYPTO_MARKUP;
+
+    rateEl.textContent = `1 ${base} = ${maskValue(rub, 2)} RUB`;
+  }
+
+  function calcSend() {
+    if (LOCK) return;
+    LOCK = true;
+
+    const send = getValue(sendInput);
+    if (!send) {
+      receiveInput.value = '';
+      button.textContent = 'Перевести';
+      LOCK = false;
+      return;
+    }
+
+    const from = getCurrency(sendSelect);
+    const to = getCurrency(receiveSelect);
+    const rate = getCryptoRate(from, to);
+
+    setValue(receiveInput, send * rate, 6);
+    renderRate(from, to);
+    button.textContent = `Перевести ${maskValue(send, 6)} ${from}`;
+
+    LOCK = false;
+  }
+
+  function calcReceive() {
+    if (LOCK) return;
+    LOCK = true;
+
+    const receive = getValue(receiveInput);
+    const rate = getCryptoRate(
+      getCurrency(sendSelect),
+      getCurrency(receiveSelect)
+    );
+
+    setValue(sendInput, receive / rate, 6);
+    calcSend();
+
+    LOCK = false;
+  }
+
+  sendInput.addEventListener('input', () => {
+    LAST = 'send';
+    calcSend();
+  });
+
+  receiveInput.addEventListener('input', () => {
+    LAST = 'receive';
+    calcReceive();
+  });
+
+  document.addEventListener('click', e => {
+    if (panel.contains(e.target) && e.target.closest('.cselect__option')) {
+      LAST === 'send' ? calcSend() : calcReceive();
+    }
+  });
+
+  swapBtn?.addEventListener('click', () => {
+    const m = document.createComment('');
+    sendSelect.parentNode.replaceChild(m, sendSelect);
+    receiveSelect.parentNode.replaceChild(sendSelect, receiveSelect);
+    m.parentNode.replaceChild(receiveSelect, m);
+    [sendSelect, receiveSelect] = [receiveSelect, sendSelect];
+    sendInput.value = '';
+    receiveInput.value = '';
+    button.textContent = 'Перевести';
+  });
+}
+
+/**************************************************************
+ * MASK INIT
+ **************************************************************/
+maskNumberInput(document.querySelector('.js-fiat-send-amount'), 2);
+maskNumberInput(document.querySelector('.js-fiat-receive-amount'), 2);
+maskNumberInput(document.querySelector('.js-crypto-send-amount'), 6);
+maskNumberInput(document.querySelector('.js-crypto-receive-amount'), 6);
+
+/**************************************************************
+ * BOOT
+ **************************************************************/
 document.addEventListener('DOMContentLoaded', () => {
-  document
-    .querySelectorAll('.currency-transfer')
-    .forEach(initCalculator);
+  initFiat(document.querySelector('.tabs__panel[data-name="tab1"]'));
+  initCrypto(document.querySelector('.tabs__panel[data-name="tab2"]'));
 });

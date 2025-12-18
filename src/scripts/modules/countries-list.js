@@ -15,9 +15,12 @@ const NEEDED = [
   "ES","RW","IT","RO"
 ];
 
+const DESKTOP_STEP = 45;
+const MOBILE_STEP = 11;
+const IS_MOBILE = window.matchMedia('(max-width: 768px)').matches;
+
 let filtered = [];
-let visibleCount = 45;
-const STEP = 45;
+let visibleCount = IS_MOBILE ? MOBILE_STEP : DESKTOP_STEP;
 
 /* ------------------ РЕНДЕР ------------------ */
 function render() {
@@ -35,34 +38,34 @@ function render() {
     `)
     .join('');
 
-  moreBtn.classList.toggle("show", visibleCount >= filtered.length);
+  // кнопка только если есть что раскрывать
+  moreBtn.classList.toggle('is-open', filtered.length > visibleCount);
+  // состояние "Закрыть"
+  moreBtn.classList.toggle('show', visibleCount >= filtered.length);
 }
 
 /* ------------------ ЗАГРУЗКА ------------------ */
 async function loadCountries() {
   try {
-    const res = await fetch("js/entities.json");
+    const res = await fetch('js/entities.json');
     const data = await res.json();
-
-    // тут ИЗМЕНЕНО
     filtered = data.entities.filter(c => NEEDED.includes(c.id));
-
     render();
-  } catch (err) {
-    console.error("Ошибка загрузки:", err);
+  } catch (e) {
+    console.error(e);
   }
 }
 
 loadCountries();
 
 /* ------------------ КНОПКА MORE ------------------ */
-moreBtn.addEventListener("click", () => {
+moreBtn.addEventListener('click', () => {
   if (visibleCount >= filtered.length) {
-    visibleCount = STEP; // вернуть в начало
+    visibleCount = IS_MOBILE ? MOBILE_STEP : DESKTOP_STEP;
     render();
-    countriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    countriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
-    visibleCount += STEP;
+    visibleCount = filtered.length;
     render();
   }
 });

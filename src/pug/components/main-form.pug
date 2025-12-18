@@ -22,7 +22,7 @@
                 .input__field
                   div
                     label(for="sending") Вы отправляете
-                    input.js-send-amount.js-fiat-send-amount(type="number" name="sending" data-src)
+                    input.js-send-amount.js-fiat-send-amount(type="text" name="sending" data-src)
 
                   +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true).js-fiat-sending-select
 
@@ -34,7 +34,7 @@
                 .input__field
                   div
                     label(for="get") Получатель получит
-                    input.js-receive-amount.js-fiat-receive-amount(type="number" name="receiving")
+                    input.js-receive-amount.js-fiat-receive-amount(type="text" name="receiving")
                   +currencySelect("./images/currencies/flags/de.svg", "EUR", src="./js/entities.json", false, "Страна получателя").js-fiat-receiving-select
             
             .receipt__list 
@@ -51,7 +51,7 @@
                 span.js-fiat-delivery  до 30 минут
 
             .centered
-              button.btn.js-fiat-button 
+              button.btn.js-fiat-button Перевести 
 
 
           .tabs__panel(data-name="tab2")
@@ -60,7 +60,7 @@
                 .input__field
                   div
                     label(for="sending") Вы отправляете
-                    input.js-send-amount.js-crypto-send-amount(type="number" name="sending-crypto" data-src)
+                    input.js-send-amount.js-crypto-send-amount(type="text" name="sending-crypto" data-src)
 
                   +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true).js-crypto-sending-select
 
@@ -72,7 +72,7 @@
                 .input__field
                   div
                     label(for="sending") Получатель получит
-                    input.js-receive-amount.js-crypto-receive-amount(type="number" name="receiving-crypto")
+                    input.js-receive-amount.js-crypto-receive-amount(type="text" name="receiving-crypto")
                   +currencySelect("./images/currencies/crypto/usdt.svg", "USDT", src="./js/crypto.json", true, "Валюта получателя").js-crypto-receiving-select
 
             .receipt__list 
@@ -86,10 +86,10 @@
                 
               .receipt__list-item
                 span Скорость доставки:
-                span.js-crypto-delivery 
+                span.js-crypto-delivery до 30 минут
 
             .centered
-              button.btn.js-crypto-button
+              button.btn.js-crypto-button Перевести 
 
   .mine-title-block__icon-wrap
     .mine-title-block__column-icon
