@@ -71,7 +71,17 @@
                     label(for="sending") Вы отправляете
                     input.js-crypto-send-amount(type="text" name="sending-crypto")
 
-                  +currencySelect("./images/currencies/flags/ru.svg", "RUB", "", true).js-crypto-sending-select
+                  .cselect.cselect-js.is-disabled
+                    div(class="cselect__selected" data-currency="RUB")
+                      div(class="cselect__selected-left")
+                        span(class="cselect__img")
+                          img(src="./images/currencies/flags/ru.svg", alt="RUB")
+                        span(class="cselect__code") RUB
+                      div(class="cselect__selected-right")
+                        svg(xmlns="http://www.w3.org/2000/svg", viewBox="0 0 16 16", width="20", height="20")
+                          path(fill="#fff", d="M8 11.47a1 1 0 0 1-.71-.29L2.34 6.23a1 1 0 1 1 1.42-1.41L8 9.06l4.24-4.24a1 1 0 1 1 1.42 1.41l-4.95 4.95a1 1 0 0 1-.71.29Z")  
+
+                  
 
               .currency-transfer__icon
                 svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24")
