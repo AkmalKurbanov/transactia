@@ -3,7 +3,7 @@ mixin imgFixed(name, w, h, folder = "images/decors")
     source(srcset=`/transactia/dist/${folder}/${name}.avif` type="image/avif")
     source(srcset=`/transactia/dist/${folder}/${name}.webp` type="image/webp")
     img(
-      src=`/transactia/dist/${folder}/${name}.png`
+      src=`./${folder}/${name}.png`
       width=w
       height=h
       alt=""
