@@ -99,16 +99,13 @@ function createCalculator({ panel, selectors, onRecalc }) {
 }
 
 /**************************************************************
- * 4. ФИАТНЫЙ КАЛЬКУЛЯТОР
+ * 4. ФИАТНЫЙ КАЛЬКУЛЯТОР (ОБНОВЛЕННЫЙ)
  **************************************************************/
 const initFiat = (panel) => createCalculator({
   panel,
   selectors: {
-    sendInput: '.js-fiat-send-amount',
-    receiveInput: '.js-fiat-receive-amount',
-    rate: '.js-fiat-rate',
-    commission: '.js-fiat-commission',
-    button: '.js-fiat-button'
+    sendInput: '.js-fiat-send-amount', receiveInput: '.js-fiat-receive-amount',
+    rate: '.js-fiat-rate', commission: '.js-fiat-commission', button: '.js-fiat-button'
   },
   onRecalc: ({ els, from, to, mode }) => {
     const rateData = CalcCore.getFiatRate(from, to);
@@ -119,23 +116,22 @@ const initFiat = (panel) => createCalculator({
     const amountInRUB = from === 'RUB' ? currentSend : CalcCore.convert(currentSend, from, 'RUB');
     
     let fee = 0;
-    if (amountInRUB === 0 || amountInRUB < 5000) { 
-        fee = from === 'RUB' ? 499 : CalcCore.convert(499, 'RUB', from); 
-    } else if (amountInRUB < 50000) { fee = currentSend * 0.10; }
-    else if (amountInRUB < 100000) { fee = currentSend * 0.07; }
-    else if (amountInRUB < 200000) { fee = currentSend * 0.05; }
-    else { fee = currentSend * 0.03; }
+    if (amountInRUB === 0 || amountInRUB < 5000) fee = from === 'RUB' ? 499 : CalcCore.convert(499, 'RUB', from);
+    else if (amountInRUB < 50000) fee = currentSend * 0.10;
+    else if (amountInRUB < 100000) fee = currentSend * 0.07;
+    else if (amountInRUB < 200000) fee = currentSend * 0.05;
+    else fee = currentSend * 0.03;
 
     const feeFinal = CalcCore._t(fee, 0); 
-
     if (els.commission) els.commission.textContent = `${formatNum(feeFinal, 0)} ${from}`;
     if (els.rate) els.rate.textContent = `1 ${from === 'RUB' ? to : from} = ${formatNum(rate, 2)} RUB`;
 
+    // ИСПРАВЛЕНО: Теперь Math.ceil и 0 знаков после запятой (чтобы не было 9 770,67)
     if (mode === 'send') {
       const res = from === 'RUB' ? val / rate : val * rate;
-      setVal(els.receiveInput, val ? res : '', 2); 
+      setVal(els.receiveInput, val ? Math.ceil(res) : '', 0); 
     } else {
-      setVal(els.sendInput, val ? currentSend : '', 2);
+      setVal(els.sendInput, val ? Math.ceil(currentSend) : '', 0);
     }
     
     const total = CalcCore._t(currentSend + feeFinal, 0);
@@ -144,21 +140,18 @@ const initFiat = (panel) => createCalculator({
 });
 
 /**************************************************************
- * 5. КРИПТО КАЛЬКУЛЯТОР
+ * 5. КРИПТО КАЛЬКУЛЯТОР (ОБНОВЛЕННЫЙ)
  **************************************************************/
 const isCr = (c) => ['USDT', 'BTC', 'ETH', 'TON', 'BNB', 'TRX', 'SOL', 'LTC'].includes(c);
 const initCrypto = (panel) => createCalculator({
   panel,
   selectors: {
-    sendInput: '.js-crypto-send-amount',
-    receiveInput: '.js-crypto-receive-amount',
-    rate: '.js-crypto-rate',
-    commission: '.js-crypto-commission',
-    button: '.js-crypto-button'
+    sendInput: '.js-crypto-send-amount', receiveInput: '.js-crypto-receive-amount',
+    rate: '.js-crypto-rate', commission: '.js-crypto-commission', button: '.js-crypto-button'
   },
   onRecalc: ({ els, from, to, mode }) => {
     const cRate = CalcCore.getCryptoRate(from, to, isCr);
-    const finalRate = cRate.final; 
+    const finalRate = cRate.final;
     
     if (els.rate) {
       const cryptoName = isCr(from) ? from : to;
@@ -171,14 +164,15 @@ const initCrypto = (panel) => createCalculator({
     const rateForCalc = isCr(from) ? finalRate : (1 / finalRate);
     let currentSend = mode === 'send' ? val : val / rateForCalc;
 
-    if (mode === 'send') setVal(els.receiveInput, val ? val * rateForCalc : '', 2);
-    else setVal(els.sendInput, val ? currentSend : '', 2);
+    // ИСПРАВЛЕНО: Здесь тоже Math.ceil и 0 знаков для целых чисел
+    if (mode === 'send') {
+      setVal(els.receiveInput, val ? Math.ceil(val * rateForCalc) : '', 0);
+    } else {
+      setVal(els.sendInput, val ? Math.ceil(currentSend) : '', 0);
+    }
 
     const totalBtn = CalcCore._t(currentSend, 0);
     if (els.button) els.button.textContent = val > 0 ? `Перевести ${formatNum(totalBtn, 0)} ${from}` : 'Перевести';
-
-    console.log(`--- [КРИПТО: ПРИВЯЗКА К USD + 5%] ---`);
-    console.log(`Курс API (USD): ${cRate.market.toFixed(2)} | Итог (+5%): ${finalRate.toFixed(2)}`);
   }
 });
 
