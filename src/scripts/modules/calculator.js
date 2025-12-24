@@ -91,6 +91,7 @@ function calcCommissionRub(sendAmountRub) {
   return roundUp(sendAmountRub * 0.10, 2)
 }
 
+
 /**************************************************************
  * INIT FIAT
  **************************************************************/
@@ -115,10 +116,52 @@ function initFiat(panel) {
   let LOCK = false
   let LAST = 'send'
 
+  // Получаем базовую валюту (например, RUB)
   function getBase() {
     return panel
       .querySelector('.cselect.is-disabled .cselect__selected')
-      ?.dataset.currency
+      ?.dataset.currency || 'RUB'
+  }
+
+  // Общая функция обновления текста курса
+  // Всегда пишет: 1 [ИН. ВАЛЮТА] = [КУРС] [БАЗА]
+  function renderRateText(from, to, base, rate) {
+    if (!rate) return
+    // foreign - это валюта, которая НЕ является базовой.
+    // Если base=RUB, а пара RUB-EUR, то foreign=EUR.
+    const foreign = from === base ? to : from
+    rateEl.textContent = `1 ${foreign} = ${format(rate, 2)} ${base}`
+  }
+
+  // Функция для состояния "нет данных" (пустые поля)
+  function showDefaultInfo(from, to, base) {
+    const rate = getRate(from, to, base)
+
+    // 1. Рисуем курс
+    renderRateText(from, to, base, rate)
+
+    // 2. Считаем минимальную комиссию (499 базовых единиц -> в валюту отправления)
+    const MIN_FEE_BASE = 499
+    const minFee = from === base ? MIN_FEE_BASE : convert(MIN_FEE_BASE, base, from)
+
+    commissionEl.textContent = `${format(minFee, 2)} ${from}`
+    button.textContent = 'Перевести'
+  }
+
+  function initDisplay() {
+    // Ждем, пока загрузятся курсы API
+    if (Object.keys(RATES).length === 0) {
+      setTimeout(initDisplay, 100)
+      return
+    }
+
+    const from = getCurrency(sendSelect)
+    const to = getCurrency(receiveSelect)
+    const base = getBase()
+
+    if (!from || !to || !base) return
+
+    showDefaultInfo(from, to, base)
   }
 
   function recalc(mode) {
@@ -134,47 +177,48 @@ function initFiat(panel) {
       return
     }
 
+    // Получаем курс (он уже содержит +5% или -5% в зависимости от направления)
     const rate = getRate(from, to, base)
-    const foreign = from === base ? to : from
 
+    // 1. ВСЕГДА обновляем отображение курса
+    renderRateText(from, to, base, rate)
 
     let send = getValue(sendInput)
     let receive = getValue(receiveInput)
 
+    // Если поля пустые — показываем дефолтную инфу (мин. комиссия)
+    if (mode === 'send' && !send) {
+      receiveInput.value = ''
+      showDefaultInfo(from, to, base)
+      LOCK = false
+      return
+    }
+
+    if (mode === 'receive' && !receive) {
+      sendInput.value = ''
+      showDefaultInfo(from, to, base)
+      LOCK = false
+      return
+    }
+
+    // 2. Расчет сумм (Математику НЕ меняем)
     if (mode === 'send') {
-      if (!send) {
-        receiveInput.value = ''
-        commissionEl.textContent = ''
-        button.textContent = 'Перевести'
-        LOCK = false
-        return
-      }
+      // Если отправляем Базу (RUB), то делим. Если отправляем Валюту, то умножаем.
       receive = from === base ? send / rate : send * rate
       setValue(receiveInput, receive, 2)
     }
 
     if (mode === 'receive') {
-      if (!receive) {
-        sendInput.value = ''
-        commissionEl.textContent = ''
-        button.textContent = 'Перевести'
-        LOCK = false
-        return
-      }
       send = from === base ? receive * rate : receive / rate
       setValue(sendInput, send, 2)
     }
 
-    // комиссия ВСЕГДА от суммы отправки в RUB
-    const sendRub =
-      from === base ? send : convert(send, from, base)
-
-    const feeRub = calcCommissionRub(sendRub)
-    const fee =
-      from === base ? feeRub : convert(feeRub, base, from)
+    // 3. Расчет комиссии (Считаем всегда от базовой суммы)
+    const sendInBase = from === base ? send : convert(send, from, base)
+    const feeInBase = calcCommissionRub(sendInBase) // вернет 499 или 10%
+    const fee = from === base ? feeInBase : convert(feeInBase, base, from)
 
     commissionEl.textContent = `${format(fee, 2)} ${from}`
-    rateEl.textContent = `1 ${foreign} = ${format(rate, 2)} ${base}`
     button.textContent = `Перевести ${format(send + fee, 2)} ${from}`
 
     LOCK = false
@@ -196,17 +240,28 @@ function initFiat(panel) {
     receiveSelect.parentNode.replaceChild(sendSelect, receiveSelect)
     m.parentNode.replaceChild(receiveSelect, m)
       ;[sendSelect, receiveSelect] = [receiveSelect, sendSelect]
-    recalc(LAST)
+
+    // При свапе обновляем курс и комиссию
+    const sendVal = getValue(sendInput)
+    if (!sendVal) {
+      initDisplay()
+    } else {
+      recalc(LAST)
+    }
   })
+
+  // Слушаем событие смены валюты в селектах
+  selects.forEach(select => {
+    select.addEventListener('changeCurrency', () => {
+      // Вызываем пересчет. 
+      // Если в инпуте есть число — пересчитает суммы.
+      // Если инпут пустой — пересчитает минимальную комиссию и курс под новую валюту.
+      recalc(LAST);
+    });
+  });
+
+  initDisplay()
 }
-
-
-
-
-
-
-
-
 /**************************************************************
  * CRYPTO CONFIG
  **************************************************************/
@@ -258,115 +313,117 @@ function getCryptoRate(from, to) {
  * INIT CRYPTO
  **************************************************************/
 function initCrypto(panel) {
-  const calc = panel.querySelector('.currency-transfer')
-  if (!calc) return
+  const calc = panel.querySelector('.currency-transfer');
+  if (!calc) return;
 
-  const sendInput = calc.querySelector('.js-crypto-send-amount')
-  const receiveInput = calc.querySelector('.js-crypto-receive-amount')
+  const sendInput = calc.querySelector('.js-crypto-send-amount');
+  const receiveInput = calc.querySelector('.js-crypto-receive-amount');
+  const selects = calc.querySelectorAll('.cselect-js');
+  const swapBtn = calc.querySelector('.currency-transfer__icon');
+  
+  // Элементы вывода информации
+  const rateEl = panel.querySelector('.js-crypto-rate');
+  const commissionEl = panel.querySelector('.js-crypto-commission'); // Тот самый элемент комиссии
+  const button = panel.querySelector('.js-crypto-button'); // Убедитесь, что класс в HTML именно такой
 
-  applyMoneyMask(sendInput)
-  applyMoneyMask(receiveInput)
+  let [sendSelect, receiveSelect] = selects;
+  let LOCK = false;
+  let LAST = 'send';
 
-  const selects = calc.querySelectorAll('.cselect-js')
-  const swapBtn = calc.querySelector('.currency-transfer__icon')
+  applyMoneyMask(sendInput);
+  applyMoneyMask(receiveInput);
 
-  let [sendSelect, receiveSelect] = selects
+  // Функция отображения курса: Всегда 1 КРИПТО = X ДРУГАЯ ВАЛЮТА
+  function renderCryptoRateText(from, to, rate) {
+    if (!rateEl || !rate) return;
+    const fromCrypto = isCrypto(from);
+    const toCrypto = isCrypto(to);
 
-  const rateEl = panel.querySelector('.js-crypto-rate')
-  const button = panel.querySelector('.js-crypto-button')
-
-  let LOCK = false
-  let LAST = 'send'
-
-  function recalc(mode) {
-    if (LOCK) return
-
-    
-
-    LOCK = true
-
-    const from = getCurrency(sendSelect)
-    const to = getCurrency(receiveSelect)
-
-    if (!from || !to) {
-      LOCK = false
-      return
+    if (!fromCrypto && toCrypto) {
+      // fiat -> crypto: показываем цену 1 крипты в фиате
+      rateEl.textContent = `1 ${to} = ${format(1 / rate, 2)} ${from}`;
+    } else {
+      // crypto -> fiat или crypto -> crypto
+      rateEl.textContent = `1 ${from} = ${format(rate, isCrypto(to) ? 8 : 2)} ${to}`;
     }
-
-    const rate = getCryptoRate(from, to)
-
-    let send = getValue(sendInput)
-    let receive = getValue(receiveInput)
-
-    if (mode === 'send') {
-      if (!send) {
-        receiveInput.value = ''
-        button.textContent = 'Перевести'
-        LOCK = false
-        return
-      }
-      receive = send * rate
-      setValue(receiveInput, receive, 8)
-    }
-
-    if (mode === 'receive') {
-      if (!receive) {
-        sendInput.value = ''
-        button.textContent = 'Перевести'
-        LOCK = false
-        return
-      }
-      send = receive / rate
-      setValue(sendInput, send, 2)
-    }
-
-    function renderCryptoRate(rateEl, from, to, rate) {
-      const fromCrypto = isCrypto(from)
-      const toCrypto = isCrypto(to)
-    
-      // crypto → fiat
-      if (fromCrypto && !toCrypto) {
-        rateEl.textContent = `1 ${from} = ${format(rate, 2)} ${to}`
-        return
-      }
-    
-      // fiat → crypto
-      if (!fromCrypto && toCrypto) {
-        rateEl.textContent = `1 ${to} = ${format(1 / rate, 2)} ${from}`
-        return
-      }
-    
-      // crypto → crypto
-      rateEl.textContent = `1 ${from} = ${format(rate, 8)} ${to}`
-    }
-    
-    button.textContent = `Перевести ${format(send, 2)} ${from}`
-
-    LOCK = false
-    renderCryptoRate(from, to, rate)
   }
 
-  sendInput.addEventListener('input', () => {
-    LAST = 'send'
-    recalc('send')
-  })
+  function recalc(mode) {
+    if (LOCK) return;
+    LOCK = true;
 
-  receiveInput.addEventListener('input', () => {
-    LAST = 'receive'
-    recalc('receive')
-  })
+    const from = getCurrency(sendSelect);
+    const to = getCurrency(receiveSelect);
+    if (!from || !to) { LOCK = false; return; }
+
+    const rate = getCryptoRate(from, to);
+    
+    // Обновляем курс
+    renderCryptoRateText(from, to, rate);
+
+    // УСТАНАВЛИВАЕМ КОМИССИЮ 0 ВСЕГДА
+    if (commissionEl) {
+      commissionEl.textContent = `0 ${from}`;
+    }
+
+    let send = getValue(sendInput);
+    let receive = getValue(receiveInput);
+
+    // Если поля пустые
+    if ((mode === 'send' && !send) || (mode === 'receive' && !receive)) {
+      if (mode === 'send') receiveInput.value = '';
+      else sendInput.value = '';
+      if (button) button.textContent = 'Перевести';
+      LOCK = false;
+      return;
+    }
+
+    // Расчет сумм
+    if (mode === 'send') {
+      receive = send * rate;
+      setValue(receiveInput, receive, isCrypto(to) ? 8 : 2);
+    } else {
+      send = receive / rate;
+      setValue(sendInput, send, isCrypto(from) ? 8 : 2);
+    }
+
+    if (button) {
+      button.textContent = `Перевести ${format(send, 2)} ${from}`;
+    }
+
+    LOCK = false;
+  }
+
+  // Слушатели ввода
+  sendInput.addEventListener('input', () => { LAST = 'send'; recalc('send'); });
+  receiveInput.addEventListener('input', () => { LAST = 'receive'; recalc('receive'); });
+
+  // Слушатель смены валюты из select-curency.js
+  selects.forEach(select => {
+    select.addEventListener('changeCurrency', () => {
+      recalc(LAST);
+    });
+  });
 
   swapBtn.addEventListener('click', () => {
-    const m = document.createComment('')
-    sendSelect.parentNode.replaceChild(m, sendSelect)
-    receiveSelect.parentNode.replaceChild(sendSelect, receiveSelect)
-    m.parentNode.replaceChild(receiveSelect, m)
-    ;[sendSelect, receiveSelect] = [receiveSelect, sendSelect]
-    recalc(LAST)
-  })
+    const m = document.createComment('');
+    sendSelect.parentNode.replaceChild(m, sendSelect);
+    receiveSelect.parentNode.replaceChild(sendSelect, receiveSelect);
+    m.parentNode.replaceChild(receiveSelect, m);
+    [sendSelect, receiveSelect] = [receiveSelect, sendSelect];
+    recalc(LAST);
+  });
+
+  // Инициализация при загрузке
+  function initDisplay() {
+    if (Object.keys(RATES).length === 0) {
+      setTimeout(initDisplay, 100);
+      return;
+    }
+    recalc('send');
+  }
+  initDisplay();
 }
-
-
 /**************************************************************
  * BOOT
  **************************************************************/

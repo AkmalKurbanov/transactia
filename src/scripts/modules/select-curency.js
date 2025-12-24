@@ -180,8 +180,8 @@ document.addEventListener('click', e => {
     clearSearch(select);
     hideSubmenus();
     select.classList.remove('open');
+    select.dispatchEvent(new CustomEvent('changeCurrency', { detail: { value } })); 
     return;
-
   }
 
   const option = e.target.closest('.cselect__option');
@@ -193,6 +193,7 @@ document.addEventListener('click', e => {
       renderSelected(select, option);
       clearSearch(select);
       select.classList.remove('open');
+      select.dispatchEvent(new CustomEvent('changeCurrency'));
 
     }
     return;
