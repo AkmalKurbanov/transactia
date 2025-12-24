@@ -1,26 +1,15 @@
-/**************************************************************
- * 1. API И КУРСЫ
- **************************************************************/
 const API_CONFIG = {
   key: '557e55cf33ce4ba9983b55b771d0b44b',
   get url() { return `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${this.key}`; }
 };
 
 let RATES = {};
-
 fetch(API_CONFIG.url)
   .then(r => r.json())
   .then(d => { RATES = d.rates || {}; })
-  .catch(err => console.error("Ошибка API:", err));
+  .catch(err => console.error("API Error:", err));
 
-/**************************************************************
- * 2. ЯДРО РАСЧЕТОВ
- **************************************************************/
 const CalcCore = {
-  _t(v, d = 0) {
-    const multiplier = 10 ** d;
-    return Math.ceil(Number(v) * multiplier) / multiplier;
-  },
   convert(amount, from, to) {
     if (!RATES[from] || !RATES[to]) return 0;
     return amount * (Number(RATES[to]) / Number(RATES[from]));
@@ -31,44 +20,27 @@ const CalcCore = {
     const marketPrice = this.convert(1, foreign, 'RUB');
     const markup = isRubSend ? 1.06 : 0.94; 
     let finalRate = Math.round((marketPrice * markup) * 100) / 100;
-    return { market: marketPrice, final: finalRate };
-  },
-  getCryptoRate(from, to, isCrFunc) {
-    const fiat = isCrFunc(from) ? to : from;
-    const usdToFiat = this.convert(1, 'USD', fiat);
-    const final = usdToFiat * 1.05;
-    return { market: usdToFiat, final };
+    return { final: finalRate };
   }
 };
 
-/**************************************************************
- * 3. СИНХРОНИЗАЦИЯ (ЗЕРКАЛО)
- **************************************************************/
 function syncToOtherTab(currentPanel, mode, value) {
   if (window._isSyncing) return;
   window._isSyncing = true;
-
   const otherPanel = document.querySelector(`.tabs__panel:not([data-name="${currentPanel.dataset.name}"])`);
-  if (!otherPanel) { window._isSyncing = false; return; }
-
-  const targetSelector = mode === 'send' 
-    ? '.js-fiat-send-amount, .js-crypto-send-amount' 
-    : '.js-fiat-receive-amount, .js-crypto-receive-amount';
-
-  const otherInput = otherPanel.querySelector(targetSelector);
-  if (otherInput) {
-    otherInput.value = value;
-    otherInput.dispatchEvent(new CustomEvent('input', { detail: { isSync: true } }));
+  if (otherPanel) {
+    const target = mode === 'send' ? '.js-fiat-send-amount, .js-crypto-send-amount' : '.js-fiat-receive-amount, .js-crypto-receive-amount';
+    const input = otherPanel.querySelector(target);
+    if (input) {
+      input.value = value;
+      input.dispatchEvent(new CustomEvent('input', { detail: { isSync: true } }));
+    }
   }
   window._isSyncing = false;
 }
 
-/**************************************************************
- * 4. УНИВЕРСАЛЬНЫЙ КОНСТРУКТОР
- **************************************************************/
 function createCalculator({ panel, selectors, onRecalc }) {
   if (!panel) return;
-
   const els = {
     sendInput: panel.querySelector(selectors.sendInput),
     receiveInput: panel.querySelector(selectors.receiveInput),
@@ -91,42 +63,44 @@ function createCalculator({ panel, selectors, onRecalc }) {
   };
 
   els.sendInput?.addEventListener('input', (e) => {
-    applyMask(e.target);
-    run('send');
+    applyMask(e.target); run('send');
     if (!e.detail?.isSync) syncToOtherTab(panel, 'send', e.target.value);
   });
-
   els.receiveInput?.addEventListener('input', (e) => {
-    applyMask(e.target);
-    run('receive');
+    applyMask(e.target); run('receive');
     if (!e.detail?.isSync) syncToOtherTab(panel, 'receive', e.target.value);
   });
 
+  // Убрано зеркалирование: теперь свап меняет местами селекторы только в текущей панели
   els.swap?.addEventListener('click', () => {
     const selects = panel.querySelectorAll('.cselect-js');
     if (selects.length < 2) return;
-    const v1 = els.sendInput.value, v2 = els.receiveInput.value;
-    els.sendInput.value = v2; els.receiveInput.value = v1;
+    
+    const fromCode = selects[0].querySelector('.cselect__code')?.textContent.trim();
+    const isRubTop = fromCode === 'RUB';
+    const rubValue = isRubTop ? els.sendInput.value : els.receiveInput.value;
+
     const s1 = selects[0], s2 = selects[1], p1 = s1.parentNode, p2 = s2.parentNode;
     const marker = document.createComment('swap');
     p1.replaceChild(marker, s1); p2.replaceChild(s1, s2); p1.replaceChild(s2, marker);
-    run('send');
-    if (!window._isSwapping) {
-      window._isSwapping = true;
-      const otherSwap = document.querySelector(`.tabs__panel:not([data-name="${panel.dataset.name}"]) .currency-transfer__icon`);
-      if (otherSwap) otherSwap.click();
-      window._isSwapping = false;
+    
+    if (isRubTop) {
+      els.receiveInput.value = rubValue;
+      run('receive');
+    } else {
+      els.sendInput.value = rubValue;
+      run('send');
     }
   });
 
   const timer = setInterval(() => { 
-    if (Object.keys(RATES).length) { run('send'); clearInterval(timer); } 
+    if (Object.keys(RATES).length) { 
+      run('send'); 
+      clearInterval(timer); 
+    } 
   }, 200);
 }
 
-/**************************************************************
- * 5. ФИАТНЫЙ КАЛЬКУЛЯТОР
- **************************************************************/
 const initFiat = (panel) => createCalculator({
   panel,
   selectors: {
@@ -135,50 +109,48 @@ const initFiat = (panel) => createCalculator({
   },
   onRecalc: ({ els, from, to, mode }) => {
     const { final: rate } = CalcCore.getFiatRate(from, to);
+    const rawSend = getRaw(els.sendInput);
+    const rawReceive = getRaw(els.receiveInput);
+    const isRubSend = from === 'RUB';
+
+    // Если пусто: считаем комиссию, скрываем курс, очищаем кнопку
+    if (rawSend === 0 && rawReceive === 0) {
+      let defaultFee = isRubSend ? 499 : (499 / rate);
+      if (els.commission) els.commission.textContent = `${formatNum(defaultFee, isRubSend ? 0 : 2, true)} ${from}`;
+      if (els.rate) els.rate.textContent = '';
+      if (els.button) els.button.textContent = 'Перевести';
+      return;
+    }
+
     const val = getRaw(mode === 'send' ? els.sendInput : els.receiveInput);
-
-    let pureSend, pureReceive;
-    if (from === 'RUB') {
-        pureSend = mode === 'send' ? val : val * rate;
-        pureReceive = mode === 'send' ? val / rate : val;
+    let pS, pR;
+    if (mode === 'receive') {
+      pR = val;
+      pS = isRubSend ? val * rate : val / rate;
+      setVal(els.sendInput, pS, 2);
     } else {
-        pureSend = mode === 'send' ? val : val / rate;
-        pureReceive = mode === 'send' ? val * rate : val;
+      pS = val;
+      pR = isRubSend ? val / rate : val * rate;
+      setVal(els.receiveInput, pR, 2);
     }
 
-    if (mode === 'send') setVal(els.receiveInput, pureReceive, 2);
-    else setVal(els.sendInput, pureSend, 2);
-
-    // ИСПРАВЛЕНО: Комиссия по умолчанию не 0
-    const rubAmount = from === 'RUB' ? pureSend : pureReceive;
-    let fee = 0;
+    const currentSend = getRaw(els.sendInput);
+    const rubAmt = isRubSend ? currentSend : getRaw(els.receiveInput);
     
-    // Если сумма не введена, показываем минимальную комиссию 499
-    if (rubAmount < 5000) {
-        fee = from === 'RUB' ? 499 : CalcCore.convert(499, 'RUB', from);
-    } else if (rubAmount < 50000) {
-        fee = pureSend * 0.10;
-    } else if (rubAmount < 100000) {
-        fee = pureSend * 0.07;
-    } else {
-        fee = pureSend * 0.05;
-    }
+    let fee = 0;
+    if (rubAmt < 5000) fee = isRubSend ? 499 : (499 / rate);
+    else fee = currentSend * 0.10; 
 
-    const feeFinal = Math.ceil(fee);
-    if (els.commission) {
-        els.commission.textContent = `${formatNum(feeFinal, 0)} ${from}`;
-    }
-
-    if (els.rate) els.rate.textContent = val > 0 ? `1 ${from === 'RUB' ? to : from} = ${formatNum(rate, 2)} RUB` : '';
-
-    const total = Math.ceil(pureSend + feeFinal);
-    if (els.button) els.button.textContent = val > 0 ? `Перевести ${formatNum(total, 0)} ${from}` : 'Перевести';
+    const feeF = Math.ceil(fee * 100) / 100;
+    
+    if (els.commission) els.commission.textContent = `${formatNum(feeF, isRubSend ? 0 : 2, true)} ${from}`;
+    if (els.rate) els.rate.textContent = `1 ${isRubSend ? to : from} = ${formatNum(rate, 2, true)} RUB`;
+    
+    const total = Math.ceil(currentSend + feeF);
+    if (els.button) els.button.textContent = `Перевести ${formatNum(total, 0, true)} ${from}`;
   }
 });
 
-/**************************************************************
- * 6. КРИПТО КАЛЬКУЛЯТОР
- **************************************************************/
 const isCr = (c) => ['USDT', 'BTC', 'ETH', 'TON', 'BNB', 'TRX', 'SOL', 'LTC'].includes(c);
 const initCrypto = (panel) => createCalculator({
   panel,
@@ -187,63 +159,75 @@ const initCrypto = (panel) => createCalculator({
     rate: '.js-crypto-rate', commission: '.js-crypto-commission', button: '.js-crypto-button'
   },
   onRecalc: ({ els, from, to, mode }) => {
-    const { final: rate } = CalcCore.getCryptoRate(from, to, isCr);
+    const rawSend = getRaw(els.sendInput);
+    const rawReceive = getRaw(els.receiveInput);
+    
+    if (rawSend === 0 && rawReceive === 0) {
+      if (els.commission) els.commission.textContent = `0 ${from}`;
+      if (els.rate) els.rate.textContent = '';
+      if (els.button) els.button.textContent = 'Перевести';
+      return;
+    }
+
+    // ВАЖНО: Вызываем твой метод, который сам решит: +6% или -6%
+    // Если меняем RUB на USDT -> вернет рыночный * 1.06
+    // Если меняем USDT на RUB -> вернет рыночный * 0.94
+    const { final: rateWithMarkup } = CalcCore.getFiatRate(from, to);
+    
     const val = getRaw(mode === 'send' ? els.sendInput : els.receiveInput);
-    const rateCalc = isCr(from) ? rate : (1 / rate);
+    const isRubSend = from === 'RUB';
 
     let pS, pR;
+    // Логика расчета:
+    // Если шлем RUB: получаем USDT (RUB / курс)
+    // Если шлем USDT: получаем RUB (USDT * курс)
     if (mode === 'send') {
-        pS = val; pR = val * rateCalc;
-        setVal(els.receiveInput, pR, isCr(to) ? 6 : 2);
+      pS = val;
+      pR = isRubSend ? (val / rateWithMarkup) : (val * rateWithMarkup);
+      setVal(els.receiveInput, pR, isCr(to) ? 2 : 2);
     } else {
-        pR = val; pS = val / rateCalc;
-        setVal(els.sendInput, pS, isCr(from) ? 6 : 2);
+      pR = val;
+      pS = isRubSend ? (val * rateWithMarkup) : (val / rateWithMarkup);
+      setVal(els.sendInput, pS, isCr(from) ? 2 : 2);
     }
 
     if (els.commission) els.commission.textContent = `0 ${from}`;
     
-    // ИСПРАВЛЕНО: Скрываем курс при загрузке (если val === 0)
     if (els.rate) {
-        if (val > 0) {
-            const crName = isCr(from) ? from : to, fiName = isCr(from) ? to : from;
-            els.rate.textContent = `1 ${crName} = ${formatNum(rate, 2)} ${fiName}`;
-        } else {
-            els.rate.textContent = ''; 
-        }
+      const crCode = isCr(from) ? from : to;
+      const ftCode = isCr(from) ? to : from;
+      // Всегда показываем курс 1 единицы крипты с учетом текущей наценки/уценки
+      els.rate.textContent = `1 ${crCode} = ${formatNum(rateWithMarkup, 2, true)} ${ftCode}`;
     }
-    
-    const total = Math.ceil(pS);
-    if (els.button) els.button.textContent = val > 0 ? `Перевести ${formatNum(total, 0)} ${from}` : 'Перевести';
+
+    const totalSend = Math.ceil(getRaw(els.sendInput));
+    if (els.button) els.button.textContent = `Перевести ${formatNum(totalSend, 0, true)} ${from}`;
   }
 });
+function getRaw(el) { return el ? (Number(el.value.replace(/\s/g, '').replace(',', '.')) || 0) : 0; }
 
-/**************************************************************
- * 7. УТИЛИТЫ (МАСКИ И ФОРМАТИРОВАНИЕ)
- **************************************************************/
-function getRaw(el) { 
-  return el ? (Number(el.value.replace(/\s/g, '').replace(',', '.')) || 0) : 0; 
+// Добавлен аргумент keepZero для возможности вывода "0" в тексте (комиссия), но не в инпутах
+function formatNum(v, d = 2, keepZero = false) {
+  if (v === '' || v === null || isNaN(v) || (v === 0 && !keepZero)) return ''; 
+  return Number(v).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d });
 }
 
-function formatNum(v, d = 0) {
-  if (v === '' || v === 0 || isNaN(v)) return ''; 
-  return Number(v).toLocaleString('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: d });
-}
-
-function setVal(el, v, d = 0) { 
-    if (el && document.activeElement !== el) {
-        const f = formatNum(v, d);
-        el.value = f === '0' ? '' : f; 
-    }
+function setVal(el, v, d = 2) { 
+  if (el && document.activeElement !== el) {
+    const formatted = formatNum(v, d, false); // В инпутах нули скрываем
+    el.value = formatted; 
+  }
 }
 
 function applyMask(el) {
   let cursor = el.selectionStart, oldLen = el.value.length;
   let raw = el.value.replace(/[^\d.,]/g, '').replace(',', '.');
-  if (!raw) { el.value = ''; return; }
+  if (!raw || raw === '0') { el.value = ''; return; }
   const parts = raw.split('.');
   let formatted = Number(parts[0]).toLocaleString('ru-RU');
   if (parts.length > 1) {
-    formatted += ',' + parts[1].substring(0, 6);
+    const isCrF = el.classList.contains('js-crypto-send-amount') || el.classList.contains('js-crypto-receive-amount');
+    formatted += ',' + parts[1].substring(0, isCrF ? 2 : 2);
   }
   el.value = formatted;
   let newPos = cursor + (el.value.length - oldLen);
