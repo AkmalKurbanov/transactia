@@ -149,7 +149,7 @@ function clearSearch(select) {
 
 
 /**************************************************************
- * 5. CLICK HANDLER
+ * 5. CLICK HANDLER (ИСПРАВЛЕННЫЙ)
  **************************************************************/
 document.addEventListener('click', e => {
   const select = e.target.closest('.cselect-js');
@@ -157,9 +157,7 @@ document.addEventListener('click', e => {
 
   if (!select) {
     hideSubmenus();
-    document
-      .querySelectorAll('.cselect-js')
-      .forEach(s => s.classList.remove('open'));
+    document.querySelectorAll('.cselect-js').forEach(s => s.classList.remove('open'));
     return;
   }
 
@@ -172,15 +170,18 @@ document.addEventListener('click', e => {
   if (subOption) {
     const value = subOption.dataset.value;
     const code = submenu.dataset.itemCode;
-    const parentOption = select.querySelector(
-      `.cselect__option[data-code="${code}"]`
-    );
+    const parentOption = select.querySelector(`.cselect__option[data-code="${code}"]`);
 
     renderSelected(select, parentOption, value);
     clearSearch(select);
     hideSubmenus();
     select.classList.remove('open');
-    select.dispatchEvent(new CustomEvent('changeCurrency', { detail: { value } })); 
+
+    // ИСПРАВЛЕНО: Добавлен bubbles: true
+    select.dispatchEvent(new CustomEvent('changeCurrency', { 
+      bubbles: true, 
+      detail: { value } 
+    })); 
     return;
   }
 
@@ -193,8 +194,11 @@ document.addEventListener('click', e => {
       renderSelected(select, option);
       clearSearch(select);
       select.classList.remove('open');
-      select.dispatchEvent(new CustomEvent('changeCurrency'));
 
+      // ИСПРАВЛЕНО: Добавлен bubbles: true
+      select.dispatchEvent(new CustomEvent('changeCurrency', { 
+        bubbles: true 
+      }));
     }
     return;
   }
