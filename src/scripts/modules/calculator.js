@@ -36,13 +36,12 @@ const CalcCore = {
       label: from === base ? "+5% (Покупка)" : "-5% (Продажа)" 
     };
   },
-  // ИЗМЕНЕНО: Крипта привязана к доллару + 5%
-  getCryptoRate(from, to, isCr) {
-    const crypto = isCr(from) ? from : to;
-    const fiat = isCr(from) ? to : from;
-    
-    // Берем курс USD к фиату и добавляем 5%
+  // Крипта привязана к доллару + 5%
+  getCryptoRate(from, to, isCrFunc) {
+    const fiat = isCrFunc(from) ? to : from;
+    // Берем курс USD к фиату (например, рублю)
     const usdToFiat = this.convert(1, 'USD', fiat);
+    // Всегда +5% к доллару для крипты
     const final = usdToFiat * 1.05; 
     
     return { market: usdToFiat, final, label: "+5% (Привязка к USD)" };
@@ -119,14 +118,13 @@ const initFiat = (panel) => createCalculator({
     let currentSend = mode === 'send' ? val : (from === 'RUB' ? val * rate : val / rate);
     const amountInRUB = from === 'RUB' ? currentSend : CalcCore.convert(currentSend, from, 'RUB');
     
-    let fee = 0, feeLabel = "0%";
+    let fee = 0;
     if (amountInRUB === 0 || amountInRUB < 5000) { 
         fee = from === 'RUB' ? 499 : CalcCore.convert(499, 'RUB', from); 
-        feeLabel = "Фикса 499 RUB";
-    } else if (amountInRUB < 50000) { fee = currentSend * 0.10; feeLabel = "10%"; }
-    else if (amountInRUB < 100000) { fee = currentSend * 0.07; feeLabel = "7%"; }
-    else if (amountInRUB < 200000) { fee = currentSend * 0.05; feeLabel = "5%"; }
-    else { fee = currentSend * 0.03; feeLabel = "3%"; }
+    } else if (amountInRUB < 50000) { fee = currentSend * 0.10; }
+    else if (amountInRUB < 100000) { fee = currentSend * 0.07; }
+    else if (amountInRUB < 200000) { fee = currentSend * 0.05; }
+    else { fee = currentSend * 0.03; }
 
     const feeFinal = CalcCore._t(fee, 0); 
 
@@ -146,7 +144,7 @@ const initFiat = (panel) => createCalculator({
 });
 
 /**************************************************************
- * 5. КРИПТО КАЛЬКУЛЯТОР (ИСПРАВЛЕНО: КРИПТА = USD + 5%)
+ * 5. КРИПТО КАЛЬКУЛЯТОР
  **************************************************************/
 const isCr = (c) => ['USDT', 'BTC', 'ETH', 'TON', 'BNB', 'TRX', 'SOL', 'LTC'].includes(c);
 const initCrypto = (panel) => createCalculator({
@@ -160,9 +158,8 @@ const initCrypto = (panel) => createCalculator({
   },
   onRecalc: ({ els, from, to, mode }) => {
     const cRate = CalcCore.getCryptoRate(from, to, isCr);
-    const finalRate = cRate.final; // Это курс 1 монеты в фиате (USD + 5%)
+    const finalRate = cRate.final; 
     
-    // Отображение курса: всегда 1 Крипта = Фиат (с наценкой)
     if (els.rate) {
       const cryptoName = isCr(from) ? from : to;
       const fiatName = isCr(from) ? to : from;
@@ -171,10 +168,6 @@ const initCrypto = (panel) => createCalculator({
     if (els.commission) els.commission.textContent = `0 ${from}`;
 
     const val = mode === 'send' ? getRaw(els.sendInput) : getRaw(els.receiveInput);
-    
-    // Математика привязки:
-    // Если отдаем крипту (USDT -> RUB): сумма = крипта * finalRate
-    // Если получаем крипту (RUB -> USDT): сумма = фиат / finalRate
     const rateForCalc = isCr(from) ? finalRate : (1 / finalRate);
     let currentSend = mode === 'send' ? val : val / rateForCalc;
 
@@ -185,19 +178,23 @@ const initCrypto = (panel) => createCalculator({
     if (els.button) els.button.textContent = val > 0 ? `Перевести ${formatNum(totalBtn, 0)} ${from}` : 'Перевести';
 
     console.log(`--- [КРИПТО: ПРИВЯЗКА К USD + 5%] ---`);
-    console.log(`Курс 1 монеты: ${finalRate.toFixed(2)}`);
+    console.log(`Курс API (USD): ${cRate.market.toFixed(2)} | Итог (+5%): ${finalRate.toFixed(2)}`);
   }
 });
 
 /**************************************************************
- * 6. УТИЛИТЫ
+ * 6. УТИЛИТЫ (ПОЛНЫЙ КОМПЛЕКТ)
  **************************************************************/
 function getRaw(el) { return el ? (Number(el.value.replace(/\s/g, '').replace(',', '.')) || 0) : 0; }
+
 function formatNum(v, d = 0) { 
   if (v === '' || v === 0) return '';
   return Number(v).toLocaleString('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: d }); 
 }
-function setVal(el, v, d = 0) { if (el) el.value = formatNum(v, d); }
+
+function setVal(el, v, d = 0) { 
+  if (el) el.value = formatNum(v, d); 
+}
 
 function applyMask(el) {
   let cursor = el.selectionStart, oldLen = el.value.length;
