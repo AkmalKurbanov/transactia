@@ -2,7 +2,7 @@
  * 1. API И КУРСЫ
  **************************************************************/
 const API_CONFIG = {
-  key: '22cc9d3ab02842c4b89b8546efdd9f91',
+  key: '557e55cf33ce4ba9983b55b771d0b44b',
   get url() { return `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${this.key}`; }
 };
 
@@ -17,8 +17,9 @@ fetch(API_CONFIG.url)
  * 2. ЯДРО РАСЧЕТОВ
  **************************************************************/
 const CalcCore = {
-  round(v, d = 2) {
-    return Math.ceil(Number(v) * (10 ** d)) / (10 ** d);
+  _t(v, d = 0) {
+    const multiplier = 10 ** d;
+    return Math.ceil(Number(v) * multiplier) / multiplier;
   },
   convert(amount, from, to) {
     if (!RATES[from] || !RATES[to]) return 0;
@@ -28,13 +29,23 @@ const CalcCore = {
     const base = 'RUB';
     const foreign = from === base ? to : from;
     const market = this.convert(1, foreign, base);
-    return market * (from === base ? 1.05 : 0.95);
+    const markup = from === base ? 1.05 : 0.95;
+    return { 
+      market, 
+      final: market * markup, 
+      label: from === base ? "+5% (Покупка)" : "-5% (Продажа)" 
+    };
   },
+  // ИЗМЕНЕНО: Крипта привязана к доллару + 5%
   getCryptoRate(from, to, isCr) {
-    const market = this.convert(1, from, to);
-    if (isCr(from) && !isCr(to)) return market * 0.95;
-    if (!isCr(from) && isCr(to)) return market * 1.05;
-    return market;
+    const crypto = isCr(from) ? from : to;
+    const fiat = isCr(from) ? to : from;
+    
+    // Берем курс USD к фиату и добавляем 5%
+    const usdToFiat = this.convert(1, 'USD', fiat);
+    const final = usdToFiat * 1.05; 
+    
+    return { market: usdToFiat, final, label: "+5% (Привязка к USD)" };
   }
 };
 
@@ -57,45 +68,30 @@ function createCalculator({ panel, selectors, onRecalc }) {
 
   const run = (mode) => {
     if (mode) LAST_MODE = mode;
-    // Находим селекты заново, так как Swap меняет их положение
     const currentSelects = panel.querySelectorAll('.cselect-js');
     if (currentSelects.length < 2) return;
-
     const from = currentSelects[0].querySelector('.cselect__code')?.textContent.trim();
     const to = currentSelects[1].querySelector('.cselect__code')?.textContent.trim();
-
     if (!from || !to || !Object.keys(RATES).length) return;
     onRecalc({ els, from, to, mode: LAST_MODE });
   };
 
-  // Слушатели ввода
   els.sendInput?.addEventListener('input', (e) => { applyMask(e.target); run('send'); });
   els.receiveInput?.addEventListener('input', (e) => { applyMask(e.target); run('receive'); });
+  panel.addEventListener('changeCurrency', () => run());
 
-  // Слушаем событие changeCurrency на уровне панели (делегирование)
-  panel.addEventListener('changeCurrency', (e) => {
-    run();
-  });
-
-  // РЕВЕРС (Swap) - Исправленная логика
   els.swap?.addEventListener('click', () => {
     const currentSelects = panel.querySelectorAll('.cselect-js');
     if (currentSelects.length < 2) return;
-
-    const s1 = currentSelects[0];
-    const s2 = currentSelects[1];
-
-    // Чтобы не было ошибки NotFoundError, работаем через родителей каждого элемента
-    const parent1 = s1.parentNode;
-    const parent2 = s2.parentNode;
-
-    // Используем временный маркер (как в вашем оригинале)
-    const tempMarker = document.createComment('swap-marker');
-    parent1.replaceChild(tempMarker, s1);
-    parent2.replaceChild(s1, s2);
-    parent1.replaceChild(s2, tempMarker);
-
-    run();
+    const val1 = els.sendInput.value;
+    const val2 = els.receiveInput.value;
+    els.sendInput.value = val2;
+    els.receiveInput.value = val1;
+    const s1 = currentSelects[0], s2 = currentSelects[1];
+    const p1 = s1.parentNode, p2 = s2.parentNode;
+    const tempMarker = document.createComment('swap');
+    p1.replaceChild(tempMarker, s1); p2.replaceChild(s1, s2); p1.replaceChild(s2, tempMarker);
+    run('send');
   });
 
   const timer = setInterval(() => {
@@ -104,7 +100,7 @@ function createCalculator({ panel, selectors, onRecalc }) {
 }
 
 /**************************************************************
- * 4. ИНИЦИАЛИЗАЦИЯ (ФИАТ И КРИПТО)
+ * 4. ФИАТНЫЙ КАЛЬКУЛЯТОР
  **************************************************************/
 const initFiat = (panel) => createCalculator({
   panel,
@@ -116,33 +112,43 @@ const initFiat = (panel) => createCalculator({
     button: '.js-fiat-button'
   },
   onRecalc: ({ els, from, to, mode }) => {
-    const rate = CalcCore.getFiatRate(from, to);
-    const send = getRaw(els.sendInput);
+    const rateData = CalcCore.getFiatRate(from, to);
+    const rate = rateData.final;
+    const val = mode === 'send' ? getRaw(els.sendInput) : getRaw(els.receiveInput);
+    
+    let currentSend = mode === 'send' ? val : (from === 'RUB' ? val * rate : val / rate);
+    const amountInRUB = from === 'RUB' ? currentSend : CalcCore.convert(currentSend, from, 'RUB');
+    
+    let fee = 0, feeLabel = "0%";
+    if (amountInRUB === 0 || amountInRUB < 5000) { 
+        fee = from === 'RUB' ? 499 : CalcCore.convert(499, 'RUB', from); 
+        feeLabel = "Фикса 499 RUB";
+    } else if (amountInRUB < 50000) { fee = currentSend * 0.10; feeLabel = "10%"; }
+    else if (amountInRUB < 100000) { fee = currentSend * 0.07; feeLabel = "7%"; }
+    else if (amountInRUB < 200000) { fee = currentSend * 0.05; feeLabel = "5%"; }
+    else { fee = currentSend * 0.03; feeLabel = "3%"; }
 
-    if (els.rate) els.rate.textContent = `1 ${from === 'RUB' ? to : from} = ${formatNum(rate)} RUB`;
+    const feeFinal = CalcCore._t(fee, 0); 
 
-    const sendInBase = from === 'RUB' ? send : CalcCore.convert(send, from, 'RUB');
-    const feeInBase = sendInBase < 5000 ? 499 : CalcCore.round(sendInBase * 0.1);
-    const fee = from === 'RUB' ? feeInBase : CalcCore.convert(feeInBase, 'RUB', from);
-
-    if (els.commission) els.commission.textContent = `${formatNum(fee)} ${from}`;
+    if (els.commission) els.commission.textContent = `${formatNum(feeFinal, 0)} ${from}`;
+    if (els.rate) els.rate.textContent = `1 ${from === 'RUB' ? to : from} = ${formatNum(rate, 2)} RUB`;
 
     if (mode === 'send') {
-      if (!send) { els.receiveInput.value = ''; els.button.textContent = 'Перевести'; return; }
-      const res = from === 'RUB' ? send / rate : send * rate;
-      setVal(els.receiveInput, res);
+      const res = from === 'RUB' ? val / rate : val * rate;
+      setVal(els.receiveInput, val ? res : '', 2); 
     } else {
-      const recv = getRaw(els.receiveInput);
-      const res = from === 'RUB' ? recv * rate : recv / rate;
-      setVal(els.sendInput, res);
+      setVal(els.sendInput, val ? currentSend : '', 2);
     }
-    const totalSend = getRaw(els.sendInput);
-    if (els.button) els.button.textContent = `Перевести ${formatNum(totalSend + fee)} ${from}`;
+    
+    const total = CalcCore._t(currentSend + feeFinal, 0);
+    if (els.button) els.button.textContent = val > 0 ? `Перевести ${formatNum(total, 0)} ${from}` : 'Перевести';
   }
 });
 
+/**************************************************************
+ * 5. КРИПТО КАЛЬКУЛЯТОР (ИСПРАВЛЕНО: КРИПТА = USD + 5%)
+ **************************************************************/
 const isCr = (c) => ['USDT', 'BTC', 'ETH', 'TON', 'BNB', 'TRX', 'SOL', 'LTC'].includes(c);
-
 const initCrypto = (panel) => createCalculator({
   panel,
   selectors: {
@@ -153,40 +159,54 @@ const initCrypto = (panel) => createCalculator({
     button: '.js-crypto-button'
   },
   onRecalc: ({ els, from, to, mode }) => {
-    const rate = CalcCore.getCryptoRate(from, to, isCr);
-
+    const cRate = CalcCore.getCryptoRate(from, to, isCr);
+    const finalRate = cRate.final; // Это курс 1 монеты в фиате (USD + 5%)
+    
+    // Отображение курса: всегда 1 Крипта = Фиат (с наценкой)
     if (els.rate) {
-      if (!isCr(from) && isCr(to)) els.rate.textContent = `1 ${to} = ${formatNum(1 / rate, 2)} ${from}`;
-      else els.rate.textContent = `1 ${from} = ${formatNum(rate, isCr(to) ? 8 : 2)} ${to}`;
+      const cryptoName = isCr(from) ? from : to;
+      const fiatName = isCr(from) ? to : from;
+      els.rate.textContent = `1 ${cryptoName} = ${formatNum(finalRate, 2)} ${fiatName}`;
     }
-
     if (els.commission) els.commission.textContent = `0 ${from}`;
 
-    const send = getRaw(els.sendInput);
-    if (!send && mode === 'send') { els.receiveInput.value = ''; els.button.textContent = 'Перевести'; return; }
+    const val = mode === 'send' ? getRaw(els.sendInput) : getRaw(els.receiveInput);
+    
+    // Математика привязки:
+    // Если отдаем крипту (USDT -> RUB): сумма = крипта * finalRate
+    // Если получаем крипту (RUB -> USDT): сумма = фиат / finalRate
+    const rateForCalc = isCr(from) ? finalRate : (1 / finalRate);
+    let currentSend = mode === 'send' ? val : val / rateForCalc;
 
-    if (mode === 'send') {
-      setVal(els.receiveInput, send * rate, isCr(to) ? 8 : 2);
-    } else {
-      const recv = getRaw(els.receiveInput);
-      setVal(els.sendInput, recv / rate, isCr(from) ? 8 : 2);
-    }
-    if (els.button) els.button.textContent = `Перевести ${formatNum(getRaw(els.sendInput))} ${from}`;
+    if (mode === 'send') setVal(els.receiveInput, val ? val * rateForCalc : '', 2);
+    else setVal(els.sendInput, val ? currentSend : '', 2);
+
+    const totalBtn = CalcCore._t(currentSend, 0);
+    if (els.button) els.button.textContent = val > 0 ? `Перевести ${formatNum(totalBtn, 0)} ${from}` : 'Перевести';
+
+    console.log(`--- [КРИПТО: ПРИВЯЗКА К USD + 5%] ---`);
+    console.log(`Курс 1 монеты: ${finalRate.toFixed(2)}`);
   }
 });
 
 /**************************************************************
- * 5. УТИЛИТЫ
+ * 6. УТИЛИТЫ
  **************************************************************/
 function getRaw(el) { return el ? (Number(el.value.replace(/\s/g, '').replace(',', '.')) || 0) : 0; }
-function formatNum(v, d = 2) { return CalcCore.round(v, d).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d }); }
-function setVal(el, v, d = 2) { if (el) el.value = formatNum(v, d); }
+function formatNum(v, d = 0) { 
+  if (v === '' || v === 0) return '';
+  return Number(v).toLocaleString('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: d }); 
+}
+function setVal(el, v, d = 0) { if (el) el.value = formatNum(v, d); }
 
 function applyMask(el) {
   let cursor = el.selectionStart, oldLen = el.value.length;
-  let raw = el.value.replace(/[^\d]/g, '');
+  let raw = el.value.replace(/[^\d.,]/g, '').replace(',', '.'); 
   if (!raw) { el.value = ''; return; }
-  el.value = Number(raw).toLocaleString('ru-RU');
+  const parts = raw.split('.');
+  let formatted = Number(parts[0]).toLocaleString('ru-RU');
+  if (parts.length > 1) formatted += ',' + parts[1].substring(0, 2);
+  el.value = formatted;
   el.setSelectionRange(cursor + (el.value.length - oldLen), cursor + (el.value.length - oldLen));
 }
 
